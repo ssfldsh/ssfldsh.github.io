@@ -3,11 +3,11 @@
   <title>Kotomi&#39;s Blog</title>
   
   <subtitle>Hello,world.</subtitle>
-  <link href="/child/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/child/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2019-12-29T15:16:12.934Z</updated>
-  <id>http://yoursite.com/child/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>Runzhe He</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>注意事项</title>
-    <link href="http://yoursite.com/child/2019/12/29/test-my-site/"/>
-    <id>http://yoursite.com/child/2019/12/29/test-my-site/</id>
+    <link href="http://yoursite.com/2019/12/29/test-my-site/"/>
+    <id>http://yoursite.com/2019/12/29/test-my-site/</id>
     <published>2019-12-29T04:02:35.000Z</published>
     <updated>2019-12-29T15:16:12.934Z</updated>
     
@@ -39,19 +39,19 @@
     </summary>
     
     
-      <category term="cat" scheme="http://yoursite.com/child/categories/cat/"/>
+      <category term="cat" scheme="http://yoursite.com/categories/cat/"/>
     
     
-      <category term="tag1" scheme="http://yoursite.com/child/tags/tag1/"/>
+      <category term="tag1" scheme="http://yoursite.com/tags/tag1/"/>
     
-      <category term="tag2" scheme="http://yoursite.com/child/tags/tag2/"/>
+      <category term="tag2" scheme="http://yoursite.com/tags/tag2/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/child/2019/12/29/hello-world/"/>
-    <id>http://yoursite.com/child/2019/12/29/hello-world/</id>
+    <link href="http://yoursite.com/2019/12/29/hello-world/"/>
+    <id>http://yoursite.com/2019/12/29/hello-world/</id>
     <published>2019-12-29T03:35:40.249Z</published>
     <updated>2019-12-29T15:09:18.689Z</updated>
     
@@ -67,12 +67,12 @@
     </summary>
     
     
-      <category term="cat" scheme="http://yoursite.com/child/categories/cat/"/>
+      <category term="cat" scheme="http://yoursite.com/categories/cat/"/>
     
     
-      <category term="tag1" scheme="http://yoursite.com/child/tags/tag1/"/>
+      <category term="tag1" scheme="http://yoursite.com/tags/tag1/"/>
     
-      <category term="tag2" scheme="http://yoursite.com/child/tags/tag2/"/>
+      <category term="tag2" scheme="http://yoursite.com/tags/tag2/"/>
     
   </entry>
   
