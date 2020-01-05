@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-05T10:22:13.858Z</updated>
+  <updated>2020-01-05T10:28:54.100Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2019/12/29/test-my-site/"/>
     <id>http://yoursite.com/2019/12/29/test-my-site/</id>
     <published>2019-12-29T04:02:35.000Z</published>
-    <updated>2020-01-05T10:22:13.858Z</updated>
+    <updated>2020-01-05T10:28:54.100Z</updated>
     
-    <content type="html"><![CDATA[<ol><li>一个文档只有一个目录，但可以有多个标签</li><li>说明段落要用yaml front matter格式书写<div class="row">    <embed src="/source/pdf/test.pdf" width="100%" height="550" type="application/pdf"></div></li></ol>]]></content>
+    <content type="html"><![CDATA[<ol><li>一个文档只有一个目录，但可以有多个标签</li><li>说明段落要用yaml front matter格式书写</li></ol><div class="row">    <embed src="./test.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
     
     <summary type="html">
     
@@ -31,10 +31,12 @@
       
         &lt;ol&gt;
 &lt;li&gt;一个文档只有一个目录，但可以有多个标签&lt;/li&gt;
-&lt;li&gt;说明段落要用yaml front matter格式书写
+&lt;li&gt;说明段落要用yaml front matter格式书写&lt;/li&gt;
+&lt;/ol&gt;
+
 
 	&lt;div class=&quot;row&quot;&gt;
-    &lt;embed src=&quot;/source/pdf/test.pdf&quot; width=&quot;100%&quot; hei
+    &lt;embed src=&quot;./test.pdf&quot; width=&quot;100%&quot; h
       
     
     </summary>
