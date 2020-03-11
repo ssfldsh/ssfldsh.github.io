@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-11T13:58:26.215Z</updated>
+  <updated>2020-03-11T14:48:58.527Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>挖掘孤僻学子：</title>
+    <link href="http://yoursite.com/2020/03/11/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/"/>
+    <id>http://yoursite.com/2020/03/11/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/</id>
+    <published>2020-03-11T14:43:23.229Z</published>
+    <updated>2020-03-11T14:48:58.527Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 学会海量数据处理的方式方法。</p><p>2． 在时间序列中找到共现模式。</p><p>3． 研究高效处理海量数据的单机算法；尝试使用多机计算环境。</p><h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><h2 id="1．实验背景介绍"><a href="#1．实验背景介绍" class="headerlink" title="1．实验背景介绍"></a>1．实验背景介绍</h2><p>食堂是校园文化的主要组成部分之一，学生刷卡买饭的信息包含着有用的知识，希望你能挖掘出来。</p><p>从刷卡记录可以判断一个人在行为上是否是孤僻的，从而可以推断他/她在精神上是否疑似孤僻。</p><p>结伴的学生经常会有一同去一个餐厅吃饭的行为模式，你需要在大量数据记录中挖掘出好友，从而对那些没有好友的人进行疑似孤僻推断。</p><h2 id="2．输入输出及具体要求"><a href="#2．输入输出及具体要求" class="headerlink" title="2．输入输出及具体要求"></a>2．输入输出及具体要求</h2><p>输入：文件“log.txt”，其中的每一行是一条刷卡记录。</p><p>例如，一行信息“2017-01-01_07:00:00,420,3,4”表示，在2017年1月1日的7点整，号码为420的学生去第3食堂的第4 POS机上刷卡买饭。</p><p>输出：每一个学生的好友。好友的定义：在给定的时间范围内，有超过比例R（例如1/4）的次数是在一个食堂吃饭的，而且两者的时间间隔前后不超过T分钟（例如5分钟）</p><p>例如，输出文件的一行如下：</p><p>“0#3,151,921”</p><p>这表示第0号学生有3个好友，分别是第3号、第151号和第921号学生。</p><p>具体要求：程序必须高效才能在有限的时间内完成任务。要在实验报告中把你的思路描述清楚。</p><h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法:"></a>实现方法:</h1><p>创建Data类，包含以下五个变量</p><p><img src="/img/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90.png" alt=""></p><p>用arraylist创建data类的对象数组用于存储从文件中读入的信息</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;实验要求：&quot;&gt;&lt;a href=&quot;#实验要求：&quot; class=&quot;headerlink&quot; title=&quot;实验要求：&quot;&gt;&lt;/a&gt;实验要求：&lt;/h1&gt;&lt;p&gt;1． 学会海量数据处理的方式方法。&lt;/p&gt;
+&lt;p&gt;2． 在时间序列中找到共现模式。&lt;/p&gt;
+&lt;p&gt;3． 研究高效处理
+      
+    
+    </summary>
+    
+    
+      <category term="数据挖掘" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/"/>
+    
+    
+      <category term="数据挖掘" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/"/>
+    
+  </entry>
   
   <entry>
     <title>PageRank算法的应用：</title>
