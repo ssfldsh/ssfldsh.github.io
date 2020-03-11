@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-05T10:44:38.721Z</updated>
+  <updated>2020-03-10T14:30:31.615Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,37 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>注意事项</title>
-    <link href="http://yoursite.com/2019/12/29/test-my-site/"/>
-    <id>http://yoursite.com/2019/12/29/test-my-site/</id>
+    <title>论文下载</title>
+    <link href="http://yoursite.com/2019/12/29/%E8%AE%BA%E6%96%87%E4%B8%8B%E8%BD%BD/"/>
+    <id>http://yoursite.com/2019/12/29/%E8%AE%BA%E6%96%87%E4%B8%8B%E8%BD%BD/</id>
     <published>2019-12-29T04:02:35.000Z</published>
-    <updated>2020-01-05T10:44:38.721Z</updated>
+    <updated>2020-03-10T14:30:31.615Z</updated>
     
-    <content type="html"><![CDATA[<ol><li>一个文档只有一个目录，但可以有多个标签</li><li>说明段落要用yaml front matter格式书写</li></ol><div class="row">    <embed src="/pdf/test.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    <content type="html"><![CDATA[<p>PDF过大，加载可能过慢，请稍等。</p><div class="row">    <embed src="/pdf/test.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;ol&gt;
-&lt;li&gt;一个文档只有一个目录，但可以有多个标签&lt;/li&gt;
-&lt;li&gt;说明段落要用yaml front matter格式书写&lt;/li&gt;
-&lt;/ol&gt;
+        &lt;p&gt;PDF过大，加载可能过慢，请稍等。&lt;/p&gt;
 
 
 	&lt;div class=&quot;row&quot;&gt;
-    &lt;embed src=&quot;/pdf/test.pdf&quot; width=&quot;100%
+    &lt;embed src=&quot;/pdf/test.pdf&quot; width=&quot;100%&quot; height=&quot;550&quot; type=&quot;application/pdf&quot;&gt;
+	&lt;/div&gt;
+
+
+
+
       
     
     </summary>
     
     
-      <category term="cat" scheme="http://yoursite.com/categories/cat/"/>
+      <category term="论文" scheme="http://yoursite.com/categories/%E8%AE%BA%E6%96%87/"/>
     
     
-      <category term="tag1" scheme="http://yoursite.com/tags/tag1/"/>
-    
-      <category term="tag2" scheme="http://yoursite.com/tags/tag2/"/>
+      <category term="论文" scheme="http://yoursite.com/tags/%E8%AE%BA%E6%96%87/"/>
     
   </entry>
   
