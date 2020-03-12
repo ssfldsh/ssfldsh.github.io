@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-fill-left.min.css?v=1.0.2" rel="stylesheet">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="软件开发,团队项目," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Kotomi's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="项目描述 基于Android（或者IOS）的文化创意产业公共服务系统文化创意产业公共服务平台服务端与Android端都需要实现。  完整的系统应包括前端页面和后台管理两部分。前端页面包含：用户信息（对于已登录用户）、资讯列表、供求列表、展会列表、最新留言和用户登陆&#x2F;注册等，导航栏则包括首页、资讯频道、展会频道、供求频道等。后台管理包含：用户信息管理、留言管理、供求管理、资讯管理、展会管理。系统支持">
+<meta property="og:type" content="article">
+<meta property="og:title" content="团队项目：文化创意产业公共服务平台">
+<meta property="og:url" content="http://yoursite.com/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="Kotomi&#39;s Blog">
+<meta property="og:description" content="项目描述 基于Android（或者IOS）的文化创意产业公共服务系统文化创意产业公共服务平台服务端与Android端都需要实现。  完整的系统应包括前端页面和后台管理两部分。前端页面包含：用户信息（对于已登录用户）、资讯列表、供求列表、展会列表、最新留言和用户登陆&#x2F;注册等，导航栏则包括首页、资讯频道、展会频道、供求频道等。后台管理包含：用户信息管理、留言管理、供求管理、资讯管理、展会管理。系统支持">
+<meta property="og:image" content="http://yoursite.com/img/clip_image002-1584018641607.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image004-1584018655685.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image006-1584018664954.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image008-1584018671036.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image010.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image012.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image014.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image016.jpg">
+<meta property="og:image" content="http://yoursite.com/img/clip_image018.jpg">
+<meta property="og:image" content="http://yoursite.com/img/1584018979820.png">
+<meta property="article:published_time" content="2020-03-12T12:53:55.654Z">
+<meta property="article:modified_time" content="2020-03-12T14:25:12.457Z">
+<meta property="article:author" content="Runzhe He">
+<meta property="article:tag" content="软件开发">
+<meta property="article:tag" content="团队项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/img/clip_image002-1584018641607.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/12/团队项目：文化创意产业公共服务平台/"/>
+
+
+
+
+
+  <title>团队项目：文化创意产业公共服务平台 | Kotomi's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Kotomi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Hello,world.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runzhe He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kotomi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">团队项目：文化创意产业公共服务平台</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T20:53:55+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">软件开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a>项目描述</h1><blockquote>
+<p>基于Android（或者IOS）的文化创意产业公共服务系统<br>文化创意产业公共服务平台服务端与Android端都需要实现。</p>
+</blockquote>
+<p>完整的系统应包括前端页面和后台管理两部分。前端页面包含：用户信息（对于已登录用户）、资讯列表、供求列表、展会列表、最新留言和用户登陆/注册等，导航栏则包括首页、资讯频道、展会频道、供求频道等。后台管理包含：用户信息管理、留言管理、供求管理、资讯管理、展会管理。系统支持游客、注册会员两种角色访问。代码采用MVC三层架构实现。</p>
+<h2 id="角色描述"><a href="#角色描述" class="headerlink" title="角色描述"></a>角色描述</h2><h3 id="1-游客"><a href="#1-游客" class="headerlink" title="(1)   游客"></a>(1)   游客</h3><p>未经注册的访问者称为游客。游客可以浏览平台首页，查看供应与求购信息，查看资讯、展会等信息。但是因其未注册，游客不能对发布资讯、展会、求购或供应信息，也不能进行留言。当游客进行留言或发布操作时，系统将提示用户尚未注册或者尚未登录。</p>
+<a id="more"></a>
+
+<h3 id="2-注册会员"><a href="#2-注册会员" class="headerlink" title="(2)   注册会员"></a>(2)   注册会员</h3><p>游客经过注册后成为网站会员。会员分为两种类型，一种是个人用户，另一种是企业用户。个人用户有如下功能：修改注册信息、修改登陆密码、发布供求信息、发表留言等。企业用户有如下功能：修改注册信息、修改登陆密码、发布供求信息、发布资讯信息、发布展会信息、发表留言等。注意：供求信息、资讯信息、展会信息的发布均包括图片上传。</p>
+<h3 id="（3）系统管理员"><a href="#（3）系统管理员" class="headerlink" title="（3）系统管理员"></a>（3）系统管理员</h3><p>系统管理员具有整个系统所有模块节点的权限，能够对所有模块所涉及的信息进行进行增删改查管理操作。</p>
+<h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><h3 id="1-用户管理"><a href="#1-用户管理" class="headerlink" title="(1)用户管理"></a>(1)用户管理</h3><p>提供新用户注册、会员登陆、会员资料修改、会员密码修改等功能。要求：</p>
+<p>a)       用户在登陆时注意防止SQL注入。</p>
+<p>b)       注册时最好有验证码，验证码四位数字即可。</p>
+<h3 id="2-用户信息管理"><a href="#2-用户信息管理" class="headerlink" title="(2)用户信息管理"></a>(2)用户信息管理</h3><p>对用户注册信息能够修改、查看。用户头像可以删除、上传、修改等。要求：</p>
+<p>a)       用户信息包括：用户类别、用户昵称/企业名称、真实姓名、头像、邮箱、地址、QQ号码、联系电话、用户简介等。</p>
+<h3 id="3-留言管理"><a href="#3-留言管理" class="headerlink" title="(3)留言管理"></a>(3)留言管理</h3><p>留言管理包括：添加留言、修改留言、删除留言、查询等功能。要求：</p>
+<p>a) 留言需要包含：留言人、内容、时间、被留言的资讯/展会/供求标题等信息。</p>
+<p>b) 所有留言可按倒叙顺序由新到旧排列，并且能显示被留言的资讯/展会/供求标题、留言内容、时间、留言人等。</p>
+<p>c) 登陆用户可发表、修改自己的留言、删除自己的留言。</p>
+<h3 id="4-供求管理"><a href="#4-供求管理" class="headerlink" title="(4)供求管理"></a>(4)供求管理</h3><p>供求管理包括：添加、修改、查询、删除供应或求购信息，包括图片上传。要求：</p>
+<p>a)       列表中的供应或求购记录应包含发布人、供求名称、发布时间、访问数量等信息。</p>
+<p>b)       完整的供应或求购信息应包含发布人、供求名称、发布时间、详细描述、图片、图片数量、留言数量、供求有效期限、访问数量等信息。</p>
+<p>c)       查询所有供求信息时应可列表分页显示所有供求信息，可以查看前一页、后一页、最前页、最后页，能够显示当前页数、共几页等。</p>
+<p>d)       查询供求可按名称、发布人、有效期限等信息查询，支持模糊匹配和精确匹配；</p>
+<p>e)       对于用户感兴趣的供求信息，可进行收藏</p>
+<h3 id="5-资讯管理"><a href="#5-资讯管理" class="headerlink" title="(5)资讯管理"></a>(5)资讯管理</h3><p>资讯管理包括：添加、修改、查询、删除资讯信息，包括图片上传。要求：</p>
+<p>a)       列表中的资讯记录应包含发布企业、资讯标题、发布时间、访问数量等信息。</p>
+<p>b)       完整的资讯信息应包含发布企业、资讯标题、发布时间、详细描述、图片、图片数量、留言数量、访问数量等信息。</p>
+<p>c)       查询所有资讯信息时应可列表分页显示所有资讯信息，可以查看前一页、后一页、最前页、最后页，能够显示当前页数、共几页等。</p>
+<p>d)       查询资讯可按名称、发布企业、发布时间等信息查询，支持模糊匹配和精确匹配；</p>
+<p>e)       对于用户感兴趣的资讯信息，可进行收藏</p>
+<h3 id="6-展会管理"><a href="#6-展会管理" class="headerlink" title="(6)展会管理"></a>(6)展会管理</h3><p>展会管理包括：添加、修改、查询、删除展会信息，包括图片上传。要求：</p>
+<p>a)       列表中的展会记录应包含发布企业、展会主题、发布时间、访问数量等信息。</p>
+<p>b)       完整的展会信息应包含发布企业、展会主题、发布时间、详细描述、图片、图片数量、留言数量、访问数量等信息。</p>
+<p>c)       查询所有展会信息时应可列表分页显示所有展会信息，可以查看前一页、后一页、最前页、最后页，能够显示当前页数、共几页等。</p>
+<p>d)       查询展会可按名称、发布企业、发布时间等信息查询，支持模糊匹配和精确匹配；</p>
+<p>e)       对于用户感兴趣的展会信息，可进行收藏</p>
+<h3 id="7-产品模块"><a href="#7-产品模块" class="headerlink" title="(7)产品模块"></a>(7)产品模块</h3><p>电子商务的核心在于通过网络进行贸易， 产品频道主要展示了所有会员的产品，网站浏览用户如果对某个产品有兴趣，可以给会员发送询价，若有需要，可以直接进行向供应商下订单，进行在线交易。</p>
+<p>a)       产品以列表形式向用户展示，不同分类的有不同的列表页面，用户可以按分类查看产品。</p>
+<p>b)       产品详细页面展示了产品的详细信息， 包括价格，简介等供应商在后台添加的产品信息。</p>
+<p>c)       登录用户在浏览产品时，或购买产品后，可以给供应商（产品发布企业）发送留言，可以是对产品详细信息的咨询，也可以是购买产品后对产品的评价。</p>
+<p>d)       统计单个产品的访问量、单个产品的购买量，以及网站产品信息总数量。</p>
+<p>e)       网站用户查看自己需要的代销产品后， 可以发布订单，进行在线购买。</p>
+<p>f)        网站用户若有意购买产品，或计划批量购买产品时，对供应商（产品发布企业）提供的价格不满意，也可以给供应商（产品发布企业）发送询价信息，与供应商（产品发布企业）协商产品价格。</p>
+<p>g)       网站用户若查看到自己感兴趣的产品， 可以加为收藏，留待以后查看。</p>
+<p>h)       若同一产品有不同的供货商家，用户可以货比三家，对比不同商家提供的产品的价格以及其他参数，按自己的需求进行选择。</p>
+<h1 id="负责部分："><a href="#负责部分：" class="headerlink" title="负责部分："></a>负责部分：</h1><h2 id="数据库的设计："><a href="#数据库的设计：" class="headerlink" title="数据库的设计："></a>数据库的设计：</h2><p>Collect_info表 （收藏信息表）</p>
+<p><img src="/img/clip_image002-1584018641607.jpg" alt="img"> </p>
+<p>Comments表 （评论表）</p>
+<p><img src="/img/clip_image004-1584018655685.jpg" alt="img"></p>
+<p>Meet_info表：（展会信息表）</p>
+<p><img src="/img/clip_image006-1584018664954.jpg" alt="img"></p>
+<p>News_info表</p>
+<p><img src="/img/clip_image008-1584018671036.jpg" alt="img"> </p>
+<p>Productinfo表（产品表）</p>
+<p><img src="/img/clip_image010.jpg" alt="img"></p>
+<p>Supply_info表（供求表）</p>
+<p><img src="/img/clip_image012.jpg" alt="img"></p>
+<p>Type_info表（类型表）</p>
+<p><img src="/img/clip_image014.jpg" alt="img"></p>
+<p>User_info表 (用户表)</p>
+<p><img src="/img/clip_image016.jpg" alt="img"></p>
+<p>Wanted_info(求购信息表)</p>
+<p><img src="/img/clip_image018.jpg" alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Navicat MySQL Data Transfer</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Source Server         : a</span></span><br><span class="line"><span class="comment">Source Server Version : 50724</span></span><br><span class="line"><span class="comment">Source Host           : localhost:3306</span></span><br><span class="line"><span class="comment">Source Database       : coursedesign</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Target Server Type    : MYSQL</span></span><br><span class="line"><span class="comment">Target Server Version : 50724</span></span><br><span class="line"><span class="comment">File Encoding         : 65001</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Date: 2019-01-14 13:47:02</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `collect_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`collect_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`collect_info`</span> (</span><br><span class="line">  <span class="string">`collect_id`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'id'</span>,</span><br><span class="line">  <span class="string">`collect_type`</span> <span class="built_in">text</span> <span class="keyword">COMMENT</span> <span class="string">'收藏类型'</span>,</span><br><span class="line">  <span class="string">`collect_user_name`</span> <span class="built_in">text</span> <span class="keyword">COMMENT</span> <span class="string">'收藏用户名'</span>,</span><br><span class="line">  <span class="string">`collect_obj_id`</span> <span class="built_in">text</span> <span class="keyword">COMMENT</span> <span class="string">'收藏对象id'</span>,</span><br><span class="line">  <span class="string">`collect_time`</span> <span class="built_in">date</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'收藏时间'</span>,</span><br><span class="line">  <span class="string">`collect_picture`</span> <span class="built_in">binary</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`post_ID`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`collect_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of collect_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`collect_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'post'</span>, <span class="string">'sjm'</span>, <span class="string">'15'</span>, <span class="string">'2019-01-14'</span>, <span class="literal">null</span>, <span class="string">'15'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `comments`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`comments`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`comments`</span> (</span><br><span class="line">  <span class="string">`comment_ID`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comment_post_ID`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`comment_author`</span> tinytext <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comment_author_email`</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`comment_author_url`</span> <span class="built_in">varchar</span>(<span class="number">200</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`comment_author_IP`</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`comment_date`</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comment_date_gmt`</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comment_content`</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comment_karma`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`comment_approved`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'1'</span>,</span><br><span class="line">  <span class="string">`comment_agent`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`comment_type`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`comment_parent`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`user_id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`comment_ID`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4 <span class="keyword">COLLATE</span>=utf8mb4_unicode_520_ci;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of comments</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'54'</span>, <span class="string">'LMissher'</span>, <span class="string">'1584805140@qq.com'</span>, <span class="string">''</span>, <span class="string">'219.143.13.32'</span>, <span class="string">'2018-12-11 18:30:29'</span>, <span class="string">'2018-12-11 10:30:29'</span>, <span class="string">'xxxxx'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'23'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'3'</span>, <span class="string">'54'</span>, <span class="string">'Alvin'</span>, <span class="string">'982791535@qq.com'</span>, <span class="string">''</span>, <span class="string">'202.204.120.248'</span>, <span class="string">'2018-12-12 08:56:19'</span>, <span class="string">'2018-12-12 00:56:19'</span>, <span class="string">'写的一手好文章！'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'24'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'4'</span>, <span class="string">'84'</span>, <span class="string">'余范锝'</span>, <span class="string">'yu5389522@126.com'</span>, <span class="string">''</span>, <span class="string">'223.71.54.189'</span>, <span class="string">'2018-12-12 09:11:27'</span>, <span class="string">'2018-12-12 01:11:27'</span>, <span class="string">'令人窒息的配图'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'0'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'5'</span>, <span class="string">'84'</span>, <span class="string">'LMissher'</span>, <span class="string">'1584805140@qq.com'</span>, <span class="string">''</span>, <span class="string">'202.204.120.181'</span>, <span class="string">'2018-12-12 09:12:32'</span>, <span class="string">'2018-12-12 01:12:32'</span>, <span class="string">'zhi xi'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'</span>, <span class="string">''</span>, <span class="string">'4'</span>, <span class="string">'23'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'6'</span>, <span class="string">'84'</span>, <span class="string">'LMissher'</span>, <span class="string">'1584805140@qq.com'</span>, <span class="string">''</span>, <span class="string">'202.204.120.181'</span>, <span class="string">'2018-12-12 09:12:49'</span>, <span class="string">'2018-12-12 01:12:49'</span>, <span class="string">'zhixi'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'</span>, <span class="string">''</span>, <span class="string">'4'</span>, <span class="string">'23'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'7'</span>, <span class="string">'84'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'785404277@qq.com'</span>, <span class="string">''</span>, <span class="string">'219.143.13.40'</span>, <span class="string">'2018-12-12 14:22:06'</span>, <span class="string">'2018-12-12 06:22:06'</span>, <span class="string">'迪丽热巴真好看'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'8'</span>, <span class="string">'112'</span>, <span class="string">'LMissher'</span>, <span class="string">'1584805140@qq.com'</span>, <span class="string">''</span>, <span class="string">'202.204.120.226'</span>, <span class="string">'2018-12-14 08:47:26'</span>, <span class="string">'2018-12-14 00:47:26'</span>, <span class="string">'xxxxx'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'23'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`comments`</span> <span class="keyword">VALUES</span> (<span class="string">'9'</span>, <span class="string">'117'</span>, <span class="string">'WooCommerce'</span>, <span class="string">'woocommerce@120.78.2.240'</span>, <span class="string">''</span>, <span class="string">''</span>, <span class="string">'2018-12-14 09:02:39'</span>, <span class="string">'2018-12-14 01:02:39'</span>, <span class="string">'交货时支付。 订单状态由 待付款 变更为 正在处理 。'</span>, <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'WooCommerce'</span>, <span class="string">'order_note'</span>, <span class="string">'0'</span>, <span class="string">'0'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `meet_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`meet_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`meet_info`</span> (</span><br><span class="line">  <span class="string">`meet_id`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`meet_name`</span> <span class="built_in">text</span>,</span><br><span class="line">  <span class="string">`meet_time`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`meet_location`</span> <span class="built_in">text</span>,</span><br><span class="line">  <span class="string">`meet_host`</span> <span class="built_in">text</span>,</span><br><span class="line">  <span class="string">`meet_brief`</span> <span class="built_in">text</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`meet_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of meet_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`meet_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'2018中国（北京）国际古董古玩展销会'</span>, <span class="string">'2018'</span>, <span class="string">'bj'</span>, <span class="string">'bj'</span>, <span class="string">'第1个古玩艺术品博览会展会信息的名称是：\r\n2014年西安佛事用品展及香文化产业博览会 2014年西安古玩、艺术收藏品展览会，这个会的开始日期是2014年11月07日，到11月10日结'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`meet_info`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'2018北京春季国际珠宝玉石首'</span>, <span class="string">'2018'</span>, <span class="string">'bj'</span>, <span class="string">'北京当代联合国际会展有限公司'</span>, <span class="string">'展区展品类别\r\n（一）中国工艺美术大师作品展区\r\n展品：国大师原创作品、国大师专册、影视资料等。\r\n（二）现代工艺品展区\r\n展品：金属、树脂、琉璃、水晶、玻璃、人造植物、家居饰品等类工艺品。'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`meet_info`</span> <span class="keyword">VALUES</span> (<span class="string">'3'</span>, <span class="string">'2018中国（北京）国际传统文化创意博览会'</span>, <span class="string">'2018'</span>, <span class="string">'bj'</span>, <span class="string">'北京当代联合国际会展有限公司'</span>, <span class="string">'&gt;'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `news_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`news_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`news_info`</span> (</span><br><span class="line">  <span class="string">`news_id`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`news_content`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`news_time`</span> <span class="built_in">text</span>,</span><br><span class="line">  <span class="string">`user_id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`user_name`</span> <span class="built_in">text</span>,</span><br><span class="line">  <span class="string">`news_picture`</span> <span class="built_in">binary</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`user_id`</span>,<span class="string">`news_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of news_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`news_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'第三届“读懂中国”国际会议在北京开幕。经中央批准，由国家创新与发展战略研究会、中国人民外交学会、21世纪理事'</span>, <span class="string">'2018年12月16日'</span>, <span class="string">'1'</span>, <span class="string">'wangxiaozhi'</span>, <span class="literal">null</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`news_info`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'2018年全省文化工作会议在济南召开，总结分析了2017年工作，安排部署了2018年任务。会议传达了李群常务副省长、王清宪部长关于全省文化工作的批示精神，'</span>, <span class="string">'2018年1月19日'</span>, <span class="string">'1'</span>, <span class="string">'wangxiaozhi'</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `productinfo`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`productinfo`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`productinfo`</span> (</span><br><span class="line">  <span class="string">`comm_id`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comm_name`</span> <span class="built_in">varchar</span>(<span class="number">200</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`comm_type`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`comm_price`</span> <span class="built_in">float</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comm_brief`</span> varbinary(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`comm_picture`</span> <span class="built_in">binary</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`comm_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4 <span class="keyword">COLLATE</span>=utf8mb4_unicode_520_ci;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of productinfo</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`productinfo`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'蒙娜丽莎的微笑'</span>, <span class="string">'传统工艺'</span>, <span class="string">'70000000000000'</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`productinfo`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'定窑白釉印花菊凤纹盘'</span>, <span class="string">'传统工艺'</span>, <span class="string">'40000000'</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`productinfo`</span> <span class="keyword">VALUES</span> (<span class="string">'3'</span>, <span class="string">'《软件工程》书籍'</span>, <span class="string">'传统工艺'</span>, <span class="string">'32.5'</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `supply_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`supply_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`supply_info`</span> (</span><br><span class="line">  <span class="string">`supply_id`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`supply_content`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`supply_time`</span> <span class="built_in">text</span>,</span><br><span class="line">  <span class="string">`supplyer`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`supply_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of supply_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`supply_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'供应：本公司负责承办各种展会\r\n供应：本公司负责承办各种展会\r\n供应：本公司负责承办各种展会\r\n'</span>, <span class="string">'2019年1月14日'</span>, <span class="string">'ssfldsh'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`supply_info`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'需求：承办太极拳展会\r\n需求：承办太极拳展会\r\n'</span>, <span class="string">'2019年1月14日'</span>, <span class="string">'ssfldsh'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `type_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`type_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`type_info`</span> (</span><br><span class="line">  <span class="string">`type_id`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`type_name`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`type_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of type_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`type_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'admin'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`type_info`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'visitor'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `user_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`user_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user_info`</span> (</span><br><span class="line">  <span class="string">`ID`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`user_login`</span> <span class="built_in">varchar</span>(<span class="number">60</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`user_pass`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`user_nicename`</span> <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`user_email`</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`user_registered`</span> datetime <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">COMMENT</span> <span class="string">'Registered time'</span>,</span><br><span class="line">  <span class="string">`user_activation_key`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`user_status`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`display_name`</span> <span class="built_in">varchar</span>(<span class="number">250</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`type_id`</span> <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">COLLATE</span> utf8mb4_unicode_520_ci <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`ID`</span>),</span><br><span class="line">  <span class="keyword">KEY</span> <span class="string">`ID`</span> (<span class="string">`ID`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4 <span class="keyword">COLLATE</span>=utf8mb4_unicode_520_ci;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of user_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'$P$BeOB/5m1TFpL7dGuI/drv/wFOB/5m1TFpL7dGuI/drv/wFO946fD'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'785429177@qq.com'</span>, <span class="string">'2019-01-14 13:18:06'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'19'</span>, <span class="string">'yufande'</span>, <span class="string">'$P$BnwEUve.02qutHHEoywTh0xx81BofW1'</span>, <span class="string">'yufande'</span>, <span class="string">'yu5389522@126.com'</span>, <span class="string">'2018-12-10 10:22:34'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'yufande'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'21'</span>, <span class="string">'sjm'</span>, <span class="string">'$P$BJXLpNJ7g/VrtmJnNQnua3toA0d336/'</span>, <span class="string">'sjm'</span>, <span class="string">'873628385@qq.com'</span>, <span class="string">'2018-12-10 10:26:32'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'sjm'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'23'</span>, <span class="string">'LMissher'</span>, <span class="string">'$P$BeMuN3VEnxEKIfCVf0mef7xQhw37m6.'</span>, <span class="string">'lmissher'</span>, <span class="string">'1584805140@qq.com'</span>, <span class="string">'2018-12-10 10:32:00'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'LMissher'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'24'</span>, <span class="string">'Alvin'</span>, <span class="string">'$P$BMSJgwTKfnaCisDe6DymcFWPNaQQwf/'</span>, <span class="string">'alvin'</span>, <span class="string">'982791535@qq.com'</span>, <span class="string">'2018-12-11 08:15:52'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'Alvin'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'25'</span>, <span class="string">'ssfldsh'</span>, <span class="string">'$P$BgI/2yMrfq/RYSzsqgYIj9oJkCnnPr0'</span>, <span class="string">'ssfldsh'</span>, <span class="string">'ssfldsh@163.com'</span>, <span class="string">'2018-12-11 08:19:06'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'ssfldsh'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'26'</span>, <span class="string">'Haha'</span>, <span class="string">'$P$BUNtkx3ftvZ3eC5pepdQXH.qF7Z2570'</span>, <span class="string">'haha'</span>, <span class="string">'lilei_growing@163.com'</span>, <span class="string">'2018-12-11 11:31:29'</span>, <span class="string">'1544528698:$P$BFEpCSqaEdMNIqJbTdH.6cjKeI8wZQ1'</span>, <span class="string">'0'</span>, <span class="string">'Haha'</span>, <span class="string">'2'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'27'</span>, <span class="string">'1415138419'</span>, <span class="string">'$P$BmrLBMAxnnLdGkwml2YpEHTOAJb9CX1'</span>, <span class="string">'1415138419'</span>, <span class="string">'1415138419@qq.com'</span>, <span class="string">'2018-12-12 09:09:06'</span>, <span class="string">'1544605844:$P$BPfgXpivjP6humdkZ52GCMKyli/P081'</span>, <span class="string">'0'</span>, <span class="string">'1415138419'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'28'</span>, <span class="string">'yufande1'</span>, <span class="string">'$P$B/zhOB/5m1TFpL7dGuI/drv/wF17H1/'</span>, <span class="string">'yufande1'</span>, <span class="string">'yufande@gmail.com'</span>, <span class="string">'2018-12-13 06:49:30'</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'yufande1'</span>, <span class="string">'1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`user_info`</span> <span class="keyword">VALUES</span> (<span class="string">'30'</span>, <span class="string">'yufande2'</span>, <span class="string">'$P$Be3RNK5Kyo4ztRIvSkcO946fDNa.pW.'</span>, <span class="string">'yufande2'</span>, <span class="string">'794341783@qq.com'</span>, <span class="string">'2018-12-13 10:28:53'</span>, <span class="string">'1544696934:$P$BiDARjieZPtJdccCnn6b025eyF0nfH1'</span>, <span class="string">'0'</span>, <span class="string">'yufande2'</span>, <span class="string">'1'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for `wanted_info`</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`wanted_info`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`wanted_info`</span> (</span><br><span class="line">  <span class="string">`wanted_id`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`user_id`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`wanted_content`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`wanted_time`</span> <span class="built_in">text</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`wanted_id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of wanted_info</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`wanted_info`</span> <span class="keyword">VALUES</span> (<span class="string">'1'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'求批量杂志'</span>, <span class="string">'2019年1月14日12:32'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`wanted_info`</span> <span class="keyword">VALUES</span> (<span class="string">'2'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'\r\n“求购批量脸谱T恤”已被锁定\r\n求购批量脸谱T恤'</span>, <span class="string">'2019年1月14日12:50'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`wanted_info`</span> <span class="keyword">VALUES</span> (<span class="string">'3'</span>, <span class="string">'wangxiaozhi'</span>, <span class="string">'求购仿照清明上河图'</span>, <span class="string">'2019年1月14日12:10'</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="文档撰写："><a href="#文档撰写：" class="headerlink" title="文档撰写："></a>文档撰写：</h2><p>与另一位同学合作撰写了相关文档：</p>
+<p><img src="/img/1584018979820.png" alt="1584018979820"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" <i class="fa fa-tag"> 软件开发</a>
+          
+            <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" <i class="fa fa-tag"> 团队项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" rel="next" title="小型PS软件">
+                <i class="fa fa-chevron-left"></i> 小型PS软件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" rel="prev" title="JavaWeb:个人简历管理平台">
+                JavaWeb:个人简历管理平台 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Runzhe He</p>
+              <p class="site-description motion-element" itemprop="description">kotomi460</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ssfldsh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:ssfldsh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目描述"><span class="nav-number">1.</span> <span class="nav-text">项目描述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#角色描述"><span class="nav-number">1.1.</span> <span class="nav-text">角色描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-游客"><span class="nav-number">1.1.1.</span> <span class="nav-text">(1)   游客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-注册会员"><span class="nav-number">1.1.2.</span> <span class="nav-text">(2)   注册会员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）系统管理员"><span class="nav-number">1.1.3.</span> <span class="nav-text">（3）系统管理员</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能描述"><span class="nav-number">1.2.</span> <span class="nav-text">功能描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-用户管理"><span class="nav-number">1.2.1.</span> <span class="nav-text">(1)用户管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-用户信息管理"><span class="nav-number">1.2.2.</span> <span class="nav-text">(2)用户信息管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-留言管理"><span class="nav-number">1.2.3.</span> <span class="nav-text">(3)留言管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-供求管理"><span class="nav-number">1.2.4.</span> <span class="nav-text">(4)供求管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-资讯管理"><span class="nav-number">1.2.5.</span> <span class="nav-text">(5)资讯管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-展会管理"><span class="nav-number">1.2.6.</span> <span class="nav-text">(6)展会管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-产品模块"><span class="nav-number">1.2.7.</span> <span class="nav-text">(7)产品模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#负责部分："><span class="nav-number">2.</span> <span class="nav-text">负责部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的设计："><span class="nav-number">2.1.</span> <span class="nav-text">数据库的设计：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档撰写："><span class="nav-number">2.2.</span> <span class="nav-text">文档撰写：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Runzhe He</span>
+
+  
+</div>
+
+
+  <!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div> -->
+
+
+
+<!--   <span class="post-meta-divider">|</span>
+ -->
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div> -->
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'RQ6D2Qdvht4E9en6YxwA6Nuz-gzGzoHsz',
+        appKey: 'h4EXuAuQPwR5h6xsGGXhIEID',
+        placeholder: 'comment some...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":180,"height":400},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

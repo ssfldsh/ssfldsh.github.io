@@ -412,64 +412,974 @@
 
       
         
-          
-            <h1 id="研究背景和意义"><a href="#研究背景和意义" class="headerlink" title="研究背景和意义:"></a>研究背景和意义:</h1><p>无线传感器网络（WSN）是能量受限的无线传感器节点的集合，这些节点随机分布在动态变化的环境中，并且能够以多跳的方式彼此无线通信。无线传感器网络的发展是受到军事应用的推动，例如在偏远丛林地区检测敌人。如今，此类网络通常用于检测和记录环境的物理状况，例如温度，声音，压力，污染水平，湿度等，收集的数据将通过网络传输到中心位置。随着物联网（IoT）的发展，广泛的智能和小型无线传感设备已用于诸如环境传感，医疗保健监视，工业监视等领域。</p>
+          <h1 id="研究背景和意义"><a href="#研究背景和意义" class="headerlink" title="研究背景和意义:"></a>研究背景和意义:</h1><p>无线传感器网络（WSN）是能量受限的无线传感器节点的集合，这些节点随机分布在动态变化的环境中，并且能够以多跳的方式彼此无线通信。无线传感器网络的发展是受到军事应用的推动，例如在偏远丛林地区检测敌人。如今，此类网络通常用于检测和记录环境的物理状况，例如温度，声音，压力，污染水平，湿度等，收集的数据将通过网络传输到中心位置。随着物联网（IoT）的发展，广泛的智能和小型无线传感设备已用于诸如环境传感，医疗保健监视，工业监视等领域。</p>
 <p>尽管无线传感器网络系统在这些领域具有巨大的潜力，但是在实现上述应用上仍然存在一些主要障碍。 WSN中使用的设备通常具有较低的处理速度，较小的存储单元和有限的通信带宽。而且，由于节点是电池供电的，因此有限的电池容量会限制传感器节点的寿命和效用[1]。</p>
 <p>这时，想办法延长无线传感器网络的效用和寿命就显得至关重要。同时，效用和网络寿命是能量受限的WSN中两个基本但相互矛盾的设计目标，这意味着最大化一个将降低另一个，这就要求我们根据实际应用的需要在二者之间进行一个折中。</p>
-<p>在以往的文献中，有许多关于以多种不同方式优化WSN网络寿命的论文。 Yang et al.  [2]在采用时分多址（TDMA）调度的优化方案中，共同考虑链路调度，传输功率和传输速率，并通过迭代算法解决了优化问题。 Madan和Lall [3]通过分布式方式使用次梯度算法来最大限度地延长网络寿命。文献[4]使用Alternating Direction Method of Multipliers解决了寿命优化问题。 Ehsan et al. [5]为多信道接入WSN设计了能量和跨层感知路由方案，这些方案考虑了无线充电，MAC争用和网络约束，旨在最大程度地延长网络寿命。但是，所有这些工作都没有考虑由于流量速率的减少而导致传感器节点的效用下降。实际上，网络生存期和实用性是WSN中两个基本但相互冲突的设计目标。 Chen et al. [6]分析了无线传感器网络中的效用-寿命折中问题。He et al. [7]遵循了跨层设计方法。这两篇论文都没有采取某些特殊的方法来确保系统的可靠性。 Fei et al. [8]提供了WSN中多目标优化（MOO）的指南和调查。如[8]所示，许多论文旨在解决无线传感器网络中的寿命，速率折中问题，但没有同时将速率，可靠性和网络寿命三者结合起来。Lun et al. [9]通过将错误控制方案引入具有多路径路由的传感器节点，提高了系统的可靠性。 Yu等人使用了自动重复请求（ARQ）和混合ARQ方案 [10]。通过重新传输，ARQ方案提高了系统的可靠性，同时增加了节点的能耗。实际上，通过使用一些合适的错误控制代码，我们可以提高系统的可靠性并减少重传次数。Xu et al. [11]通过采用数据包的理论端到端错误概率描述了WSN的速率，可靠性和生命周期的折中。同样，Zou et al. [12]对WSN采用了通用的寿命-效用率-可靠性联合方法，并采用了通用错误编码处理能力模型。然而，[11]和[12]中的模型均未考虑差错控制码的编码/解码能力。</p>
-<p>He et al. [13], Magno et al. [14], Deng et al. [15], and Kamalinejad et al. [16] 提出能量收集是改善WSN寿命的有用方法。他们假设电池能量在启动时为零，这对于带有带可充电电池的传感器的许多应用场景而言可能不切实际。由干扰引起的分组丢失所引起的挑战也没有得到解决。</p>
-<p>本文在系统模型中考虑了无线传感器网络的寿命，速率和可靠性，并将速率，可靠性和寿命的优化目标组合到一个目标中，以表征它们之间的权衡。我们还发现合适的错误控制编码方案是解决效用-寿命折衷联合问题的关键，我们找到了一种根据实际应用需求选择最合适的差错控制编码的方法。</p>
-<p><strong>References</strong></p>
-<blockquote>
-<ol>
-<li><p>Nikolaos A. Pantazis, Stefanos A. Nikolidakis, and Dimitrios D. Vergados. Energy-Efficient Routing Protocols in Wireless Sensor Networks: A Survey. IEEE Communications Surveys &amp; Tutorials, 2013, 15(2):551–591</p>
-</li>
-<li><p>Hongyu Yang, Yuan Zhou, Yu-Hen Hu, Boyu Wang, and Sun-Yuan Kung. Cross-layer design for network lifetime maximization in underwater wireless sensor networks. In 2018 IEEE International Conference on Communications (ICC), pages 1–6. IEEE, 2018.</p>
-</li>
-<li><p>R. Madan and S. Lall. Distributed algorithms for maximum lifetime routing in wireless sensor networks. IEEE Transactions on Wireless Communications, 2006, 5(8):2185–2193</p>
-</li>
-<li><p>Farzad Tashtarian, Ahmadreza Montazerolghaem, and Amir Varasteh. Distributed lifetime optimization in wireless sensor networks using alternating direction method of multipliers, 2018, arXiv preprint arXiv:1807.09701</p>
-</li>
-<li><p>Samina Ehsan, Bechir Hamdaoui, and Mohsen Guizani. Radio and medium access contention aware routing for lifetime maximization in multichannel sensor networks. IEEE Transactions on Wireless Communications, 2012, 11(9):3058–3067</p>
-</li>
-<li><p>Jiming Chen, Weiqiang Xu, Shibo He, and Student Member. UtilityBased Asynchronous Flow Control Algorithm for Wireless Sensor Networks. IEEE Journal on Selected Areas in Communications, 2010, 28(7):1116– 1126</p>
-</li>
-<li><p>Shibo He, Jiming Chen, David K.Y. Yau, and Youxian Sun. Cross-layer optimization of correlated data gathering in wireless sensor networks. IEEE Transactions on Mobile Computing, 2012, 11(11):1678–1691</p>
-</li>
-<li><p>Zesong Fei, Bin Li, Shaoshi Yang, Chengwen Xing, Hongbin Chen, and Lajos Hanzo. A survey of multi-objective optimization in wireless sensor networks: Metrics, algorithms, and open problems. IEEE Communications Surveys &amp; Tutorials, 2017, 19(1):550–586</p>
-</li>
-</ol>
-<ol start="9">
-<li><p>Desmond S. Lun, Muriel Médard, Ralf Koetter, and Michelle Effros. On coding for reliable communication over packet networks. Physical Communication, 2008, 1(1):3–20</p>
-</li>
-<li><p>Kan Yu, Filip Barac, Mikael Gidlund, and Johan Åkerberg. Adaptive forward error correction for best effort wireless sensor networks. IEEE International Conference on Communications, 2012, pages 7104–7109</p>
-</li>
-<li><p>Weiqiang Xu. Distributed optimal rate reliability lifetime tradeoff in time varying wireless sensor networks. 2013, 13(9):4836–4847</p>
-</li>
-<li><p>Junni Zou, Hongkai Xiong, Chenglin Li, Ruifeng Zhang, and Zhihai He. Lifetime and distortion optimization with joint source/channel rate adaptation and network coding-based error control in wireless video sensor networks. IEEE Transactions on Vehicular Technology, 2011, 60(3):1182–1194</p>
-</li>
-<li><p>Tengjiao He, Kwan Wu Chin, and Sieteng Soh. On Wireless Power Transfer and Max Flow in Rechargeable Wireless Sensor Networks. IEEE Access, 2016, 4(c):4155–4167</p>
-</li>
-<li><p>Michele Magno, David Boyle, Davide Brunelli, Emanuel Popovici, and Luca Benini. Ensuring survivability of resource-intensive sensor networks through ultra-low power overlays. IEEE Transactions on Industrial Informatics, 2014, 10(2):946–956</p>
-</li>
-<li><p>Ruilong Deng, Yongmin Zhang, Shibo He, Jiming Chen, and Xuemin Sherman Shen. Globally optimizing network utility with spatiotemporally-coupled constraint in rechargeable sensor networks. 2013 IEEE Global Communications Conference (GLOBECOM), 2013, pages 4810–4815</p>
-</li>
-<li><p>Pouya Kamalinejad, Chinmaya Mahapatra, Zhengguo Sheng, Shahriar Mirabbasi, Victor C. M. Leung, and Yong Liang Guan. Wireless energy harvesting for the internet of things. IEEE Communications Magazine, 2015, 53(6):102–108</p>
-</li>
-</ol>
-</blockquote>
-<h1 id="指导老师评语："><a href="#指导老师评语：" class="headerlink" title="指导老师评语："></a>指导老师评语：</h1><p><img src="/img/paper-comment.jpg" alt=""></p>
-<h1 id="论文下载："><a href="#论文下载：" class="headerlink" title="论文下载："></a>论文下载：</h1><p><code>PDF过大，加载可能过慢，请稍等。</code></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/29/paper-download/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-	<div class="row">
-    <embed src="/pdf/test.pdf" width="100%" height="550" type="application/pdf">
-	</div>
+    
+      
 
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runzhe He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kotomi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" itemprop="url">JavaWeb:个人简历管理平台</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T21:57:33+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  783 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="项目需求："><a href="#项目需求：" class="headerlink" title="项目需求："></a>项目需求：</h1><blockquote>
+<p>设计个人简历管理平台。该平台是一个在线的系统，可以动态的对个人信息进行增删该查等功能。</p>
+</blockquote>
+<p>个人简历管理平台应该具备如下几方面的内容。</p>
+<p><img src="/img/clip_image002-1584021441013.png" alt="img"></p>
+<p>系统功能详细介绍</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runzhe He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kotomi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/" itemprop="url">团队项目：文化创意产业公共服务平台</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T20:53:55+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">软件开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.8k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a>项目描述</h1><blockquote>
+<p>基于Android（或者IOS）的文化创意产业公共服务系统<br>文化创意产业公共服务平台服务端与Android端都需要实现。</p>
+</blockquote>
+<p>完整的系统应包括前端页面和后台管理两部分。前端页面包含：用户信息（对于已登录用户）、资讯列表、供求列表、展会列表、最新留言和用户登陆/注册等，导航栏则包括首页、资讯频道、展会频道、供求频道等。后台管理包含：用户信息管理、留言管理、供求管理、资讯管理、展会管理。系统支持游客、注册会员两种角色访问。代码采用MVC三层架构实现。</p>
+<h2 id="角色描述"><a href="#角色描述" class="headerlink" title="角色描述"></a>角色描述</h2><h3 id="1-游客"><a href="#1-游客" class="headerlink" title="(1)   游客"></a>(1)   游客</h3><p>未经注册的访问者称为游客。游客可以浏览平台首页，查看供应与求购信息，查看资讯、展会等信息。但是因其未注册，游客不能对发布资讯、展会、求购或供应信息，也不能进行留言。当游客进行留言或发布操作时，系统将提示用户尚未注册或者尚未登录。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runzhe He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kotomi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" itemprop="url">小型PS软件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T17:34:49+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">数字图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  235 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="软件已实现功能："><a href="#软件已实现功能：" class="headerlink" title="软件已实现功能："></a>软件已实现功能：</h1><h2 id="导入图片："><a href="#导入图片：" class="headerlink" title="导入图片："></a>导入图片：</h2><p>点击 文件-打开导入图片：</p>
+<p><img src="/img/1584005701819.png" alt="1584005701819"></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runzhe He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kotomi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url">Unity3D小游戏</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T14:45:00+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  164 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容:"></a>实验内容:</h1><p>完成一个“孤岛求生”小游戏，可在实验指导书中海岛漫游的基础上进行扩展：</p>
+<p>必做任务：找火柴点篝火。</p>
+<p>篝火一开始是灭的，你需要找齐四枚电池，进入房间，拿到火柴，才能点燃篝火，在场景中加入自己的Logo!</p>
+<h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><ul>
+<li>使用unity创建地形</li>
+<li>创建物体</li>
+<li>创建粒子系统</li>
+<li>编写C#脚本</li>
+<li>添加第一人称视点</li>
+</ul>
+<h1 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h1>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/11/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Runzhe He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kotomi's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/11/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/" itemprop="url">层次化聚类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-11T23:54:53+08:00">
+                2020-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据挖掘</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/11/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/11/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  22 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 理解接层次化聚类的原理和作用。理解层次化聚类中的距离和“松散度”的概念。</p>
+<p>2． 实现层次化聚类的全过程流程，包括与用户的交互、树结构的建设和存储、与数据库的交互、核心聚类算法实现等。</p>
+<p>3． 具体要求：实现一个具有一定“通用性”的软件，可以针对数据库的不同字段的取值人工建树，建好的树可以组合复用，进行层次化聚类，并能显示聚类结果。要求数据库路径可以配置，或在界面中输入。</p>
+<p>4． 本实验要求计算最优解，除了穷举没有更好的办法（据老王所知），特别注意层次化聚类算法中的剪枝操作，否则你的软件会异常缓慢。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/11/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -611,7 +1521,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  467 字
+                  1.4k 字
                 </span>
               
 
@@ -627,7 +1537,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -649,25 +1559,19 @@
 
       
         
-          
-            <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 学会海量数据处理的方式方法。</p>
+          <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 学会海量数据处理的方式方法。</p>
 <p>2． 在时间序列中找到共现模式。</p>
 <p>3． 研究高效处理海量数据的单机算法；尝试使用多机计算环境。</p>
 <h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><h2 id="1．实验背景介绍"><a href="#1．实验背景介绍" class="headerlink" title="1．实验背景介绍"></a>1．实验背景介绍</h2><p>食堂是校园文化的主要组成部分之一，学生刷卡买饭的信息包含着有用的知识，希望你能挖掘出来。</p>
 <p>从刷卡记录可以判断一个人在行为上是否是孤僻的，从而可以推断他/她在精神上是否疑似孤僻。</p>
 <p>结伴的学生经常会有一同去一个餐厅吃饭的行为模式，你需要在大量数据记录中挖掘出好友，从而对那些没有好友的人进行疑似孤僻推断。</p>
-<h2 id="2．输入输出及具体要求"><a href="#2．输入输出及具体要求" class="headerlink" title="2．输入输出及具体要求"></a>2．输入输出及具体要求</h2><p>输入：文件“log.txt”，其中的每一行是一条刷卡记录。</p>
-<p>例如，一行信息“2017-01-01_07:00:00,420,3,4”表示，在2017年1月1日的7点整，号码为420的学生去第3食堂的第4 POS机上刷卡买饭。</p>
-<p>输出：每一个学生的好友。好友的定义：在给定的时间范围内，有超过比例R（例如1/4）的次数是在一个食堂吃饭的，而且两者的时间间隔前后不超过T分钟（例如5分钟）</p>
-<p>例如，输出文件的一行如下：</p>
-<p>“0#3,151,921”</p>
-<p>这表示第0号学生有3个好友，分别是第3号、第151号和第921号学生。</p>
-<p>具体要求：程序必须高效才能在有限的时间内完成任务。要在实验报告中把你的思路描述清楚。</p>
-<h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法:"></a>实现方法:</h1><p>创建Data类，包含以下五个变量</p>
-<p><img src="/img/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90.png" alt=""></p>
-<p>用arraylist创建data类的对象数组用于存储从文件中读入的信息</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/11/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -847,217 +1751,18 @@
 
       
         
-          
-            <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 掌握PageRank算法的原理。</p>
+          <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 掌握PageRank算法的原理。</p>
 <p>2． 学会编写PageRank的程序实现和应用。</p>
 <h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><h2 id="实验背景介绍"><a href="#实验背景介绍" class="headerlink" title="实验背景介绍"></a>实验背景介绍</h2><p>PageRank是机器学习中重要的算法之一，在网络社区关系挖掘和相关系统中的挖掘至关重要，有许多版本变种和应用场景。</p>
 <p>希望你能按照算法的基本原理，编写一个能够读取数据，并输出结果的系统。</p>
 <p>注意，不要调用3行命令就实现的软件包。</p>
-<h2 id="输入输出及具体要求"><a href="#输入输出及具体要求" class="headerlink" title="输入输出及具体要求"></a>输入输出及具体要求</h2><p>输入：文件“linkArr.txt”，其中第一行是2个整数，n和m用英文逗号隔开。第1个整数n表示有多少个节点，第2个整数m表示有多少个关系对。</p>
-<p>后面紧跟n行，每行表示一个链接关系，也用2个整数表示，第一个整数表示链接的发起节点，第2个整数表示链接的指向节点，中间用英文逗号隔开。</p>
-<p>注意，节点序号是从0开始计数的。</p>
-<p>当用户输入文件路径、多少代迭代后，就会产生各代迭代之后各节点的权重。</p>
-<p>例如，如果链接文件路径是D:/linkArr.txt，其中的内容如下：</p>
-<p>3, 2</p>
-<p>0, 1</p>
-<p>2, 1</p>
-<p>则输入命令：</p>
-<p>java  PageRank  “D:/linkArr.txt”  10 差异</p>
-<p>迭代次数与代间差异</p>
-<p>之后，有如下类似输出：</p>
-<p>Epoch 1: [0.09090909090909091, 0.8181818181818182, 0.09090909090909091]</p>
-<p>Epoch 2: [0.08771929824561403, 0.824561403508772, 0.08771929824561403]</p>
-<p>Epoch 3: [0.08762886597938144, 0.8247422680412372, 0.08762886597938144]</p>
-<p>Epoch 4: [0.08762626262626262, 0.8247474747474747, 0.08762626262626262]</p>
-<p>Epoch 5: [0.08762618764845607, 0.824747624703088, 0.08762618764845607]</p>
-<p>Epoch 6: [0.08762618548903243, 0.8247476290219352, 0.08762618548903243]</p>
-<p>Epoch 7: [0.08762618542683917, 0.8247476291463216, 0.08762618542683917]</p>
-<p>Epoch 8: [0.08762618542504795, 0.824747629149904, 0.08762618542504795]</p>
-<p>Epoch 9: [0.08762618542499635, 0.8247476291500071, 0.08762618542499635]</p>
-<p>Epoch 10: [0.08762618542499487, 0.8247476291500103, 0.08762618542499487]</p>
-<p>我们要求：</p>
-<p>（1）    算法初始化：每个节点分配概率是1/n。</p>
-<p>（2）    算法的每一次迭代要根据上一次的概率比例进行。概率分配分为3部分：第一部分按照随机基础权重randomBasicWeight（此次实验设置为0.05）分配，也就是每次迭代每个节点首先获得randomBasicWeight/n的基础概率；第二部分是随机比例权重randomRatioWeight（此次实验设置为0.15），也就是每次迭代，各个节点按照上次的概率比例分配randomRatioWeight；第三部分：链接权重（此次实验设置为0.8），各节点按照上次迭代后的概率乘以链接权重，然后平均分配至它链接到的节点。</p>
-<p>（3）    每迭代一次，都要进行归一化处理，使得各节点的概率之和在迭代之后保持为1。</p>
-<h1 id="实现方法："><a href="#实现方法：" class="headerlink" title="实现方法："></a>实现方法：</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ex1;</span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.FileReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ex2.Data;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">pagerank</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">//读入数据</span></span><br><span class="line">			BufferedReader br=<span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"H:/linkArr.txt"</span>));</span><br><span class="line">			String s;</span><br><span class="line">			<span class="keyword">int</span> n=<span class="number">0</span>;<span class="comment">//节点数</span></span><br><span class="line">			<span class="keyword">int</span> m=<span class="number">0</span>;<span class="comment">//关系对数</span></span><br><span class="line">			s=br.readLine();</span><br><span class="line">			System.out.println(<span class="string">"the value of n,m:"</span>+s);</span><br><span class="line">			String []strArr=s.split(<span class="string">","</span>);</span><br><span class="line">			n=Integer.parseInt(strArr[<span class="number">0</span>]);</span><br><span class="line">			m=Integer.parseInt(strArr[<span class="number">1</span>]);</span><br><span class="line">			Scanner input=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">			<span class="keyword">int</span> t;<span class="comment">//迭代次数</span></span><br><span class="line">			System.out.println(<span class="string">"please input the value of iteration times--t:"</span>);</span><br><span class="line">			t=input.nextInt();</span><br><span class="line">			<span class="keyword">int</span> [][]l=<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">100</span>][<span class="number">100</span>];<span class="comment">//构造有向图l[i][j]==1说明节点i-&gt;j有一条边</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++) &#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">100</span>;j++) &#123;</span><br><span class="line">					l[i][j]=<span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">double</span> p[]=<span class="keyword">new</span> <span class="keyword">double</span>[<span class="number">100</span>];<span class="comment">//p[i]存储节点权重</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">				p[i]=<span class="number">1.0</span>/n;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//构造有向图</span></span><br><span class="line">			<span class="keyword">int</span> lindex=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">int</span> rindex=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">int</span> leng[]=<span class="keyword">new</span> <span class="keyword">int</span> [n];<span class="comment">//各个节点的出边数</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">				leng[i]=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++) &#123;</span><br><span class="line">				s=br.readLine();</span><br><span class="line">				String []strArr2=s.split(<span class="string">","</span>);</span><br><span class="line">				lindex=Integer.parseInt(strArr2[<span class="number">0</span>]);</span><br><span class="line">				rindex=Integer.parseInt(strArr2[<span class="number">1</span>]);</span><br><span class="line">				l[lindex][rindex]=<span class="number">1</span>;</span><br><span class="line">				leng[lindex]++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">double</span> randomBasicWeight=<span class="number">0.05</span>;</span><br><span class="line">			<span class="keyword">double</span> randomRatioWeight=<span class="number">0.15</span>;</span><br><span class="line">			<span class="keyword">double</span> randomweight=<span class="number">1</span>-randomBasicWeight-randomRatioWeight;</span><br><span class="line">			<span class="comment">//t次迭代，更新节点权重</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t;i++) &#123;</span><br><span class="line">				<span class="keyword">double</span> temp[]=<span class="keyword">new</span> <span class="keyword">double</span> [n]; </span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) &#123;</span><br><span class="line">					temp[j]=p[j];<span class="comment">//temp[]存储上一代的节点权重值</span></span><br><span class="line">					p[j]=p[j]*randomRatioWeight+randomBasicWeight/n;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) &#123;<span class="comment">//检查节点j的出边</span></span><br><span class="line">					<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n;k++) &#123;</span><br><span class="line">						<span class="keyword">if</span>(l[j][k]==<span class="number">1</span>) &#123;</span><br><span class="line">							p[k]=p[k]+temp[j]*randomweight/leng[j];</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">double</span> sum=<span class="number">0</span>;</span><br><span class="line">				<span class="comment">//归一化</span></span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) &#123;</span><br><span class="line">					sum=sum+p[j];</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) &#123;</span><br><span class="line">					p[j]=p[j]/sum;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//输出结果</span></span><br><span class="line">				System.out.println(<span class="string">"the "</span>+(i+<span class="number">1</span>)+<span class="string">"th result:"</span>);</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) &#123;</span><br><span class="line">					System.out.println(p[j]);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//计算代间差异，当代间差异小于0.000001时，退出循环，停止迭代</span></span><br><span class="line">				<span class="keyword">double</span> cha=<span class="number">0.0</span>;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++) &#123;</span><br><span class="line">					cha=Math.abs(p[j]-temp[j]);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//System.out.println("该代与上一代之间的代间差异:"+cha);</span></span><br><span class="line">				<span class="keyword">if</span>(cha&lt;<span class="number">0.000001</span>) <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;<span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">			System.out.println(e.getMessage());</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="实验结果及结论分析："><a href="#实验结果及结论分析：" class="headerlink" title="实验结果及结论分析："></a>实验结果及结论分析：</h1><p>读入输入文件<img src="/img/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%AE%9E%E9%AA%8C%E4%B8%80.png" alt="">,输出如下结果，</p>
-<p><img src="/img/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%AE%9E%E9%AA%8C%E4%B8%802.png" alt=""></p>
-<p>程序在读入存储着节点拓扑信息的输入文件后，提示用户输入迭代次数，本次实验用户输入的是10，表示要迭代10次，由于第五次迭代后，代间差异就小于0.000001,所以实际程序只迭代了5次，输出了这五代的节点权重值。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/29/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Runzhe He">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kotomi's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/29/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-29T11:35:40+08:00">
-                2019-12-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/12/29/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/29/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  70 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/11/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%981/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1137,7 +1842,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1148,7 +1853,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1159,7 +1864,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

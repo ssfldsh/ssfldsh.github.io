@@ -106,7 +106,7 @@
 <meta property="og:description" content="研究背景和意义:无线传感器网络（WSN）是能量受限的无线传感器节点的集合，这些节点随机分布在动态变化的环境中，并且能够以多跳的方式彼此无线通信。无线传感器网络的发展是受到军事应用的推动，例如在偏远丛林地区检测敌人。如今，此类网络通常用于检测和记录环境的物理状况，例如温度，声音，压力，污染水平，湿度等，收集的数据将通过网络传输到中心位置。随着物联网（IoT）的发展，广泛的智能和小型无线传感设备已用于">
 <meta property="og:image" content="http://yoursite.com/img/paper-comment.jpg">
 <meta property="article:published_time" content="2019-12-29T04:02:35.000Z">
-<meta property="article:modified_time" content="2020-03-11T10:53:38.459Z">
+<meta property="article:modified_time" content="2020-03-12T14:25:39.340Z">
 <meta property="article:author" content="Runzhe He">
 <meta property="article:tag" content="论文">
 <meta name="twitter:card" content="summary">
@@ -416,6 +416,8 @@
         <h1 id="研究背景和意义"><a href="#研究背景和意义" class="headerlink" title="研究背景和意义:"></a>研究背景和意义:</h1><p>无线传感器网络（WSN）是能量受限的无线传感器节点的集合，这些节点随机分布在动态变化的环境中，并且能够以多跳的方式彼此无线通信。无线传感器网络的发展是受到军事应用的推动，例如在偏远丛林地区检测敌人。如今，此类网络通常用于检测和记录环境的物理状况，例如温度，声音，压力，污染水平，湿度等，收集的数据将通过网络传输到中心位置。随着物联网（IoT）的发展，广泛的智能和小型无线传感设备已用于诸如环境传感，医疗保健监视，工业监视等领域。</p>
 <p>尽管无线传感器网络系统在这些领域具有巨大的潜力，但是在实现上述应用上仍然存在一些主要障碍。 WSN中使用的设备通常具有较低的处理速度，较小的存储单元和有限的通信带宽。而且，由于节点是电池供电的，因此有限的电池容量会限制传感器节点的寿命和效用[1]。</p>
 <p>这时，想办法延长无线传感器网络的效用和寿命就显得至关重要。同时，效用和网络寿命是能量受限的WSN中两个基本但相互矛盾的设计目标，这意味着最大化一个将降低另一个，这就要求我们根据实际应用的需要在二者之间进行一个折中。</p>
+<a id="more"></a>
+
 <p>在以往的文献中，有许多关于以多种不同方式优化WSN网络寿命的论文。 Yang et al.  [2]在采用时分多址（TDMA）调度的优化方案中，共同考虑链路调度，传输功率和传输速率，并通过迭代算法解决了优化问题。 Madan和Lall [3]通过分布式方式使用次梯度算法来最大限度地延长网络寿命。文献[4]使用Alternating Direction Method of Multipliers解决了寿命优化问题。 Ehsan et al. [5]为多信道接入WSN设计了能量和跨层感知路由方案，这些方案考虑了无线充电，MAC争用和网络约束，旨在最大程度地延长网络寿命。但是，所有这些工作都没有考虑由于流量速率的减少而导致传感器节点的效用下降。实际上，网络生存期和实用性是WSN中两个基本但相互冲突的设计目标。 Chen et al. [6]分析了无线传感器网络中的效用-寿命折中问题。He et al. [7]遵循了跨层设计方法。这两篇论文都没有采取某些特殊的方法来确保系统的可靠性。 Fei et al. [8]提供了WSN中多目标优化（MOO）的指南和调查。如[8]所示，许多论文旨在解决无线传感器网络中的寿命，速率折中问题，但没有同时将速率，可靠性和网络寿命三者结合起来。Lun et al. [9]通过将错误控制方案引入具有多路径路由的传感器节点，提高了系统的可靠性。 Yu等人使用了自动重复请求（ARQ）和混合ARQ方案 [10]。通过重新传输，ARQ方案提高了系统的可靠性，同时增加了节点的能耗。实际上，通过使用一些合适的错误控制代码，我们可以提高系统的可靠性并减少重传次数。Xu et al. [11]通过采用数据包的理论端到端错误概率描述了WSN的速率，可靠性和生命周期的折中。同样，Zou et al. [12]对WSN采用了通用的寿命-效用率-可靠性联合方法，并采用了通用错误编码处理能力模型。然而，[11]和[12]中的模型均未考虑差错控制码的编码/解码能力。</p>
 <p>He et al. [13], Magno et al. [14], Deng et al. [15], and Kamalinejad et al. [16] 提出能量收集是改善WSN寿命的有用方法。他们假设电池能量在启动时为零，这对于带有带可充电电池的传感器的许多应用场景而言可能不切实际。由干扰引起的分组丢失所引起的挑战也没有得到解决。</p>
 <p>本文在系统模型中考虑了无线传感器网络的寿命，速率和可靠性，并将速率，可靠性和寿命的优化目标组合到一个目标中，以表征它们之间的权衡。我们还发现合适的错误控制编码方案是解决效用-寿命折衷联合问题的关键，我们找到了一种根据实际应用需求选择最合适的差错控制编码的方法。</p>
@@ -497,10 +499,6 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/12/29/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
             
           </div>
 
@@ -590,7 +588,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -601,7 +599,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -612,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
