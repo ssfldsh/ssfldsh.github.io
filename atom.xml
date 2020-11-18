@@ -322,4 +322,25 @@
     
   </entry>
   
+  <entry>
+    <title>hexo常用命令</title>
+    <link href="http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
+    <published>2019-12-29T04:02:35.000Z</published>
+    <updated>2020-11-18T03:19:29.629Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/img/image-20201118111656203.png" alt="image-20201118111656203"></p><a id="more"></a><p>缓存过多时，使用hexo c</p><p>加速访问</p><p>–cdn</p><p>–图片外链</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/img/image-20201118111656203.png&quot; alt=&quot;image-20201118111656203&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
 </feed>
