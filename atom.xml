@@ -289,6 +289,27 @@
   </entry>
   
   <entry>
+    <title>hexo常用命令</title>
+    <link href="http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
+    <published>2019-12-29T04:02:35.000Z</published>
+    <updated>2020-11-18T03:46:11.739Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/img/image-20201118111656203.png" alt="image-20201118111656203"></p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​</span><br></pre></td></tr></table></figure><!-- more --><p>​```java</p><pre><code>缓存过多时，使用hexo c加速访问--cdn--图片外链</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/img/image-20201118111656203.png&quot; alt=&quot;image-20201118111656203&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title>论文下载</title>
     <link href="http://yoursite.com/2019/12/29/paper-download/"/>
     <id>http://yoursite.com/2019/12/29/paper-download/</id>
@@ -310,27 +331,6 @@
     
     
       <category term="论文" scheme="http://yoursite.com/tags/%E8%AE%BA%E6%96%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo常用命令</title>
-    <link href="http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
-    <published>2019-12-29T04:02:35.000Z</published>
-    <updated>2020-11-18T03:46:11.739Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/img/image-20201118111656203.png" alt="image-20201118111656203"></p><a id="more"></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​</span><br></pre></td></tr></table></figure><!-- more --><p>​```java</p><pre><code>缓存过多时，使用hexo c加速访问--cdn--图片外链</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/img/image-20201118111656203.png&quot; alt=&quot;image-20201118111656203&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   
