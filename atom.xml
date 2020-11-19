@@ -319,7 +319,7 @@
     <link href="http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
     <id>http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
     <published>2019-12-29T04:02:35.000Z</published>
-    <updated>2020-11-19T17:19:39.742Z</updated>
+    <updated>2020-11-19T18:15:07.392Z</updated>
     
     <content type="html"><![CDATA[<p><img src="/img/image-20201118135433033.png" alt="image-20201118135433033"></p><a id="more"></a><p><strong><em>```</em></strong><br><strong>*<!-- more -->*</strong></p><p><strong><em>```java</em></strong></p><p>插入图片前</p><p>调整根目录typora-root-url: ..</p><p>使用coding对国内访问速度进行优化。</p><p>压缩优化</p><p>图片外链，更改cdn进行优化。</p>]]></content>
     
@@ -329,6 +329,8 @@
     
     </summary>
     
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
     
     
       <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
