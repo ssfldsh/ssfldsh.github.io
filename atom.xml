@@ -340,6 +340,29 @@
   </entry>
   
   <entry>
+    <title>hexo常用命令</title>
+    <link href="http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
+    <published>2019-12-29T04:02:35.000Z</published>
+    <updated>2020-11-19T18:30:03.596Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/img/image-20201118135433033.png" alt="image-20201118135433033"></p><a id="more"></a><p><strong><em>```</em></strong><br><strong>*<!-- more -->*</strong></p><p><strong><em>```java</em></strong></p><p>插入图片前</p><p>调整根目录typora-root-url: ..</p><p>使用coding对国内访问速度进行优化。</p><p>压缩优化</p><p>图片外链，更改cdn进行优化。</p><p>目录，标签的正确添加!!!回车- <em>空格</em></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/img/image-20201118135433033.png&quot; alt=&quot;image-20201118135433033&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title>论文下载</title>
     <link href="http://yoursite.com/2019/12/29/paper-download/"/>
     <id>http://yoursite.com/2019/12/29/paper-download/</id>
@@ -361,29 +384,6 @@
     
     
       <category term="论文" scheme="http://yoursite.com/tags/%E8%AE%BA%E6%96%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo常用命令</title>
-    <link href="http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
-    <published>2019-12-29T04:02:35.000Z</published>
-    <updated>2020-11-19T18:20:32.140Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/img/image-20201118135433033.png" alt="image-20201118135433033"></p><a id="more"></a><p><strong><em>```</em></strong><br><strong>*<!-- more -->*</strong></p><p><strong><em>```java</em></strong></p><p>插入图片前</p><p>调整根目录typora-root-url: ..</p><p>使用coding对国内访问速度进行优化。</p><p>压缩优化</p><p>图片外链，更改cdn进行优化。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/img/image-20201118135433033.png&quot; alt=&quot;image-20201118135433033&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
-    
-    
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   
