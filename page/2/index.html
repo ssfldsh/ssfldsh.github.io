@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-ST-hadoop" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-商汤实习总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/07/19/ST-hadoop/" class="article-date">
-  <time class="dt-published" datetime="2021-07-19T12:02:01.000Z" itemprop="datePublished">2021-07-19</time>
+    <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2022-02-23T14:30:35.000Z" itemprop="datePublished">2022-02-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a>
+    <a class="article-category-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/19/ST-hadoop/">st-hadoop</a>
+      <a class="p-name article-title" href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
     </h1>
   
 
@@ -97,20 +97,58 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871-6696253.jpeg" alt="幻灯片1"></p>
-        
-          <p class="article-more-link">
-            <a href="/2021/07/19/ST-hadoop/#more">Read More</a>
-          </p>
-        
+        <h1 id="实习时间："><a href="#实习时间：" class="headerlink" title="实习时间："></a>实习时间：</h1><p>​	2021-9-9 到 2022-1-20 </p>
+<h1 id="实习公司："><a href="#实习公司：" class="headerlink" title="实习公司："></a>实习公司：</h1><p>​	商汤科技( SenseTime )，亚洲最大的人工智能公司，市值千亿级别。计算机视觉相关的算法很厉害，工程方面做的也不错。</p>
+<h1 id="实习部门："><a href="#实习部门：" class="headerlink" title="实习部门："></a>实习部门：</h1><p>​	工程院-容器平台，名字叫容器平台，实际上我们组并不直接接触docker、k8s二次开发之类的，至少我去的时候是没有做的，可能同部门其他组或者我们组在我来之前有负责k8s集群部署，运维，二次开发之类的。公司内部是有自己的k8s平台的，日常开发docker用的也比较多。</p>
+<p>​	我对docker、k8s的了解仅限于一些基本操作上，如dockerfile的编写之类，对于底层原理不是很熟悉，有时间再补吧。</p>
+<p>​	实习期间，参与的后台开发项目较多。使用的开发语言是Goalng和Golang相关的Web开发技术栈。采用的是微服务架构，涉及到一些分布式系统相关的知识。</p>
+<p>​	内部使用的是DevOps的开发模式，要自己写gitlab-ci.yaml配置gitlab上的pipeline，运行自动化测试、部署的脚本，持续集成和持续部署体验很好。</p>
+<h1 id="参与项目："><a href="#参与项目：" class="headerlink" title="参与项目："></a>参与项目：</h1><h2 id="1、产品交付中心的开发："><a href="#1、产品交付中心的开发：" class="headerlink" title="1、产品交付中心的开发："></a>1、产品交付中心的开发：</h2><p>​		产品交付中心是一个Web项目，以网站的形式提供服务。</p>
+<p>​		方便客户经理管理客户，描述客户需求，提出发货申请。</p>
+<p>​		方便产品经理管理各自的产品线和物料仓库，根据客户的需求匹配相应的物料，从license中心添加相应的加密包。</p>
+<p>​		财务人员审核后，发货。</p>
+<p>​		将原本的客户经理线下交付模式转变为线上，实现软件发货流程的合规与可追溯。</p>
+<p>​		交付中心里将从统一的网站入口进入，通过 IAM 对登陆用户统一进行鉴权，根据用户角色提供相应的页面内</p>
+<p>容以及操作能力。交付中心2.0是“基于合同的软件交付”流程，即在OA审批，在交付中心完成软件交付，形成业务</p>
+<p>闭环。</p>
+<p>​	   项目采用微服务架构，调用了IAM（认证与授权）系统和license （秘钥）中心这两个服务。</p>
+<h2 id="2、-ABAC-基于属性的访问控制-微服务部分接口的开发："><a href="#2、-ABAC-基于属性的访问控制-微服务部分接口的开发：" class="headerlink" title="2、 ABAC( 基于属性的访问控制) 微服务部分接口的开发："></a>2、 ABAC( 基于属性的访问控制) 微服务部分接口的开发：</h2><p>​		ABAC 和 RBAC（基于角色的访问控制相对应），基于访问主体的属性、所处环境，被访问对象、对被访问对象执行的操作 这四种元素描述一次访问行为，和 内置的一些访问规则去碰撞，返回 allow 或者 deny。</p>
+<p>​		ABAC 在一次访问过程中使用了更多的属性（信息），能获得比RBAC更细粒度的控制。当然实现上也更加复杂一点。</p>
+<h1 id="所用技术栈："><a href="#所用技术栈：" class="headerlink" title="所用技术栈："></a>所用技术栈：</h1><p>微服务架构：</p>
+<p>Golang 编程：</p>
+<p>Golang Web开发相关开源组件：</p>
+<p>​	cobra搭建命令行工具</p>
+<p>​	viper实现配置信息管理</p>
+<p>​	gorilla实现restful接口的路由</p>
+<p>​	ORM工具：gorm&#x2F;entGo</p>
+<p>​	zap日志</p>
+<p>​	packr将静态文件打包进go二进制可执行文件</p>
+<p>​	prometheus监控	</p>
+<p>设计模式：</p>
+<p>​	微服务架构</p>
+<p>​	gorilla middleware做 日志、recovery、jwt（面向切面编程）</p>
+<p>​	wire包管理对象创建（依赖注入），依赖于接口而非具体实现</p>
+<p>​	分层架构，类似DDD的模块划分模式（不过我对DDD不是很熟，有时间再看吧。。。）</p>
+<p>代码健壮性：</p>
+<p>​	使用自定义业务码+描述信息代替http Status Code给用户和前端更加详细的报错信息</p>
+<p>​	插入时使用唯一索引实现接口幂等	</p>
+<p>工程效率：	</p>
+<p>​	pre-commit：go fmt 代码格式调整、lint静态代码扫描</p>
+<p>​	gitlab ci&#x2F;cd 构建自动化测试和部署流水线, DevOps开发模式</p>
+<p>​	docker、k8s集群部署</p>
+<p>测试：</p>
+<p>​	单元测试:  </p>
+<p>​	功能测试：Postman</p>
+<p>​	</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/19/ST-hadoop/" data-id="cl4ed6u38000e1ex3flhubggt" data-title="st-hadoop" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4edfw2h0011tqx34dfv7fjz" data-title="商汤实习总结" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li></ul>
 
     </footer>
   </div>
@@ -120,14 +158,14 @@
 
 
   
-    <article id="post-差分隐私报告总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Redis跳表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/" class="article-date">
-  <time class="dt-published" datetime="2021-07-19T11:14:01.000Z" itemprop="datePublished">2021-07-19</time>
+    <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2021-08-10T13:48:51.000Z" itemprop="datePublished">2021-08-10</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a>
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
   </div>
 
   </div>
@@ -138,7 +176,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/">差分隐私汇报总结</a>
+      <a class="p-name article-title" href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
     </h1>
   
 
@@ -146,22 +184,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>何润喆—差分隐私保护</p>
-<p>一、 研讨厅汇报基本情况：</p>
-<p>这是我第一次在研讨厅上汇报，汇报的主题是“差分隐私保护”。我主要介绍了以下几个方面。首先，我简短的描述了隐私保护的意义。其次，简单介绍了三种主流的隐私保护方法：基于加密，基于变形和基于噪声。然后分别介绍了两种差分隐私：本地化差分隐私和中心化差分隐私。之后又介绍了中心化差分隐私中的随机扰动算法和中心化差分隐私中的Laplace分布，以及指数分布。最后总结了差分隐私的优缺点，并对未来可以改进的地方做了一个简单的介绍。</p>
+        <h1 id="Zset（也叫Sorted-Set，有序集合，按照Score有序）"><a href="#Zset（也叫Sorted-Set，有序集合，按照Score有序）" class="headerlink" title="Zset（也叫Sorted Set，有序集合，按照Score有序）"></a>Zset（也叫Sorted Set，有序集合，按照Score有序）</h1><p><strong>Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。</strong></p>
+<p><strong>不同的是zset有序集合中的每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。</strong>有序集合的成员是唯一的,但分数(score)却可以重复。</p>
+<p><strong>跳表</strong>是zset（有序集合）的底层实现之一。</p>
+<p><strong>zset</strong>底层两个数据结构实现：zipList压缩列表和zskipList。</p>
+<p><strong>zipList</strong>能节省内存空间，但是性能比较差，增删改查的时间复杂度较高，平均O(n)，特殊情况下，增删改这三项的时间复杂度能达到O(n^2)（指触发级联更新，不断重新分配内存空间的情况下）。</p>
+<p><strong>skipList</strong>跳表是一个<strong>层次索引</strong>，使用的是<strong>分层索引</strong>的思想，对标的是平衡查找树，底层采用<strong>链表</strong>实现，<strong>增删改查的平均时间复杂度是O(logn)。</strong>同时<strong>支持</strong>快速查找单个数据和<strong>范围查询。</strong>空间复杂度O(n)。</p>
         
           <p class="article-more-link">
-            <a href="/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/#more">Read More</a>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/" data-id="cl4ed6u3f001e1ex38g8y0yz1" data-title="差分隐私汇报总结" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" data-id="cl4edfw2e000jtqx37c5v2ba5" data-title="Redis跳表" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li></ul>
 
     </footer>
   </div>
@@ -171,14 +212,14 @@
 
 
   
-    <article id="post-差分隐私保护" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-tdsp代码说明文档" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/07/18/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/" class="article-date">
-  <time class="dt-published" datetime="2021-07-18T14:30:08.000Z" itemprop="datePublished">2021-07-18</time>
+    <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" class="article-date">
+  <time class="dt-published" datetime="2021-08-09T14:30:01.000Z" itemprop="datePublished">2021-08-09</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a>
+    <a class="article-category-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a>
   </div>
 
   </div>
@@ -189,7 +230,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/18/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">差分隐私保护</a>
+      <a class="p-name article-title" href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/">从最短路径到最快路径的求解（tdsp代码说明文档）</a>
     </h1>
   
 
@@ -197,399 +238,29 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871.jpeg" alt="幻灯片1"></p>
+        <h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><p>代码下载：<a target="_blank" rel="noopener" href="https://github.com/ssfldsh/tdsp">ssfldsh&#x2F;tdsp (github.com)</a></p>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="原始路网数据："><a href="#原始路网数据：" class="headerlink" title="原始路网数据："></a>原始路网数据：</h2><p><img src="/img/wpsV5MBi9.jpg" alt="img"> </p>
+<h2 id="处理后的路网数据："><a href="#处理后的路网数据：" class="headerlink" title="处理后的路网数据："></a>处理后的路网数据：</h2><p>格式：</p>
+<p>每行10列：分别是</p>
+<p>路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。</p>
+<img src="/img/wpsfryxsI.jpg" alt="img" style="zoom:25%;" /> 
+
+<p>导入Qgis，做数据可视化，观察数据分布：</p>
+<p><img src="/img/1637573646427-16c5e92c-4edf-46f9-b29f-ecf9e53fa498.png" alt="img"></p>
+<p>是一个拥有接近10000条边，10000个顶点的小型地图数据集。包含北京中心的部分主要路段。</p>
         
           <p class="article-more-link">
-            <a href="/2021/07/18/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/#more">Read More</a>
+            <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/18/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/" data-id="cl4ed6u3h001m1ex376hkdf6q" data-title="差分隐私保护" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4edfw2i0014tqx36bij7p4u" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Qgis的使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time class="dt-published" datetime="2020-11-19T04:02:35.000Z" itemprop="datePublished">2020-11-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/GIS/">GIS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/">Qgis的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="QGIS介绍："><a href="#QGIS介绍：" class="headerlink" title="QGIS介绍："></a>QGIS介绍：</h1><p>Quantum GIS（QGIS）是开源地理信息系统桌面软件， 使用GNU（General Public License）授权，属于 Open Source eospatial Foundation（OSGeo）的官方计划。 在 GNU 这个授权下，开发者可以自行检阅与调整程序代码，并保障让所有使用者可以免费且自由地修改程序。</p>
-<p>QGIS 的目标是成为一个使用简单的 GIS，提供了常见的功能与特征。借着核心特征提供基本功能与附加组件（Python 或 C++） 持续地扩充，让使用者可以浏览、管理、编辑、分析数据以及制图。</p>
-<p>QGIS 是一群自愿者所开发的项目，欢迎全球使用者或开发者将程序代码的缺陷、修复、报告以及提供文件等贡献。 它是由热心的使用者和开发社群所维护的。它提供了交互式的邮件列表， 以及通过网络管道传达给其他用户与开发人员帮忙与建议。另外，它也提供商业定制化开发。</p>
-<p>QGIS项目开始于2002年5月，是基于跨平台的图形工具Qt软件包，采用C++ 语言开发的一个GIS软件。 目前的开发非常活跃，当前Windows（2020年）的最新版本是QGIS 3.12版。</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="cl4ed6u37000a1ex3dcbs4zkj" data-title="Qgis的使用" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-postgreGIS性能实测" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/" class="article-date">
-  <time class="dt-published" datetime="2020-11-19T04:02:35.000Z" itemprop="datePublished">2020-11-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/postgreGIS/">postgreGIS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/">postgreGIS数据库性能实测</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><em><strong>*出租车数据实验报告*</strong></em></p>
-<p><em><strong>*数据来源：*</strong></em></p>
-<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/publication/t-drive-trajectory-data-sample/">https://www.microsoft.com/en-us/research/publication/t-drive-trajectory-data-sample/</a></p>
-<p><em><strong>*数据介绍：*</strong></em></p>
-<p>This dataset contains the GPS trajectories of 10,357 taxis during the period of Feb. 2 to Feb. 8, 2008</p>
-<p>within Beijing. </p>
-<p>一共有 10357辆出租车的txt数据，每个TXT文件分别记载了车辆的taxi_id，记录时间data_time，经度longitude纬度latitude：</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/" data-id="cl4ed6u3b000q1ex3gnf466l2" data-title="postgreGIS数据库性能实测" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Unity3D小游戏" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T14:27:45.000Z" itemprop="datePublished">2020-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Unity/">Unity</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/">Unity3D小游戏</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容:"></a>实验内容:</h1><p>完成一个“孤岛求生”小游戏，可在实验指导书中海岛漫游的基础上进行扩展：</p>
-<p>必做任务：找火柴点篝火。</p>
-<p>篝火一开始是灭的，你需要找齐四枚电池，进入房间，拿到火柴，才能点燃篝火，在场景中加入自己的Logo!</p>
-<h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><ul>
-<li>使用unity创建地形</li>
-<li>创建物体</li>
-<li>创建粒子系统</li>
-<li>编写C#脚本</li>
-<li>添加第一人称视点</li>
-</ul>
-<h1 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h1>
-        
-          <p class="article-more-link">
-            <a href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/" data-id="cl4ed6u3c000u1ex3cye5e7mw" data-title="Unity3D小游戏" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-挖掘孤僻学子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/03/12/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T14:26:58.000Z" itemprop="datePublished">2020-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/">朋友关系对挖掘：</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 学会海量数据处理的方式方法。</p>
-<p>2． 在时间序列中找到共现模式。</p>
-<p>3． 研究高效处理海量数据的单机算法；尝试使用多机计算环境。</p>
-<h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><h2 id="1．实验背景介绍"><a href="#1．实验背景介绍" class="headerlink" title="1．实验背景介绍"></a>1．实验背景介绍</h2><p>食堂是校园文化的主要组成部分之一，学生刷卡买饭的信息包含着有用的知识，希望你能挖掘出来。</p>
-<p>从刷卡记录可以判断一个人在行为上是否是孤僻的，从而可以推断他&#x2F;她在精神上是否疑似孤僻。</p>
-<p>结伴的学生经常会有一同去一个餐厅吃饭的行为模式，你需要在大量数据记录中挖掘出好友，从而对那些没有好友的人进行疑似孤僻推断。</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/03/12/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/%E6%8C%96%E6%8E%98%E5%AD%A4%E5%83%BB%E5%AD%A6%E5%AD%90/" data-id="cl4ed6u3h001h1ex374ybe89x" data-title="朋友关系对挖掘：" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-pageRank" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/03/12/pageRank/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T14:26:51.000Z" itemprop="datePublished">2020-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/pageRank/">PageRank算法的应用：</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 掌握PageRank算法的原理。</p>
-<p>2． 学会编写PageRank的程序实现和应用。</p>
-<h1 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h1><h2 id="实验背景介绍"><a href="#实验背景介绍" class="headerlink" title="实验背景介绍"></a>实验背景介绍</h2><p>PageRank是机器学习中重要的算法之一，在网络社区关系挖掘和相关系统中的挖掘至关重要，有许多版本变种和应用场景。</p>
-<p>希望你能按照算法的基本原理，编写一个能够读取数据，并输出结果的系统。</p>
-<p>注意，不要调用3行命令就实现的软件包。</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/03/12/pageRank/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/pageRank/" data-id="cl4ed6u39000j1ex32xyu3bsk" data-title="PageRank算法的应用：" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-层次化聚类" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T14:26:41.000Z" itemprop="datePublished">2020-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/">层次化聚类</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h1><p>1． 理解接层次化聚类的原理和作用。理解层次化聚类中的距离和“松散度”的概念。</p>
-<p>2． 实现层次化聚类的全过程流程，包括与用户的交互、树结构的建设和存储、与数据库的交互、核心聚类算法实现等。</p>
-<p>3． 具体要求：实现一个具有一定“通用性”的软件，可以针对数据库的不同字段的取值人工建树，建好的树可以组合复用，进行层次化聚类，并能显示聚类结果。要求数据库路径可以配置，或在界面中输入。</p>
-<p>4． 本实验要求计算最优解，除了穷举没有更好的办法（据老王所知），特别注意层次化聚类算法中的剪枝操作，否则你的软件会异常缓慢。</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/" data-id="cl4ed6u3i001q1ex3eu2y7owr" data-title="层次化聚类" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-JavaWeb个人简历管理平台" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T14:26:29.000Z" itemprop="datePublished">2020-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/JavaWeb/">JavaWeb</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/">JavaWeb:个人简历管理平台</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="项目需求："><a href="#项目需求：" class="headerlink" title="项目需求："></a>项目需求：</h1><blockquote>
-<p>设计个人简历管理平台。该平台是一个在线的系统，可以动态的对个人信息进行增删该查等功能。</p>
-</blockquote>
-<p>个人简历管理平台应该具备如下几方面的内容。</p>
-<p><img src="/img/clip_image002-1584021441013.png" alt="img"></p>
-<p>系统功能详细介绍</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/JavaWeb%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/" data-id="cl4ed6u3600071ex37bgp1vst" data-title="JavaWeb:个人简历管理平台" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
 
     </footer>
   </div>
@@ -603,7 +274,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>

@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-团队项目：文化创意产业公共服务平台" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Redis持久化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T14:25:11.000Z" itemprop="datePublished">2020-03-12</time>
+    <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2021-08-08T10:42:07.000Z" itemprop="datePublished">2021-08-08</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a>
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/">团队项目：文化创意产业公共服务平台</a>
+      <a class="p-name article-title" href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/">Redis持久化</a>
     </h1>
   
 
@@ -97,24 +97,26 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a>项目描述</h1><blockquote>
-<p>基于Android（或者IOS）的文化创意产业公共服务系统<br>文化创意产业公共服务平台服务端与Android端都需要实现。</p>
-</blockquote>
-<p>完整的系统应包括前端页面和后台管理两部分。前端页面包含：用户信息（对于已登录用户）、资讯列表、供求列表、展会列表、最新留言和用户登陆&#x2F;注册等，导航栏则包括首页、资讯频道、展会频道、供求频道等。后台管理包含：用户信息管理、留言管理、供求管理、资讯管理、展会管理。系统支持游客、注册会员两种角色访问。代码采用MVC三层架构实现。</p>
-<h2 id="角色描述"><a href="#角色描述" class="headerlink" title="角色描述"></a>角色描述</h2><h3 id="1-游客"><a href="#1-游客" class="headerlink" title="(1)   游客"></a>(1)   游客</h3><p>未经注册的访问者称为游客。游客可以浏览平台首页，查看供应与求购信息，查看资讯、展会等信息。但是因其未注册，游客不能对发布资讯、展会、求购或供应信息，也不能进行留言。当游客进行留言或发布操作时，系统将提示用户尚未注册或者尚未登录。</p>
+        <h1 id="AOF和RDB的取舍"><a href="#AOF和RDB的取舍" class="headerlink" title="AOF和RDB的取舍"></a>AOF和RDB的取舍</h1><p>目前，Redis 的持久化主要有两大机制，即 AOF（Append Only File）日志和 RDB 快照。</p>
+<p>AOF记录的是操作命令，而不是实际的数据。<br>用 AOF 方法进行故障恢复的时候，需要逐一把操作日志都执行一遍。如果操作日志非常多，Redis 就会恢复得很缓慢，影响到正常使用。这当然不是理想的结果。<br>使用AOF备份的特点是慢而全面，数据内容的丢失可以控制在秒级。</p>
+<p>使用RDB快照在做数据恢复时比较快。<br>缺点是备份内容不够详细，数据粒度只能达到分钟级。<br>频繁的全量快照造成大量高频磁盘读写，fork开销也很大。</p>
+<p>实际生产中，可以考虑两者的结合，如：</p>
+<p><strong>Redis 4.0 中提出了一个混合使用 AOF 日志和内存快照的方法。</strong>简单来说，内存快照以一定的频率执行，在两次快照之间，使用 AOF 日志记录这期间的所有命令操作。</p>
+<p>这样数据恢复速度可以得到提升，能恢复出的数据也更加全面。</p>
+<p>另外，具体情况具体分析，如根据QPS大小和键值对修改范围定制Redis持久化策略：</p>
         
           <p class="article-more-link">
-            <a href="/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/#more">Read More</a>
+            <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE%EF%BC%9A%E6%96%87%E5%8C%96%E5%88%9B%E6%84%8F%E4%BA%A7%E4%B8%9A%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/" data-id="cl4ed6u3e00191ex34gz77sbm" data-title="团队项目：文化创意产业公共服务平台" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" data-id="cl4edfw2c000atqx34qqcgbgi" data-title="Redis持久化" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li></ul>
 
     </footer>
   </div>
@@ -124,14 +126,14 @@
 
 
   
-    <article id="post-小型PS软件" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-minimalOnRoadTime" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" class="article-date">
-  <time class="dt-published" datetime="2020-03-12T04:02:35.000Z" itemprop="datePublished">2020-03-12</time>
+    <a href="/2021/07/19/minimalOnRoadTime/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T13:15:30.000Z" itemprop="datePublished">2021-07-19</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a>
+    <a class="article-category-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a>
   </div>
 
   </div>
@@ -142,7 +144,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/">小型PS软件</a>
+      <a class="p-name article-title" href="/2021/07/19/minimalOnRoadTime/">Minimal on road time</a>
     </h1>
   
 
@@ -150,21 +152,20 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="软件已实现功能："><a href="#软件已实现功能：" class="headerlink" title="软件已实现功能："></a>软件已实现功能：</h1><h2 id="导入图片："><a href="#导入图片：" class="headerlink" title="导入图片："></a>导入图片：</h2><p>点击 文件-打开导入图片：</p>
-<p><img src="/img/1584005701819.png" alt="1584005701819"></p>
+        <p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871-6700633.jpeg" alt="幻灯片1"></p>
         
           <p class="article-more-link">
-            <a href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/#more">Read More</a>
+            <a href="/2021/07/19/minimalOnRoadTime/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" data-id="cl4ed6u3f001a1ex3gz51akwo" data-title="小型PS软件" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/19/minimalOnRoadTime/" data-id="cl4edfw2c000etqx33p4mbwan" data-title="Minimal on road time" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li></ul>
 
     </footer>
   </div>
@@ -174,14 +175,14 @@
 
 
   
-    <article id="post-00hexo常用命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-寒假工作总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time class="dt-published" datetime="2019-12-29T04:02:35.000Z" itemprop="datePublished">2019-12-29</time>
+    <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T12:33:58.000Z" itemprop="datePublished">2021-07-19</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+    <a class="article-category-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a>
   </div>
 
   </div>
@@ -192,7 +193,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">hexo常用命令</a>
+      <a class="p-name article-title" href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">轨迹数据库入门总结</a>
     </h1>
   
 
@@ -200,20 +201,22 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><img src="/img/image-20201118135433033.png" alt="image-20201118135433033"></p>
+        <p>1、《Computing with Spatial Trajectories》第一章和第二章，轨迹数据的预处理部分</p>
+<p>2、  轨迹数据的常用索引</p>
+<p>3、 市面上的轨迹数据处理平台：以阿里云和京东为例</p>
         
           <p class="article-more-link">
-            <a href="/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#more">Read More</a>
+            <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/12/29/00hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" data-id="cl4ed6u3200011ex38lux5s5s" data-title="hexo常用命令" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" data-id="cl4edfw2p0030tqx30vmaf68n" data-title="轨迹数据库入门总结" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li></ul>
 
     </footer>
   </div>
@@ -227,7 +230,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
   </nav>
 
 </section>
