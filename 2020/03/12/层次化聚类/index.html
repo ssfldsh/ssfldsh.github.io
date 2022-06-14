@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   
   
-  <title>层次化聚类 | Hexo</title>
+  <title>层次化聚类 | RunZhe He&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="实验要求：1． 理解接层次化聚类的原理和作用。理解层次化聚类中的距离和“松散度”的概念。 2． 实现层次化聚类的全过程流程，包括与用户的交互、树结构的建设和存储、与数据库的交互、核心聚类算法实现等。 3． 具体要求：实现一个具有一定“通用性”的软件，可以针对数据库的不同字段的取值人工建树，建好的树可以组合复用，进行层次化聚类，并能显示聚类结果。要求数据库路径可以配置，或在界面中输入。 4． 本实验">
 <meta property="og:type" content="article">
 <meta property="og:title" content="层次化聚类">
 <meta property="og:url" content="http://example.com/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="RunZhe He&#39;s Blog">
 <meta property="og:description" content="实验要求：1． 理解接层次化聚类的原理和作用。理解层次化聚类中的距离和“松散度”的概念。 2． 实现层次化聚类的全过程流程，包括与用户的交互、树结构的建设和存储、与数据库的交互、核心聚类算法实现等。 3． 具体要求：实现一个具有一定“通用性”的软件，可以针对数据库的不同字段的取值人工建树，建好的树可以组合复用，进行层次化聚类，并能显示聚类结果。要求数据库路径可以配置，或在界面中输入。 4． 本实验">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%AE%9E%E9%AA%8C%E4%B8%89.png">
@@ -19,12 +19,12 @@
 <meta property="og:image" content="http://example.com/img/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%AE%9E%E9%AA%8C%E4%B8%894.png">
 <meta property="article:published_time" content="2020-03-12T14:26:41.000Z">
 <meta property="article:modified_time" content="2021-07-20T15:03:29.068Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="RunZhe He">
 <meta property="article:tag" content="数据挖掘">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E5%AE%9E%E9%AA%8C%E4%B8%89.png">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="RunZhe He's Blog" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -52,7 +52,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">RunZhe He&#39;s Blog</a>
       </h1>
       
     </div>
@@ -179,19 +179,541 @@
 <p><strong>本实验语言不限，请大家尽力做好，要经得起大规模数据的测试</strong>。</p>
 <h1 id="实现方法："><a href="#实现方法：" class="headerlink" title="实现方法："></a>实现方法：</h1><p>读入puechasing文件的数据并用arraylist存储购买记录，并将其转化为与树的叶子结点一致的内容。</p>
 <p>Log类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ex3;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Log</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> String data1;<span class="comment">//日期</span></span><br><span class="line">	<span class="keyword">private</span> String data2;<span class="comment">//时间</span></span><br><span class="line">	<span class="keyword">private</span> String data3;<span class="comment">//老人类型</span></span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> weight;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Log</span><span class="params">(String data1, String data2, String data3, <span class="type">double</span> weight)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.data1=data1;</span><br><span class="line">		<span class="built_in">this</span>.data2=data2;</span><br><span class="line">		<span class="built_in">this</span>.data3=data3;</span><br><span class="line">		<span class="built_in">this</span>.weight=weight;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getData1</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> data1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setData1</span><span class="params">(String data1)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.data1 = data1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getData2</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> data2;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setData2</span><span class="params">(String data2)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.data2 = data2;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getData3</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> data3;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setData3</span><span class="params">(String data3)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.data3 = data3;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getWeight</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> weight;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setWeight</span><span class="params">(<span class="type">double</span> weight)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.weight = weight;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">package ex3;
+public class Log &#123;
+    private String data1;&#x2F;&#x2F;日期
+    private String data2;&#x2F;&#x2F;时间
+    private String data3;&#x2F;&#x2F;老人类型
+    private double weight;
+    public Log(String data1, String data2, String data3, double weight) &#123;
+        this.data1&#x3D;data1;
+        this.data2&#x3D;data2;
+        this.data3&#x3D;data3;
+        this.weight&#x3D;weight;
+    &#125;
+    public String getData1() &#123;
+        return data1;
+    &#125;
+    public void setData1(String data1) &#123;
+        this.data1 &#x3D; data1;
+    &#125;
+    public String getData2() &#123;
+        return data2;
+    &#125;
+    public void setData2(String data2) &#123;
+        this.data2 &#x3D; data2;
+    &#125;
+    public String getData3() &#123;
+        return data3;
+    &#125;
+    public void setData3(String data3) &#123;
+        this.data3 &#x3D; data3;
+    &#125;
+    public double getWeight() &#123;
+        return weight;
+    &#125;
+    public void setWeight(double weight) &#123;
+        this.weight &#x3D; weight;
+    &#125;
+    
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>XuanXiang类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ex3;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">XuanXiang</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> isFugai []=<span class="keyword">new</span> <span class="title class_">int</span> [<span class="number">50000</span>];<span class="comment">//loglength</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> d[][]=<span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">50000</span>][<span class="number">3</span>];</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> sumweight;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> distancesum;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> lisandu;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> fugaisum;</span><br><span class="line">	<span class="comment">/*public int[] getIsFugai() &#123;</span></span><br><span class="line"><span class="comment">		return isFugai;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public void setIsFugai(int isFugai[]) &#123;</span></span><br><span class="line"><span class="comment">		this.isFugai = isFugai;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public int[] getIsConsider() &#123;</span></span><br><span class="line"><span class="comment">		return isConsider;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public void setIsConsider(int isConsider[]) &#123;</span></span><br><span class="line"><span class="comment">		this.isConsider = isConsider;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public int[][] getD() &#123;</span></span><br><span class="line"><span class="comment">		return d;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public void setD(int d[][]) &#123;</span></span><br><span class="line"><span class="comment">		this.d = d;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public double getSumweight() &#123;</span></span><br><span class="line"><span class="comment">		return sumweight;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	public void setSumweight(double sumweight) &#123;</span></span><br><span class="line"><span class="comment">		this.sumweight = sumweight;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">ex3</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">XuanXiang</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> isFugai <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token keyword">int</span> <span class="token punctuation">[</span><span class="token number">50000</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//loglength</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> d<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">50000</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> sumweight<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> distancesum<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> lisandu<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> fugaisum<span class="token punctuation">;</span>
+    <span class="token comment">/*public int[] getIsFugai() &#123;
+        return isFugai;
+    &#125;
+    public void setIsFugai(int isFugai[]) &#123;
+        this.isFugai = isFugai;
+    &#125;
+    public int[] getIsConsider() &#123;
+        return isConsider;
+    &#125;
+    public void setIsConsider(int isConsider[]) &#123;
+        this.isConsider = isConsider;
+    &#125;
+    public int[][] getD() &#123;
+        return d;
+    &#125;
+    public void setD(int d[][]) &#123;
+        this.d = d;
+    &#125;
+    public double getSumweight() &#123;
+        return sumweight;
+    &#125;
+    public void setSumweight(double sumweight) &#123;
+        this.sumweight = sumweight;
+    &#125;
+    */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>PTree类存储树的属性和方法:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ex3;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PTree</span> &#123;</span><br><span class="line">	 <span class="type">int</span> max=<span class="number">100</span>;</span><br><span class="line">	 <span class="type">int</span> n,root;</span><br><span class="line">	 <span class="type">int</span> a[]=<span class="keyword">new</span> <span class="title class_">int</span>[max];<span class="comment">//用于存放孩子结点在数组中的位置</span></span><br><span class="line">	 PTNode nodes[]=<span class="keyword">new</span> <span class="title class_">PTNode</span>[max];</span><br><span class="line">	 </span><br><span class="line">     <span class="keyword">class</span> <span class="title class_">PTNode</span>&#123;</span><br><span class="line">   	      String data;</span><br><span class="line">   	      <span class="type">int</span> parent;</span><br><span class="line">   	      <span class="type">int</span> child[]=<span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">100</span>];<span class="comment">//假设一个节点最多有100个子孙</span></span><br><span class="line">   	      <span class="type">int</span> childnum=<span class="number">0</span>;</span><br><span class="line">   	      <span class="keyword">public</span> <span class="title function_">PTNode</span><span class="params">(String d,<span class="type">int</span> p)</span>&#123;</span><br><span class="line">   		      <span class="built_in">this</span>.data=d;</span><br><span class="line">   		      <span class="built_in">this</span>.parent=p; </span><br><span class="line">   	 &#125;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="title function_">PTree</span><span class="params">()</span>&#123;</span><br><span class="line">    	 n=<span class="number">0</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEmpty</span><span class="params">()</span>&#123;  <span class="comment">//判断是否为空</span></span><br><span class="line">    	 <span class="keyword">return</span> n==<span class="number">0</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> PTNode <span class="title function_">assign</span><span class="params">(String d,<span class="type">int</span> p)</span>&#123; <span class="comment">//给结点赋值</span></span><br><span class="line">   	    PTNode newNode=<span class="keyword">new</span> <span class="title class_">PTNode</span>(d,p);</span><br><span class="line">   	    <span class="keyword">return</span> newNode;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(String d,<span class="type">int</span> p)</span>&#123; <span class="comment">//添加新结点，给定结点位置</span></span><br><span class="line">    	   nodes[n]=assign(d,p);</span><br><span class="line">    	   n++;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> String <span class="title function_">getData</span><span class="params">(<span class="type">int</span> i)</span>&#123; <span class="comment">//返回序号为i的结点的数据</span></span><br><span class="line">    	 <span class="keyword">if</span>(i&gt;n)&#123;</span><br><span class="line">    		 <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 <span class="keyword">return</span> (String)nodes[i].data;</span><br><span class="line">     &#125;</span><br><span class="line">  </span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> PTNode <span class="title function_">getParent</span><span class="params">(<span class="type">int</span> p)</span>&#123; <span class="comment">//返回父母结点,给定该结点位置</span></span><br><span class="line">    	  <span class="type">int</span> pare=nodes[p].parent;</span><br><span class="line">    	  <span class="keyword">return</span> nodes[pare];</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> PTNode <span class="title function_">getParent</span><span class="params">(String d)</span>&#123; <span class="comment">//返回父母结点，给定该结点data</span></span><br><span class="line">    	 <span class="type">int</span> p=<span class="number">0</span>;</span><br><span class="line">    	 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    		 <span class="type">int</span> x=((String)(nodes[i].data)).compareTo((String)d);</span><br><span class="line">    		 <span class="keyword">if</span>(x==<span class="number">0</span>)</span><br><span class="line">    			 p=i;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 </span><br><span class="line">   	  <span class="type">int</span> pare=nodes[p].parent;</span><br><span class="line">   	  <span class="keyword">return</span> nodes[pare];</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> String <span class="title function_">getParentData</span><span class="params">(<span class="type">int</span> p)</span>&#123; <span class="comment">//返回父母结点元素</span></span><br><span class="line">    	 <span class="keyword">if</span>(p&gt;n)&#123;</span><br><span class="line">    		 <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	   <span class="keyword">return</span> (String)getParent(p).data;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getChildCount</span><span class="params">(<span class="type">int</span> p)</span>&#123; <span class="comment">//返回孩子结点数</span></span><br><span class="line">    	 <span class="type">int</span> count=<span class="number">0</span>;    	 </span><br><span class="line">    	 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    		 <span class="keyword">if</span>(nodes[i].parent==p)&#123;</span><br><span class="line">    			 a[count]=i;<span class="comment">//将该结点的孩子结点在数组中的位置存下来</span></span><br><span class="line">    			 count++;</span><br><span class="line">    		 &#125;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 <span class="keyword">return</span> count;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getChildCount</span><span class="params">(String d)</span>&#123;<span class="comment">//返回孩子结点数,给定结点值</span></span><br><span class="line">    	 <span class="type">int</span> p=<span class="number">0</span>;</span><br><span class="line">    	 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    		 <span class="type">int</span> x=((String)(nodes[i].data)).compareTo((String)d);</span><br><span class="line">    		 <span class="keyword">if</span>(x==<span class="number">0</span>)</span><br><span class="line">    			 p=i;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 <span class="type">int</span> count=<span class="number">0</span>;    	 </span><br><span class="line">    	 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    		 <span class="keyword">if</span>(nodes[i].parent==p)&#123;</span><br><span class="line">    			 a[count]=i;<span class="comment">//将该结点的孩子结点在数组中的位置存下来</span></span><br><span class="line">    			 count++;</span><br><span class="line">    		 &#125;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 <span class="keyword">return</span> count;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> PTNode <span class="title function_">getFirstChild</span><span class="params">(<span class="type">int</span> p)</span>&#123; <span class="comment">//获得第一个孩子结点</span></span><br><span class="line">    	 <span class="type">int</span> c=getChildCount(p);<span class="comment">//得到孩子结点个数</span></span><br><span class="line">    	 PTNode kong=<span class="keyword">new</span> <span class="title class_">PTNode</span>(<span class="literal">null</span>,-<span class="number">2</span>);</span><br><span class="line">    	 <span class="keyword">if</span>(c==<span class="number">0</span>)&#123;</span><br><span class="line">    		 <span class="keyword">return</span> kong;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 <span class="keyword">else</span>&#123;</span><br><span class="line">    		 <span class="keyword">return</span> nodes[a[<span class="number">0</span>]];</span><br><span class="line">    	 &#125;	 </span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">depth</span><span class="params">()</span>&#123;</span><br><span class="line">    	<span class="type">int</span> max=<span class="number">0</span>,height,p=<span class="number">0</span>;<span class="comment">//max记录当前的最大高度，p记录双亲结点的位置，height为当前的深度</span></span><br><span class="line">    	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    		height=<span class="number">1</span>;               <span class="comment">//每次循环开始，初始化height</span></span><br><span class="line">    		p=nodes[i].parent;</span><br><span class="line">    		<span class="keyword">while</span>(p!=-<span class="number">1</span>)&#123;         <span class="comment">//若当前结点不是根结点，执行此循环</span></span><br><span class="line">     			p=nodes[p].parent;      <span class="comment">//不断沿双亲结点向上走</span></span><br><span class="line">     			height++;               <span class="comment">//没向上一步，高度加一</span></span><br><span class="line">    		&#125;</span><br><span class="line">    		<span class="keyword">if</span>(height&gt;max)           <span class="comment">//记录当前最大深度</span></span><br><span class="line">    			max=height;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> max;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getDepth</span><span class="params">(<span class="type">int</span> m)</span>&#123;<span class="comment">//获得某一结点所处的层次,根节点层次记为1</span></span><br><span class="line">    	 <span class="keyword">if</span>(m&gt;=n)</span><br><span class="line">    		 <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	 <span class="type">int</span> height=<span class="number">1</span>,p=<span class="number">0</span>;</span><br><span class="line">     	 height=<span class="number">1</span>;               <span class="comment">//每次循环开始，初始化height</span></span><br><span class="line">     	p=nodes[m].parent;</span><br><span class="line">     	<span class="keyword">while</span>(p!=-<span class="number">1</span>)&#123;         <span class="comment">//若当前结点不是根结点，执行此循环</span></span><br><span class="line">      		p=nodes[p].parent;      <span class="comment">//不断沿双亲结点向上走</span></span><br><span class="line">      		height++;               <span class="comment">//没向上一步，高度加一</span></span><br><span class="line">     	&#125;</span><br><span class="line">     	<span class="keyword">return</span> height;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">distance</span><span class="params">(<span class="type">int</span> m,<span class="type">int</span> n)</span> &#123;<span class="comment">//判断m是否覆盖n,不覆盖返回-1,覆盖返回距离差</span></span><br><span class="line">    	 <span class="keyword">if</span>(m==n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	 <span class="type">int</span> p=nodes[n].parent;</span><br><span class="line">    	 <span class="keyword">if</span>(p==m) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    	 <span class="keyword">if</span>(p==-<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    	 <span class="type">int</span> count=<span class="number">0</span>;</span><br><span class="line">    	 <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">    		 count++;</span><br><span class="line">    		 p=nodes[p].parent;</span><br><span class="line">    		 <span class="keyword">if</span>(p==m) <span class="keyword">return</span> <span class="number">1</span>+count;</span><br><span class="line">    		 <span class="keyword">if</span>(p==-<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    	 &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">xuHao</span><span class="params">(String data)</span> &#123;<span class="comment">//根据节点数据返回节点编号</span></span><br><span class="line">    	 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">    		 <span class="keyword">if</span>(nodes[i].data.equals(data)) <span class="keyword">return</span> i;</span><br><span class="line">    	 &#125;</span><br><span class="line">    	 <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">child</span><span class="params">(<span class="type">int</span> m)</span> &#123;<span class="comment">//填写m号节点的child数组，m号节点和他的子孙节点的编号都被填入其中</span></span><br><span class="line">    	 <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">    		 <span class="keyword">if</span>(distance(m,i)!=-<span class="number">1</span>) &#123;</span><br><span class="line">     			 nodes[m].child[nodes[m].childnum]=i;</span><br><span class="line">    			 nodes[m].childnum++;</span><br><span class="line">    		 &#125;</span><br><span class="line">    	 &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">package ex3;
+import java.util.*;
+public class PTree &#123;
+     int max&#x3D;100;
+     int n,root;
+     int a[]&#x3D;new int[max];&#x2F;&#x2F;用于存放孩子结点在数组中的位置
+     PTNode nodes[]&#x3D;new PTNode[max];
+     
+     class PTNode&#123;
+   	      String data;
+   	      int parent;
+   	      int child[]&#x3D;new int[100];&#x2F;&#x2F;假设一个节点最多有100个子孙
+   	      int childnum&#x3D;0;
+   	      public PTNode(String d,int p)&#123;
+   		      this.data&#x3D;d;
+   		      this.parent&#x3D;p; 
+   	 &#125;
+    &#125;
+     public PTree()&#123;
+    	 n&#x3D;0;
+     &#125;
+     public boolean isEmpty()&#123;  &#x2F;&#x2F;判断是否为空
+    	 return n&#x3D;&#x3D;0;
+     &#125;
+     
+     public PTNode assign(String d,int p)&#123; &#x2F;&#x2F;给结点赋值
+   	    PTNode newNode&#x3D;new PTNode(d,p);
+   	    return newNode;
+    &#125;
+     
+     public void insert(String d,int p)&#123; &#x2F;&#x2F;添加新结点，给定结点位置
+    	   nodes[n]&#x3D;assign(d,p);
+    	   n++;
+     &#125;
+     
+     
+     public String getData(int i)&#123; &#x2F;&#x2F;返回序号为i的结点的数据
+    	 if(i&gt;n)&#123;
+    		 return null;
+    	 &#125;
+    	 return (String)nodes[i].data;
+     &#125;
+  
+     
+     public PTNode getParent(int p)&#123; &#x2F;&#x2F;返回父母结点,给定该结点位置
+    	  int pare&#x3D;nodes[p].parent;
+    	  return nodes[pare];
+     &#125;
+     public PTNode getParent(String d)&#123; &#x2F;&#x2F;返回父母结点，给定该结点data
+    	 int p&#x3D;0;
+    	 for(int i&#x3D;0;i&lt;n;i++)&#123;
+    		 int x&#x3D;((String)(nodes[i].data)).compareTo((String)d);
+    		 if(x&#x3D;&#x3D;0)
+    			 p&#x3D;i;
+    	 &#125;
+    	 
+   	  int pare&#x3D;nodes[p].parent;
+   	  return nodes[pare];
+    &#125;
+     
+     
+     public String getParentData(int p)&#123; &#x2F;&#x2F;返回父母结点元素
+    	 if(p&gt;n)&#123;
+    		 return null;
+    	 &#125;
+    	   return (String)getParent(p).data;
+     &#125;
+     
+     public int getChildCount(int p)&#123; &#x2F;&#x2F;返回孩子结点数
+    	 int count&#x3D;0;    	 
+    	 for(int i&#x3D;0;i&lt;n;i++)&#123;
+    		 if(nodes[i].parent&#x3D;&#x3D;p)&#123;
+    			 a[count]&#x3D;i;&#x2F;&#x2F;将该结点的孩子结点在数组中的位置存下来
+    			 count++;
+    		 &#125;
+    	 &#125;
+    	 return count;
+     &#125;
+     
+     public int getChildCount(String d)&#123;&#x2F;&#x2F;返回孩子结点数,给定结点值
+    	 int p&#x3D;0;
+    	 for(int i&#x3D;0;i&lt;n;i++)&#123;
+    		 int x&#x3D;((String)(nodes[i].data)).compareTo((String)d);
+    		 if(x&#x3D;&#x3D;0)
+    			 p&#x3D;i;
+    	 &#125;
+    	 int count&#x3D;0;    	 
+    	 for(int i&#x3D;0;i&lt;n;i++)&#123;
+    		 if(nodes[i].parent&#x3D;&#x3D;p)&#123;
+    			 a[count]&#x3D;i;&#x2F;&#x2F;将该结点的孩子结点在数组中的位置存下来
+    			 count++;
+    		 &#125;
+    	 &#125;
+    	 return count;
+     &#125;
+     
+     
+     public PTNode getFirstChild(int p)&#123; &#x2F;&#x2F;获得第一个孩子结点
+    	 int c&#x3D;getChildCount(p);&#x2F;&#x2F;得到孩子结点个数
+    	 PTNode kong&#x3D;new PTNode(null,-2);
+    	 if(c&#x3D;&#x3D;0)&#123;
+    		 return kong;
+    	 &#125;
+    	 else&#123;
+    		 return nodes[a[0]];
+    	 &#125;	 
+     &#125;
+     
+     public int depth()&#123;
+    	int max&#x3D;0,height,p&#x3D;0;&#x2F;&#x2F;max记录当前的最大高度，p记录双亲结点的位置，height为当前的深度
+    	for(int i&#x3D;0;i&lt;n;i++)&#123;
+    		height&#x3D;1;               &#x2F;&#x2F;每次循环开始，初始化height
+    		p&#x3D;nodes[i].parent;
+    		while(p!&#x3D;-1)&#123;         &#x2F;&#x2F;若当前结点不是根结点，执行此循环
+     			p&#x3D;nodes[p].parent;      &#x2F;&#x2F;不断沿双亲结点向上走
+     			height++;               &#x2F;&#x2F;没向上一步，高度加一
+    		&#125;
+    		if(height&gt;max)           &#x2F;&#x2F;记录当前最大深度
+    			max&#x3D;height;
+    	&#125;
+    	return max;
+     &#125;
+     public int getDepth(int m)&#123;&#x2F;&#x2F;获得某一结点所处的层次,根节点层次记为1
+    	 if(m&gt;&#x3D;n)
+    		 return 0;
+    	 int height&#x3D;1,p&#x3D;0;
+     	 height&#x3D;1;               &#x2F;&#x2F;每次循环开始，初始化height
+     	p&#x3D;nodes[m].parent;
+     	while(p!&#x3D;-1)&#123;         &#x2F;&#x2F;若当前结点不是根结点，执行此循环
+      		p&#x3D;nodes[p].parent;      &#x2F;&#x2F;不断沿双亲结点向上走
+      		height++;               &#x2F;&#x2F;没向上一步，高度加一
+     	&#125;
+     	return height;
+     &#125;
+     public int distance(int m,int n) &#123;&#x2F;&#x2F;判断m是否覆盖n,不覆盖返回-1,覆盖返回距离差
+    	 if(m&#x3D;&#x3D;n) return 0;
+    	 int p&#x3D;nodes[n].parent;
+    	 if(p&#x3D;&#x3D;m) return 1;
+    	 if(p&#x3D;&#x3D;-1) return -1;
+    	 int count&#x3D;0;
+    	 while(true) &#123;
+    		 count++;
+    		 p&#x3D;nodes[p].parent;
+    		 if(p&#x3D;&#x3D;m) return 1+count;
+    		 if(p&#x3D;&#x3D;-1) return -1;
+    	 &#125;
+     &#125;
+     public int xuHao(String data) &#123;&#x2F;&#x2F;根据节点数据返回节点编号
+    	 for(int i&#x3D;0;i&lt;n;i++) &#123;
+    		 if(nodes[i].data.equals(data)) return i;
+    	 &#125;
+    	 return -1;
+     &#125;
+     public void child(int m) &#123;&#x2F;&#x2F;填写m号节点的child数组，m号节点和他的子孙节点的编号都被填入其中
+    	 for(int i&#x3D;0;i&lt;n;i++) &#123;
+    		 if(distance(m,i)!&#x3D;-1) &#123;
+     			 nodes[m].child[nodes[m].childnum]&#x3D;i;
+    			 nodes[m].childnum++;
+    		 &#125;
+    	 &#125;
+     &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>三维对象数组存储三棵树的各节点所能表示的所有抽象事件的集合</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//待选抽象事件集合</span></span><br><span class="line">XuanXiangkexuanxiang[][][]=newXuanXiang[length_date][length_time][length_laoren];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">&#x2F;&#x2F;待选抽象事件集合
+XuanXiangkexuanxiang[][][]&#x3D;newXuanXiang[length_date][length_time][length_laoren];
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>遍历kexuanxiang对象数组，与log数组中的各条记录进行比较判断是否覆盖，如果能覆盖就计算离散度和主题值阈值，判断主题值阈值和离散度是否达标如果达标就与最小达标离散度进行比较，更新当前的最优解。循环结束后输出最优的覆盖集，一次聚类结束。多次聚类时，由于在第一次计算时已经计算好了kexuanxiang对象数组的覆盖集，离散度，主题值，再次聚类只需在上次聚类的结果上剔除部分已经被聚类掉的数据即可。判断主题值阈值是否达标时，如果不达标，计算当前对象数组的各个节点的孩子以及孙子节点将他们从循环中剔除，可以证明如果nodei和nodej以及nodek组成的节点主题值阈值不够，则他们各自的子节点所形成的子节点在多次聚类中均无法达到主题值阈值的要求，故不予考虑。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> ex3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.FileReader;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.text.ParseException;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.text.ParseException;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">dateToWeek</span><span class="params">(String datetime)</span> &#123;</span><br><span class="line">        <span class="type">SimpleDateFormat</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">        String[] weekDays = &#123; <span class="string">&quot;周天&quot;</span>, <span class="string">&quot;周一&quot;</span>, <span class="string">&quot;周二&quot;</span>, <span class="string">&quot;周三&quot;</span>, <span class="string">&quot;周四&quot;</span>, <span class="string">&quot;周五&quot;</span>, <span class="string">&quot;周六&quot;</span> &#125;;</span><br><span class="line">        <span class="type">Calendar</span> <span class="variable">cal</span> <span class="operator">=</span> Calendar.getInstance(); <span class="comment">// 获得一个日历</span></span><br><span class="line">        <span class="type">Date</span> <span class="variable">datet</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            datet = f.parse(datetime);</span><br><span class="line">            cal.setTime(datet);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">w</span> <span class="operator">=</span> cal.get(Calendar.DAY_OF_WEEK) - <span class="number">1</span>; <span class="comment">// 指示一个星期中的某天。</span></span><br><span class="line">        <span class="keyword">if</span> (w &lt; <span class="number">0</span>)</span><br><span class="line">            w = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> weekDays[w];</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		System.out.println(Test.dateToWeek(<span class="string">&quot;2019-5-14&quot;</span>));</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">//读入数据</span></span><br><span class="line">			BufferedReader br=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;H:/laoren.txt&quot;</span>));</span><br><span class="line">			String s;</span><br><span class="line">			<span class="comment">//老人树的构建</span></span><br><span class="line">			<span class="type">PTree</span> <span class="variable">laoren</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PTree</span>();</span><br><span class="line">			<span class="keyword">while</span>((s=br.readLine())!=<span class="literal">null</span>) &#123;</span><br><span class="line">				String []strArr=s.split(<span class="string">&quot; ## &quot;</span>);</span><br><span class="line">				laoren.insert(strArr[<span class="number">2</span>],Integer.parseInt(strArr[<span class="number">1</span>]));</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;laoren.n;i++) &#123;</span><br><span class="line">				System.out.println(laoren.nodes[i].parent+laoren.nodes[i].data);</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(laoren.n);</span><br><span class="line">			<span class="comment">//日期树的构建</span></span><br><span class="line">			br=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;H:/date.txt&quot;</span>));</span><br><span class="line">			<span class="type">PTree</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PTree</span>();</span><br><span class="line">			<span class="keyword">while</span>((s=br.readLine())!=<span class="literal">null</span>) &#123;</span><br><span class="line">				String []strArr=s.split(<span class="string">&quot; ## &quot;</span>);</span><br><span class="line">				date.insert(strArr[<span class="number">2</span>],Integer.parseInt(strArr[<span class="number">1</span>]));</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;date.n;i++) &#123;</span><br><span class="line">				System.out.println(date.nodes[i].parent+date.nodes[i].data);</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(date.n);</span><br><span class="line">			<span class="comment">//时间树的构建</span></span><br><span class="line">			br=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;H:/time.txt&quot;</span>));</span><br><span class="line">			<span class="type">PTree</span> <span class="variable">time</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PTree</span>();</span><br><span class="line">			<span class="keyword">while</span>((s=br.readLine())!=<span class="literal">null</span>) &#123;</span><br><span class="line">				String []strArr=s.split(<span class="string">&quot; ## &quot;</span>);</span><br><span class="line">				time.insert(strArr[<span class="number">2</span>],Integer.parseInt(strArr[<span class="number">1</span>]));</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;time.n;i++) &#123;</span><br><span class="line">				System.out.println(time.nodes[i].parent+time.nodes[i].data);</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(time.n);</span><br><span class="line">			<span class="comment">//基本数据项的读入</span></span><br><span class="line">			br=<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">FileReader</span>(<span class="string">&quot;H:/purchasingLog.txt&quot;</span>));</span><br><span class="line">			ArrayList&lt;Log&gt; log = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Log&gt;();<span class="comment">//log数组</span></span><br><span class="line">			<span class="keyword">while</span>((s=br.readLine())!=<span class="literal">null</span>) &#123;</span><br><span class="line">				String []strArr=s.split(<span class="string">&quot;, &quot;</span>);</span><br><span class="line">				String tempdata1;</span><br><span class="line">				String tempdata2;</span><br><span class="line">				String tempdata3;</span><br><span class="line">				<span class="type">double</span> tempweight;</span><br><span class="line">				<span class="comment">//??string转double是否正确??</span></span><br><span class="line">				tempweight=Double.parseDouble(strArr[<span class="number">2</span>]);</span><br><span class="line">				<span class="type">int</span> age=Integer.parseInt(strArr[<span class="number">1</span>]);</span><br><span class="line">				<span class="comment">//假设没有错误的年龄数据，比如大于99或者小与60</span></span><br><span class="line">				<span class="keyword">if</span>(age&lt;=<span class="number">69</span>) tempdata3=<span class="string">&quot;活力老人&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(age&lt;=<span class="number">79</span>) tempdata3=<span class="string">&quot;行动老人&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(age&lt;=<span class="number">89</span>) tempdata3=<span class="string">&quot;地上心动老人&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> tempdata3=<span class="string">&quot;床上心动老人&quot;</span>;</span><br><span class="line">				<span class="comment">//时间戳的分隔与转换</span></span><br><span class="line">				String []strArr2=strArr[<span class="number">0</span>].split(<span class="string">&quot;T&quot;</span>);</span><br><span class="line">				<span class="comment">//strArr2[0]日期信息</span></span><br><span class="line">				String []strArr3=strArr2[<span class="number">1</span>].split(<span class="string">&quot;:&quot;</span>);<span class="comment">//19:54:14</span></span><br><span class="line">				<span class="type">int</span> temptime=Integer.parseInt(strArr3[<span class="number">0</span>]);</span><br><span class="line">				<span class="keyword">if</span>(temptime&lt;<span class="number">8</span>) tempdata2=<span class="string">&quot;早休闲&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(temptime&lt;=<span class="number">11</span>) tempdata2=<span class="string">&quot;上午劳作时&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(temptime==<span class="number">12</span>) tempdata2=<span class="string">&quot;午休闲&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(temptime&lt;=<span class="number">16</span>) tempdata2=<span class="string">&quot;下午劳作时&quot;</span>;</span><br><span class="line">				<span class="keyword">else</span> tempdata2=<span class="string">&quot;晚休闲&quot;</span>;</span><br><span class="line">				tempdata1=Test.dateToWeek(strArr2[<span class="number">0</span>]);</span><br><span class="line">				Log temp=<span class="keyword">new</span> <span class="title class_">Log</span>(tempdata1,tempdata2,tempdata3,tempweight);</span><br><span class="line">				log.add(temp);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">/*for(int i=0;i&lt;10;i++) &#123;</span></span><br><span class="line"><span class="comment">				System.out.println(log.get(i).getData1()+&quot; &quot;+&quot; &quot;+log.get(i).getData2()+&quot; &quot;+log.get(i).getData3()+&quot; &quot;+log.get(i).getWeight());</span></span><br><span class="line"><span class="comment">			&#125;</span></span><br><span class="line"><span class="comment">			System.out.println(log.size());*/</span></span><br><span class="line">			<span class="comment">//基本数据项的处理</span></span><br><span class="line">			<span class="type">double</span> T=<span class="number">0.3</span>;</span><br><span class="line">			<span class="type">double</span> S=<span class="number">0.8</span>;</span><br><span class="line">			</span><br><span class="line">			<span class="type">double</span> logweightsum=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;log.size();i++) &#123;</span><br><span class="line">				logweightsum=logweightsum+log.get(i).getWeight();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(logweightsum);</span><br><span class="line">			T=T*logweightsum;</span><br><span class="line">			System.out.println(<span class="string">&quot;T:&quot;</span>+T+<span class="string">&quot;S:&quot;</span>+S);</span><br><span class="line">			<span class="comment">//每棵树的节点数</span></span><br><span class="line">			<span class="type">int</span> length_date=date.n;</span><br><span class="line">			<span class="type">int</span> length_time=time.n;</span><br><span class="line">			<span class="type">int</span> length_laoren=laoren.n;</span><br><span class="line">			System.out.println(length_date+<span class="string">&quot; &quot;</span>+length_time+<span class="string">&quot; &quot;</span>+length_laoren);</span><br><span class="line">			<span class="comment">//待选抽象事件集合</span></span><br><span class="line">			XuanXiang  kexuanxiang[][][]= <span class="keyword">new</span> <span class="title class_">XuanXiang</span>[length_date][length_time][length_laoren];</span><br><span class="line">			<span class="comment">//初始化kexuanxiang[i][j[[k]</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length_date;i++) &#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;length_time;j++) &#123;</span><br><span class="line">					<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;length_laoren;k++) &#123;</span><br><span class="line">						<span class="comment">//对象数组创建完后要对每一个数组对象new一下</span></span><br><span class="line">						kexuanxiang[i][j][k]=<span class="keyword">new</span> <span class="title class_">XuanXiang</span>();</span><br><span class="line">						kexuanxiang[i][j][k].sumweight=<span class="number">0.0</span>;</span><br><span class="line">						kexuanxiang[i][j][k].distancesum=<span class="number">0.0</span>;</span><br><span class="line">						kexuanxiang[i][j][k].lisandu=<span class="number">0.0</span>;</span><br><span class="line">						kexuanxiang[i][j][k].fugaisum=<span class="number">0</span>;</span><br><span class="line">						<span class="comment">//idfugai</span></span><br><span class="line">						<span class="comment">//isconsider</span></span><br><span class="line">						<span class="comment">//d[][]</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="type">double</span> minlisandu=<span class="number">100</span>;<span class="comment">//假设所有的松散度都大于100???设的比最大树高高就好</span></span><br><span class="line">			<span class="type">int</span> besti=-<span class="number">1</span>,bestj=-<span class="number">1</span>,bestk=-<span class="number">1</span>;</span><br><span class="line">			System.out.println(<span class="string">&quot;bestvalue&quot;</span>+besti+bestj+bestk);</span><br><span class="line">			<span class="type">int</span> delete[][][]=<span class="keyword">new</span> <span class="title class_">int</span>[length_date][length_time][length_laoren];<span class="comment">//存储剪枝节点delete[i][j][k]=1,表示kexuanxiang[i][j][k]在之后的算法流程中不予考虑</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length_date;i++) &#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;length_time;j++) &#123;</span><br><span class="line">					<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;length_laoren;k++) &#123;</span><br><span class="line">						delete[i][j][k]=<span class="number">0</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//测试</span></span><br><span class="line">			<span class="comment">/*for(int i=0;i&lt;date.n;i++) &#123;</span></span><br><span class="line"><span class="comment">				for(int j=0;j&lt;date.n;j++) &#123;</span></span><br><span class="line"><span class="comment">					System.out.println(i+&quot; &quot;+&quot; &quot;+j+&quot; &quot;+date.distance(i, j));</span></span><br><span class="line"><span class="comment">				&#125;</span></span><br><span class="line"><span class="comment">			&#125;*/</span></span><br><span class="line">			<span class="comment">//求每个树的子节点</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length_date;i++) &#123;</span><br><span class="line">				date.child(i);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;length_time;j++) &#123;</span><br><span class="line">				time.child(j);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;length_laoren;k++) &#123;</span><br><span class="line">				laoren.child(k);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length_date;i++) &#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;length_time;j++) &#123;</span><br><span class="line">					<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;length_laoren;k++) &#123;</span><br><span class="line">						<span class="keyword">if</span>(delete[i][j][k]==<span class="number">1</span>) <span class="keyword">continue</span>;<span class="comment">//剪枝</span></span><br><span class="line">						<span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">0</span>;l&lt;log.size();l++) &#123;</span><br><span class="line">							<span class="keyword">if</span>(date.distance(i,date.xuHao(log.get(l).getData1()))==-<span class="number">1</span>||time.distance(j,time.xuHao(log.get(l).getData2()))==-<span class="number">1</span>||laoren.distance(k,laoren.xuHao(log.get(l).getData3()))==-<span class="number">1</span>) &#123;</span><br><span class="line">								kexuanxiang[i][j][k].isFugai[l]=<span class="number">0</span>;</span><br><span class="line">								<span class="comment">//kexuanxiang[i][j][k]不覆盖log.get(l),距离也不需要考虑</span></span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">else</span> &#123;</span><br><span class="line">								kexuanxiang[i][j][k].isFugai[l]=<span class="number">1</span>;</span><br><span class="line">								kexuanxiang[i][j][k].d[l][<span class="number">0</span>]=date.distance(i, date.xuHao(log.get(l).getData1()));</span><br><span class="line">								kexuanxiang[i][j][k].d[l][<span class="number">1</span>]=time.distance(j,time.xuHao(log.get(l).getData2()));</span><br><span class="line">								kexuanxiang[i][j][k].d[l][<span class="number">2</span>]=laoren.distance(k,laoren.xuHao(log.get(l).getData3()));</span><br><span class="line">								kexuanxiang[i][j][k].sumweight=kexuanxiang[i][j][k].sumweight+log.get(l).getWeight();</span><br><span class="line">								kexuanxiang[i][j][k].distancesum=kexuanxiang[i][j][k].distancesum+(kexuanxiang[i][j][k].d[l][<span class="number">0</span>]+kexuanxiang[i][j][k].d[l][<span class="number">1</span>]+kexuanxiang[i][j][k].d[l][<span class="number">2</span>])/<span class="number">3.0</span>;</span><br><span class="line">								kexuanxiang[i][j][k].fugaisum++;</span><br><span class="line">								</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="comment">//得到kexuanxiang的fugaisum和sumweight, 现在计算lisandu</span></span><br><span class="line">						kexuanxiang[i][j][k].lisandu=kexuanxiang[i][j][k].distancesum/(<span class="type">double</span>)kexuanxiang[i][j][k].fugaisum;</span><br><span class="line">						<span class="comment">//判断kexuanxiang的S和T是否达到要求</span></span><br><span class="line">						<span class="keyword">if</span>(kexuanxiang[i][j][k].sumweight&lt;T) &#123;<span class="comment">//如果主题值阈值达不到要求，对ijk的子节点进行剪枝</span></span><br><span class="line">							delete[i][j][k]=<span class="number">1</span>;</span><br><span class="line">							<span class="keyword">for</span>(<span class="type">int</span> m=<span class="number">0</span>;m&lt;date.nodes[i].childnum;m++) &#123;</span><br><span class="line">								<span class="keyword">for</span>(<span class="type">int</span> n=<span class="number">0</span>;n&lt;time.nodes[j].childnum;n++) &#123;</span><br><span class="line">									<span class="keyword">for</span>(<span class="type">int</span> o=<span class="number">0</span>;o&lt;laoren.nodes[o].childnum;o++) &#123;</span><br><span class="line">										delete[date.nodes[i].child[m]][time.nodes[j].child[n]][laoren.nodes[k].child[o]]=<span class="number">1</span>;</span><br><span class="line">									&#125;</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">else</span> <span class="keyword">if</span>(kexuanxiang[i][j][k].lisandu&lt;=S) &#123;</span><br><span class="line">							<span class="keyword">if</span>(kexuanxiang[i][j][k].lisandu&lt;minlisandu) &#123;</span><br><span class="line">								besti=i;</span><br><span class="line">								bestj=j;</span><br><span class="line">								bestk=k;</span><br><span class="line">								minlisandu=kexuanxiang[i][j][k].lisandu;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(besti);</span><br><span class="line">			<span class="keyword">if</span>(besti==-<span class="number">1</span>&amp;&amp;bestj==-<span class="number">1</span>&amp;&amp;bestk==-<span class="number">1</span>) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;没有满足主题值阈值和离散度阈值的聚类&quot;</span>);</span><br><span class="line">				System.exit(<span class="number">0</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> System.out.println(<span class="string">&quot;一次聚类的结果为&quot;</span>+date.nodes[besti].data+time.nodes[bestj].data+laoren.nodes[bestk].data+kexuanxiang[besti][bestj][bestk].sumweight);</span><br><span class="line">			<span class="type">int</span> fugaiji[]=<span class="keyword">new</span> <span class="title class_">int</span> [<span class="number">10000</span>];<span class="comment">//假设当前聚类的最优解的覆盖log的数目不超过10000</span></span><br><span class="line">			<span class="type">int</span> fugaijilength=<span class="number">0</span>;</span><br><span class="line">			<span class="comment">//存储当前聚类得到的最优解的覆盖集</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10000</span>;i++) &#123;</span><br><span class="line">				<span class="keyword">if</span>(kexuanxiang[besti][bestj][bestk].isFugai[i]==<span class="number">1</span>) &#123;</span><br><span class="line">					fugaiji[fugaijilength]=i;</span><br><span class="line">					fugaijilength++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//多次聚类</span></span><br><span class="line">			<span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">				minlisandu=<span class="number">100</span>;</span><br><span class="line">				besti=-<span class="number">1</span>;</span><br><span class="line">				bestj=-<span class="number">1</span>;</span><br><span class="line">				bestk=-<span class="number">1</span>;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length_date;i++) &#123;</span><br><span class="line">					<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;length_time;j++) &#123;</span><br><span class="line">						<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;length_laoren;k++) &#123;</span><br><span class="line">							<span class="keyword">if</span>(delete[i][j][k]==<span class="number">1</span>) <span class="keyword">continue</span>;<span class="comment">//剪枝</span></span><br><span class="line">							<span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">0</span>;l&lt;fugaijilength;l++) &#123;</span><br><span class="line">								<span class="keyword">if</span>(kexuanxiang[i][j][k].isFugai[fugaiji[l]]==<span class="number">1</span>) &#123;</span><br><span class="line">									<span class="comment">//???idfugai要修改吗??</span></span><br><span class="line">									kexuanxiang[i][j][k].isFugai[fugaiji[l]]=<span class="number">0</span>;</span><br><span class="line">									kexuanxiang[i][j][k].fugaisum--;</span><br><span class="line">									kexuanxiang[i][j][k].sumweight=kexuanxiang[i][j][k].sumweight-log.get(fugaiji[l]).getWeight();</span><br><span class="line">									kexuanxiang[i][j][k].distancesum=kexuanxiang[i][j][k].distancesum-(kexuanxiang[i][j][k].d[fugaiji[l]][<span class="number">0</span>]+kexuanxiang[i][j][k].d[fugaiji[l]][<span class="number">1</span>]+kexuanxiang[i][j][k].d[fugaiji[l]][<span class="number">2</span>])/<span class="number">3.0</span>;</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;</span><br><span class="line">							kexuanxiang[i][j][k].lisandu=kexuanxiang[i][j][k].distancesum/kexuanxiang[i][j][k].fugaisum;</span><br><span class="line">							<span class="keyword">if</span>(kexuanxiang[i][j][k].sumweight&lt;T) &#123;</span><br><span class="line">								delete[i][j][k]=<span class="number">1</span>;</span><br><span class="line">								<span class="keyword">for</span>(<span class="type">int</span> m=<span class="number">0</span>;m&lt;date.nodes[i].childnum;m++) &#123;</span><br><span class="line">									<span class="keyword">for</span>(<span class="type">int</span> n=<span class="number">0</span>;n&lt;time.nodes[j].childnum;n++) &#123;</span><br><span class="line">										<span class="keyword">for</span>(<span class="type">int</span> o=<span class="number">0</span>;o&lt;laoren.nodes[o].childnum;o++) &#123;</span><br><span class="line">											delete[date.nodes[i].child[m]][time.nodes[j].child[n]][laoren.nodes[k].child[o]]=<span class="number">1</span>;</span><br><span class="line">										&#125;</span><br><span class="line">									&#125;</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">else</span> <span class="keyword">if</span>(kexuanxiang[i][j][k].lisandu&lt;=S) &#123;</span><br><span class="line">								<span class="keyword">if</span>(kexuanxiang[i][j][k].lisandu&lt;minlisandu) &#123;</span><br><span class="line">									besti=i;</span><br><span class="line">									bestj=j;</span><br><span class="line">									bestk=k;</span><br><span class="line">									minlisandu=kexuanxiang[i][j][k].lisandu;</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span>(besti==-<span class="number">1</span>&amp;&amp;bestj==-<span class="number">1</span>&amp;&amp;bestk==-<span class="number">1</span>) &#123;</span><br><span class="line">					System.out.println(<span class="string">&quot;没有满足主题值阈值和离散度阈值的聚类了&quot;</span>);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> System.out.println(<span class="string">&quot;聚类的结果为&quot;</span>+date.nodes[besti].data+time.nodes[bestj].data+laoren.nodes[bestk].data+kexuanxiang[besti][bestj][bestk].sumweight);</span><br><span class="line">				</span><br><span class="line">				fugaijilength=<span class="number">0</span>;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10000</span>;i++) &#123;</span><br><span class="line">					<span class="keyword">if</span>(kexuanxiang[besti][bestj][bestk].isFugai[i]==<span class="number">1</span>) &#123;</span><br><span class="line">						fugaiji[fugaijilength]=i;</span><br><span class="line">						fugaijilength++;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//</span></span><br><span class="line">		&#125;<span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">			System.out.println(e.getMessage());</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">package ex3;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+
+
+public class Test &#123;
+    
+    public static String dateToWeek(String datetime) &#123;
+        SimpleDateFormat f &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String[] weekDays &#x3D; &#123; &quot;周天&quot;, &quot;周一&quot;, &quot;周二&quot;, &quot;周三&quot;, &quot;周四&quot;, &quot;周五&quot;, &quot;周六&quot; &#125;;
+        Calendar cal &#x3D; Calendar.getInstance(); &#x2F;&#x2F; 获得一个日历
+        Date datet &#x3D; null;
+        try &#123;
+            datet &#x3D; f.parse(datetime);
+            cal.setTime(datet);
+        &#125; catch (ParseException e) &#123;
+            e.printStackTrace();
+        &#125;
+        int w &#x3D; cal.get(Calendar.DAY_OF_WEEK) - 1; &#x2F;&#x2F; 指示一个星期中的某天。
+        if (w &lt; 0)
+            w &#x3D; 0;
+        return weekDays[w];
+    &#125;
+    public static void main(String[] args) &#123;
+        System.out.println(Test.dateToWeek(&quot;2019-5-14&quot;));
+        &#x2F;&#x2F; TODO Auto-generated method stub
+        try &#123;
+            &#x2F;&#x2F;读入数据
+            BufferedReader br&#x3D;new BufferedReader(new FileReader(&quot;H:&#x2F;laoren.txt&quot;));
+            String s;
+            &#x2F;&#x2F;老人树的构建
+            PTree laoren &#x3D; new PTree();
+            while((s&#x3D;br.readLine())!&#x3D;null) &#123;
+                String []strArr&#x3D;s.split(&quot; ## &quot;);
+                laoren.insert(strArr[2],Integer.parseInt(strArr[1]));
+            &#125;
+            for(int i&#x3D;0;i&lt;laoren.n;i++) &#123;
+                System.out.println(laoren.nodes[i].parent+laoren.nodes[i].data);
+            &#125;
+            System.out.println(laoren.n);
+            &#x2F;&#x2F;日期树的构建
+            br&#x3D;new BufferedReader(new FileReader(&quot;H:&#x2F;date.txt&quot;));
+            PTree date &#x3D; new PTree();
+            while((s&#x3D;br.readLine())!&#x3D;null) &#123;
+                String []strArr&#x3D;s.split(&quot; ## &quot;);
+                date.insert(strArr[2],Integer.parseInt(strArr[1]));
+            &#125;
+            for(int i&#x3D;0;i&lt;date.n;i++) &#123;
+                System.out.println(date.nodes[i].parent+date.nodes[i].data);
+            &#125;
+            System.out.println(date.n);
+            &#x2F;&#x2F;时间树的构建
+            br&#x3D;new BufferedReader(new FileReader(&quot;H:&#x2F;time.txt&quot;));
+            PTree time &#x3D; new PTree();
+            while((s&#x3D;br.readLine())!&#x3D;null) &#123;
+                String []strArr&#x3D;s.split(&quot; ## &quot;);
+                time.insert(strArr[2],Integer.parseInt(strArr[1]));
+            &#125;
+            for(int i&#x3D;0;i&lt;time.n;i++) &#123;
+                System.out.println(time.nodes[i].parent+time.nodes[i].data);
+            &#125;
+            System.out.println(time.n);
+            &#x2F;&#x2F;基本数据项的读入
+            br&#x3D;new BufferedReader(new FileReader(&quot;H:&#x2F;purchasingLog.txt&quot;));
+            ArrayList&lt;Log&gt; log &#x3D; new ArrayList&lt;Log&gt;();&#x2F;&#x2F;log数组
+            while((s&#x3D;br.readLine())!&#x3D;null) &#123;
+                String []strArr&#x3D;s.split(&quot;, &quot;);
+                String tempdata1;
+                String tempdata2;
+                String tempdata3;
+                double tempweight;
+                &#x2F;&#x2F;??string转double是否正确??
+                tempweight&#x3D;Double.parseDouble(strArr[2]);
+                int age&#x3D;Integer.parseInt(strArr[1]);
+                &#x2F;&#x2F;假设没有错误的年龄数据，比如大于99或者小与60
+                if(age&lt;&#x3D;69) tempdata3&#x3D;&quot;活力老人&quot;;
+                else if(age&lt;&#x3D;79) tempdata3&#x3D;&quot;行动老人&quot;;
+                else if(age&lt;&#x3D;89) tempdata3&#x3D;&quot;地上心动老人&quot;;
+                else tempdata3&#x3D;&quot;床上心动老人&quot;;
+                &#x2F;&#x2F;时间戳的分隔与转换
+                String []strArr2&#x3D;strArr[0].split(&quot;T&quot;);
+                &#x2F;&#x2F;strArr2[0]日期信息
+                String []strArr3&#x3D;strArr2[1].split(&quot;:&quot;);&#x2F;&#x2F;19:54:14
+                int temptime&#x3D;Integer.parseInt(strArr3[0]);
+                if(temptime&lt;8) tempdata2&#x3D;&quot;早休闲&quot;;
+                else if(temptime&lt;&#x3D;11) tempdata2&#x3D;&quot;上午劳作时&quot;;
+                else if(temptime&#x3D;&#x3D;12) tempdata2&#x3D;&quot;午休闲&quot;;
+                else if(temptime&lt;&#x3D;16) tempdata2&#x3D;&quot;下午劳作时&quot;;
+                else tempdata2&#x3D;&quot;晚休闲&quot;;
+                tempdata1&#x3D;Test.dateToWeek(strArr2[0]);
+                Log temp&#x3D;new Log(tempdata1,tempdata2,tempdata3,tempweight);
+                log.add(temp);
+            &#125;
+            &#x2F;*for(int i&#x3D;0;i&lt;10;i++) &#123;
+                System.out.println(log.get(i).getData1()+&quot; &quot;+&quot; &quot;+log.get(i).getData2()+&quot; &quot;+log.get(i).getData3()+&quot; &quot;+log.get(i).getWeight());
+            &#125;
+            System.out.println(log.size());*&#x2F;
+            &#x2F;&#x2F;基本数据项的处理
+            double T&#x3D;0.3;
+            double S&#x3D;0.8;
+            
+            double logweightsum&#x3D;0;
+            for(int i&#x3D;0;i&lt;log.size();i++) &#123;
+                logweightsum&#x3D;logweightsum+log.get(i).getWeight();
+            &#125;
+            System.out.println(logweightsum);
+            T&#x3D;T*logweightsum;
+            System.out.println(&quot;T:&quot;+T+&quot;S:&quot;+S);
+            &#x2F;&#x2F;每棵树的节点数
+            int length_date&#x3D;date.n;
+            int length_time&#x3D;time.n;
+            int length_laoren&#x3D;laoren.n;
+            System.out.println(length_date+&quot; &quot;+length_time+&quot; &quot;+length_laoren);
+            &#x2F;&#x2F;待选抽象事件集合
+            XuanXiang  kexuanxiang[][][]&#x3D; new XuanXiang[length_date][length_time][length_laoren];
+            &#x2F;&#x2F;初始化kexuanxiang[i][j[[k]
+            for(int i&#x3D;0;i&lt;length_date;i++) &#123;
+                for(int j&#x3D;0;j&lt;length_time;j++) &#123;
+                    for(int k&#x3D;0;k&lt;length_laoren;k++) &#123;
+                        &#x2F;&#x2F;对象数组创建完后要对每一个数组对象new一下
+                        kexuanxiang[i][j][k]&#x3D;new XuanXiang();
+                        kexuanxiang[i][j][k].sumweight&#x3D;0.0;
+                        kexuanxiang[i][j][k].distancesum&#x3D;0.0;
+                        kexuanxiang[i][j][k].lisandu&#x3D;0.0;
+                        kexuanxiang[i][j][k].fugaisum&#x3D;0;
+                        &#x2F;&#x2F;idfugai
+                        &#x2F;&#x2F;isconsider
+                        &#x2F;&#x2F;d[][]
+                    &#125;
+                &#125;
+            &#125;
+            double minlisandu&#x3D;100;&#x2F;&#x2F;假设所有的松散度都大于100???设的比最大树高高就好
+            int besti&#x3D;-1,bestj&#x3D;-1,bestk&#x3D;-1;
+            System.out.println(&quot;bestvalue&quot;+besti+bestj+bestk);
+            int delete[][][]&#x3D;new int[length_date][length_time][length_laoren];&#x2F;&#x2F;存储剪枝节点delete[i][j][k]&#x3D;1,表示kexuanxiang[i][j][k]在之后的算法流程中不予考虑
+            for(int i&#x3D;0;i&lt;length_date;i++) &#123;
+                for(int j&#x3D;0;j&lt;length_time;j++) &#123;
+                    for(int k&#x3D;0;k&lt;length_laoren;k++) &#123;
+                        delete[i][j][k]&#x3D;0;
+                    &#125;
+                &#125;
+            &#125;
+            &#x2F;&#x2F;测试
+            &#x2F;*for(int i&#x3D;0;i&lt;date.n;i++) &#123;
+                for(int j&#x3D;0;j&lt;date.n;j++) &#123;
+                    System.out.println(i+&quot; &quot;+&quot; &quot;+j+&quot; &quot;+date.distance(i, j));
+                &#125;
+            &#125;*&#x2F;
+            &#x2F;&#x2F;求每个树的子节点
+            for(int i&#x3D;0;i&lt;length_date;i++) &#123;
+                date.child(i);
+            &#125;
+            for(int j&#x3D;0;j&lt;length_time;j++) &#123;
+                time.child(j);
+            &#125;
+            for(int k&#x3D;0;k&lt;length_laoren;k++) &#123;
+                laoren.child(k);
+            &#125;
+            
+            for(int i&#x3D;0;i&lt;length_date;i++) &#123;
+                for(int j&#x3D;0;j&lt;length_time;j++) &#123;
+                    for(int k&#x3D;0;k&lt;length_laoren;k++) &#123;
+                        if(delete[i][j][k]&#x3D;&#x3D;1) continue;&#x2F;&#x2F;剪枝
+                        for(int l&#x3D;0;l&lt;log.size();l++) &#123;
+                            if(date.distance(i,date.xuHao(log.get(l).getData1()))&#x3D;&#x3D;-1||time.distance(j,time.xuHao(log.get(l).getData2()))&#x3D;&#x3D;-1||laoren.distance(k,laoren.xuHao(log.get(l).getData3()))&#x3D;&#x3D;-1) &#123;
+                                kexuanxiang[i][j][k].isFugai[l]&#x3D;0;
+                                &#x2F;&#x2F;kexuanxiang[i][j][k]不覆盖log.get(l),距离也不需要考虑
+                            &#125;
+                            else &#123;
+                                kexuanxiang[i][j][k].isFugai[l]&#x3D;1;
+                                kexuanxiang[i][j][k].d[l][0]&#x3D;date.distance(i, date.xuHao(log.get(l).getData1()));
+                                kexuanxiang[i][j][k].d[l][1]&#x3D;time.distance(j,time.xuHao(log.get(l).getData2()));
+                                kexuanxiang[i][j][k].d[l][2]&#x3D;laoren.distance(k,laoren.xuHao(log.get(l).getData3()));
+                                kexuanxiang[i][j][k].sumweight&#x3D;kexuanxiang[i][j][k].sumweight+log.get(l).getWeight();
+                                kexuanxiang[i][j][k].distancesum&#x3D;kexuanxiang[i][j][k].distancesum+(kexuanxiang[i][j][k].d[l][0]+kexuanxiang[i][j][k].d[l][1]+kexuanxiang[i][j][k].d[l][2])&#x2F;3.0;
+                                kexuanxiang[i][j][k].fugaisum++;
+                                
+                            &#125;
+                        &#125;
+                        &#x2F;&#x2F;得到kexuanxiang的fugaisum和sumweight, 现在计算lisandu
+                        kexuanxiang[i][j][k].lisandu&#x3D;kexuanxiang[i][j][k].distancesum&#x2F;(double)kexuanxiang[i][j][k].fugaisum;
+                        &#x2F;&#x2F;判断kexuanxiang的S和T是否达到要求
+                        if(kexuanxiang[i][j][k].sumweight&lt;T) &#123;&#x2F;&#x2F;如果主题值阈值达不到要求，对ijk的子节点进行剪枝
+                            delete[i][j][k]&#x3D;1;
+                            for(int m&#x3D;0;m&lt;date.nodes[i].childnum;m++) &#123;
+                                for(int n&#x3D;0;n&lt;time.nodes[j].childnum;n++) &#123;
+                                    for(int o&#x3D;0;o&lt;laoren.nodes[o].childnum;o++) &#123;
+                                        delete[date.nodes[i].child[m]][time.nodes[j].child[n]][laoren.nodes[k].child[o]]&#x3D;1;
+                                    &#125;
+                                &#125;
+                            &#125;
+                        &#125;
+                        else if(kexuanxiang[i][j][k].lisandu&lt;&#x3D;S) &#123;
+                            if(kexuanxiang[i][j][k].lisandu&lt;minlisandu) &#123;
+                                besti&#x3D;i;
+                                bestj&#x3D;j;
+                                bestk&#x3D;k;
+                                minlisandu&#x3D;kexuanxiang[i][j][k].lisandu;
+                            &#125;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+            System.out.println(besti);
+            if(besti&#x3D;&#x3D;-1&amp;&amp;bestj&#x3D;&#x3D;-1&amp;&amp;bestk&#x3D;&#x3D;-1) &#123;
+                System.out.println(&quot;没有满足主题值阈值和离散度阈值的聚类&quot;);
+                System.exit(0);
+            &#125;
+            else System.out.println(&quot;一次聚类的结果为&quot;+date.nodes[besti].data+time.nodes[bestj].data+laoren.nodes[bestk].data+kexuanxiang[besti][bestj][bestk].sumweight);
+            int fugaiji[]&#x3D;new int [10000];&#x2F;&#x2F;假设当前聚类的最优解的覆盖log的数目不超过10000
+            int fugaijilength&#x3D;0;
+            &#x2F;&#x2F;存储当前聚类得到的最优解的覆盖集
+            for(int i&#x3D;0;i&lt;10000;i++) &#123;
+                if(kexuanxiang[besti][bestj][bestk].isFugai[i]&#x3D;&#x3D;1) &#123;
+                    fugaiji[fugaijilength]&#x3D;i;
+                    fugaijilength++;
+                &#125;
+            &#125;
+            &#x2F;&#x2F;多次聚类
+            while(true) &#123;
+                minlisandu&#x3D;100;
+                besti&#x3D;-1;
+                bestj&#x3D;-1;
+                bestk&#x3D;-1;
+                for(int i&#x3D;0;i&lt;length_date;i++) &#123;
+                    for(int j&#x3D;0;j&lt;length_time;j++) &#123;
+                        for(int k&#x3D;0;k&lt;length_laoren;k++) &#123;
+                            if(delete[i][j][k]&#x3D;&#x3D;1) continue;&#x2F;&#x2F;剪枝
+                            for(int l&#x3D;0;l&lt;fugaijilength;l++) &#123;
+                                if(kexuanxiang[i][j][k].isFugai[fugaiji[l]]&#x3D;&#x3D;1) &#123;
+                                    &#x2F;&#x2F;???idfugai要修改吗??
+                                    kexuanxiang[i][j][k].isFugai[fugaiji[l]]&#x3D;0;
+                                    kexuanxiang[i][j][k].fugaisum--;
+                                    kexuanxiang[i][j][k].sumweight&#x3D;kexuanxiang[i][j][k].sumweight-log.get(fugaiji[l]).getWeight();
+                                    kexuanxiang[i][j][k].distancesum&#x3D;kexuanxiang[i][j][k].distancesum-(kexuanxiang[i][j][k].d[fugaiji[l]][0]+kexuanxiang[i][j][k].d[fugaiji[l]][1]+kexuanxiang[i][j][k].d[fugaiji[l]][2])&#x2F;3.0;
+                                &#125;
+                            &#125;
+                            kexuanxiang[i][j][k].lisandu&#x3D;kexuanxiang[i][j][k].distancesum&#x2F;kexuanxiang[i][j][k].fugaisum;
+                            if(kexuanxiang[i][j][k].sumweight&lt;T) &#123;
+                                delete[i][j][k]&#x3D;1;
+                                for(int m&#x3D;0;m&lt;date.nodes[i].childnum;m++) &#123;
+                                    for(int n&#x3D;0;n&lt;time.nodes[j].childnum;n++) &#123;
+                                        for(int o&#x3D;0;o&lt;laoren.nodes[o].childnum;o++) &#123;
+                                            delete[date.nodes[i].child[m]][time.nodes[j].child[n]][laoren.nodes[k].child[o]]&#x3D;1;
+                                        &#125;
+                                    &#125;
+                                &#125;
+                            &#125;
+                            else if(kexuanxiang[i][j][k].lisandu&lt;&#x3D;S) &#123;
+                                if(kexuanxiang[i][j][k].lisandu&lt;minlisandu) &#123;
+                                    besti&#x3D;i;
+                                    bestj&#x3D;j;
+                                    bestk&#x3D;k;
+                                    minlisandu&#x3D;kexuanxiang[i][j][k].lisandu;
+                                &#125;
+                            &#125;
+                        &#125;
+                    &#125;
+                &#125;
+                if(besti&#x3D;&#x3D;-1&amp;&amp;bestj&#x3D;&#x3D;-1&amp;&amp;bestk&#x3D;&#x3D;-1) &#123;
+                    System.out.println(&quot;没有满足主题值阈值和离散度阈值的聚类了&quot;);
+                    break;
+                &#125;
+                else System.out.println(&quot;聚类的结果为&quot;+date.nodes[besti].data+time.nodes[bestj].data+laoren.nodes[bestk].data+kexuanxiang[besti][bestj][bestk].sumweight);
+                
+                fugaijilength&#x3D;0;
+                for(int i&#x3D;0;i&lt;10000;i++) &#123;
+                    if(kexuanxiang[besti][bestj][bestk].isFugai[i]&#x3D;&#x3D;1) &#123;
+                        fugaiji[fugaijilength]&#x3D;i;
+                        fugaijilength++;
+                    &#125;
+                &#125;
+            &#125;
+            &#x2F;&#x2F;
+        &#125;catch(IOException e) &#123;
+            System.out.println(e.getMessage());
+        &#125; 
+    &#125;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h1 id="实验结果及结论分析："><a href="#实验结果及结论分析：" class="headerlink" title="实验结果及结论分析："></a>实验结果及结论分析：</h1><p>遍历kexuanxiang对象数组，与log数组中的各条记录进行比较判断是否覆盖，如果能覆盖就计算离散度和主题值阈值，判断主题值阈值和离散度是否达标如果达标就与最小达标离散度进行比较，更新当前的最优解。循环结束后输出最优的覆盖集，一次聚类结束。多次聚类时，由于在第一次计算时已经计算好了kexuanxiang对象数组的覆盖集，离散度，主题值，再次聚类只需在上次聚类的结果上剔除部分已经被聚类掉的数据即可。判断主题值阈值是否达标时，如果不达标，计算当前对象数组的各个节点的孩子以及孙子节点将他们从循环中剔除，可以证明如果nodei和nodej以及nodek组成的节点主题值阈值不够，则他们各自的子节点所形成的子节点在多次聚类中均无法达到主题值阈值的要求，故不予考虑。</p>
 <p>实验的输出如下：</p>
@@ -201,7 +723,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/" data-id="cl4ecwtqq00345vx35j9y392m" data-title="层次化聚类" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/03/12/%E5%B1%82%E6%AC%A1%E5%8C%96%E8%81%9A%E7%B1%BB/" data-id="cl4ed6u3i001q1ex3eu2y7owr" data-title="层次化聚类" class="article-share-link">Share</a>
       
       
       
@@ -316,7 +838,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 RunZhe He<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

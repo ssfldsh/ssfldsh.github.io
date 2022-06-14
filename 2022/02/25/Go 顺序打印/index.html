@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>Go并发：控制多个线程中部分功能的执行顺序 | Hexo</title>
+  <title>Go并发：控制多个线程中部分功能的执行顺序 | RunZhe He&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="题目一：顺序打印 要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，  要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051package mainim">
+  <meta name="description" content="题目一：顺序打印 要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，  要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前 package main  import (     &quot;fmt&quot;     &quot;sync&quot;     &quot;time&quot; )  func main() &amp;#123;     var wg sync.WaitGroup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go并发：控制多个线程中部分功能的执行顺序">
 <meta property="og:url" content="http://example.com/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="题目一：顺序打印 要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，  要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051package mainim">
+<meta property="og:site_name" content="RunZhe He&#39;s Blog">
+<meta property="og:description" content="题目一：顺序打印 要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，  要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前 package main  import (     &quot;fmt&quot;     &quot;sync&quot;     &quot;time&quot; )  func main() &amp;#123;     var wg sync.WaitGroup">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-25T04:02:35.000Z">
 <meta property="article:modified_time" content="2022-06-14T14:18:08.624Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="RunZhe He">
 <meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="RunZhe He's Blog" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -47,7 +47,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">RunZhe He&#39;s Blog</a>
       </h1>
       
     </div>
@@ -103,7 +103,57 @@
         <p>题目一：顺序打印</p>
 <p>要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，</p>
 <p> 要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	wg.Add(<span class="number">3</span>)</span><br><span class="line">	nowBThreadCanRun := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>)</span><br><span class="line">	nowCThreadCanRun := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">// ３、打印A不需要依赖于谁，直接打印即可</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;A&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		nowBThreadCanRun &lt;- <span class="number">1</span></span><br><span class="line">		<span class="comment">// A线程阻塞时，可以执行B线程，体现了多线程的意义</span></span><br><span class="line">		time.Sleep(<span class="number">1000</span> * time.Millisecond)</span><br><span class="line">		wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">//　２、在A线程和B线程中使用使用nowBThreadCanRun，使得A线程中的打印操作发生在B线程之前</span></span><br><span class="line">		&lt;-nowBThreadCanRun</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;B&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		nowCThreadCanRun &lt;- <span class="number">2</span></span><br><span class="line">		time.Sleep(<span class="number">1000</span> * time.Millisecond)</span><br><span class="line">		wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">//　２、在B线程和C线程中使用使用nowCThreadCanRun，使得B线程中的打印操作发生在C线程之前</span></span><br><span class="line">		&lt;-nowCThreadCanRun</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;C&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	time.Sleep(<span class="number">100</span> * time.Millisecond)</span><br><span class="line">	fmt.Println(<span class="string">&quot;main thread end&quot;</span>)</span><br><span class="line">	<span class="comment">// 使用waitGroup阻塞main线程，防止main线程过早执行结束</span></span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不使用多线程也能实现顺序打印ABC的效果，但是因为在print过程中，加入了很多阻塞cpu的操作（如sleep）</span></span><br><span class="line"><span class="comment">// 使得以非并发方式实现的代码运行时间很长：至少大于代码中所有sleep的时间的总和：</span></span><br><span class="line"><span class="comment">// 以多线程方式实现的顺序打印ABC的代码运行时间为1.115s左右，比顺序执行要快，顺序执行的话，3个sleep操作就至少需要执行2.1s</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+    <span class="token string">"sync"</span>
+    <span class="token string">"time"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
+    wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+    nowBThreadCanRun <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    nowCThreadCanRun <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// ３、打印A不需要依赖于谁，直接打印即可</span>
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        nowBThreadCanRun <span class="token operator">&lt;-</span> <span class="token number">1</span>
+        <span class="token comment">// A线程阻塞时，可以执行B线程，体现了多线程的意义</span>
+        time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
+        wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//　２、在A线程和B线程中使用使用nowBThreadCanRun，使得A线程中的打印操作发生在B线程之前</span>
+        <span class="token operator">&lt;-</span>nowBThreadCanRun
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        nowCThreadCanRun <span class="token operator">&lt;-</span> <span class="token number">2</span>
+        time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
+        wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//　２、在B线程和C线程中使用使用nowCThreadCanRun，使得B线程中的打印操作发生在C线程之前</span>
+        <span class="token operator">&lt;-</span>nowCThreadCanRun
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"main thread end"</span><span class="token punctuation">)</span>
+    <span class="token comment">// 使用waitGroup阻塞main线程，防止main线程过早执行结束</span>
+    wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 不使用多线程也能实现顺序打印ABC的效果，但是因为在print过程中，加入了很多阻塞cpu的操作（如sleep）</span>
+<span class="token comment">// 使得以非并发方式实现的代码运行时间很长：至少大于代码中所有sleep的时间的总和：</span>
+<span class="token comment">// 以多线程方式实现的顺序打印ABC的代码运行时间为1.115s左右，比顺序执行要快，顺序执行的话，3个sleep操作就至少需要执行2.1s</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -111,7 +161,47 @@
 <p>现在要求修改代码，使得：</p>
 <p>A和B交替打印：</p>
 <p>具体规则：打印一个A后才能打印一个B；打印一个B后才能打印一个A;A先被打印。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// const声明以及赋值:</span></span><br><span class="line"><span class="keyword">const</span> looptime <span class="type">int</span> = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	wg.Add(<span class="number">2</span>)</span><br><span class="line">	start := time.Now()</span><br><span class="line">	<span class="comment">// 交替打印A、B，使用1个或者2个cahnnel来实现:</span></span><br><span class="line">	canPrintFoo := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">	canPrintBar := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">	<span class="comment">// 在A、B两个线程中引入：canPrintA channel使得对A的打印发生在B之前：</span></span><br><span class="line">	<span class="comment">// 在A、B两个线程中引入：canPrintB channel使得对B的打印发生在A之前：</span></span><br><span class="line">	<span class="comment">// 在创建A、B两个线程前先 canPrintA channel里注入数据。</span></span><br><span class="line">	canPrintFoo &lt;- <span class="number">0</span></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; looptime; i++ &#123;</span><br><span class="line">			&lt;-canPrintFoo</span><br><span class="line">			fmt.Print(<span class="string">&quot;foo&quot;</span>)</span><br><span class="line">			canPrintBar &lt;- <span class="number">0</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; looptime; i++ &#123;</span><br><span class="line">			&lt;-canPrintBar</span><br><span class="line">			fmt.Print(<span class="string">&quot;bar&quot;</span>)</span><br><span class="line">			canPrintFoo &lt;- <span class="number">0</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Println(<span class="string">&quot;the main function has been run:&quot;</span>, time.Since(start))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+    <span class="token string">"sync"</span>
+    <span class="token string">"time"</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// const声明以及赋值:</span>
+<span class="token keyword">const</span> looptime <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">100</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
+    wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+    start <span class="token operator">:=</span> time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// 交替打印A、B，使用1个或者2个cahnnel来实现:</span>
+    canPrintFoo <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    canPrintBar <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment">// 在A、B两个线程中引入：canPrintA channel使得对A的打印发生在B之前：</span>
+    <span class="token comment">// 在A、B两个线程中引入：canPrintB channel使得对B的打印发生在A之前：</span>
+    <span class="token comment">// 在创建A、B两个线程前先 canPrintA channel里注入数据。</span>
+    canPrintFoo <span class="token operator">&lt;-</span> <span class="token number">0</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> looptime<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">&lt;-</span>canPrintFoo
+            fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span>
+            canPrintBar <span class="token operator">&lt;-</span> <span class="token number">0</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">defer</span> wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> looptime<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">&lt;-</span>canPrintBar
+            fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"bar"</span><span class="token punctuation">)</span>
+            canPrintFoo <span class="token operator">&lt;-</span> <span class="token number">0</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">defer</span> wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"the main function has been run:"</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span><span class="token function">Since</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>多线程程序适合在I&#x2F;O密集型应用中使用，当一个线程处于I&#x2F;O状态时，CPU是空闲的，可以被用来执行其他线程。</p>
 <p>大部分网络应用都是I&#x2F;O密集型的，适合使用并发优化。</p>
@@ -125,7 +215,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" data-id="cl4ecwtq900075vx3cc8bcj7p" data-title="Go并发：控制多个线程中部分功能的执行顺序" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" data-id="cl4ed6u3400031ex32fwmey9r" data-title="Go并发：控制多个线程中部分功能的执行顺序" class="article-share-link">Share</a>
       
       
       
@@ -240,7 +330,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 John Doe<br>
+      &copy; 2022 RunZhe He<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
