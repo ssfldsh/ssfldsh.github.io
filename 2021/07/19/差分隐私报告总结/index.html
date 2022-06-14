@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>差分隐私汇报总结 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="何润喆—差分隐私保护 一、 研讨厅汇报基本情况： 这是我第一次在研讨厅上汇报，汇报的主题是“差分隐私保护”。我主要介绍了以下几个方面。首先，我简短的描述了隐私保护的意义。其次，简单介绍了三种主流的隐私保护方法：基于加密，基于变形和基于噪声。然后分别介绍了两种差分隐私：本地化差分隐私和中心化差分隐私。之后又介绍了中心化差分隐私中的随机扰动算法和中心化差分隐私中的Laplace分布，以及指数分布。最后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="差分隐私汇报总结">
+<meta property="og:url" content="http://example.com/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="何润喆—差分隐私保护 一、 研讨厅汇报基本情况： 这是我第一次在研讨厅上汇报，汇报的主题是“差分隐私保护”。我主要介绍了以下几个方面。首先，我简短的描述了隐私保护的意义。其次，简单介绍了三种主流的隐私保护方法：基于加密，基于变形和基于噪声。然后分别介绍了两种差分隐私：本地化差分隐私和中心化差分隐私。之后又介绍了中心化差分隐私中的随机扰动算法和中心化差分隐私中的Laplace分布，以及指数分布。最后">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-19T11:14:01.000Z">
+<meta property="article:modified_time" content="2021-07-19T11:17:35.286Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="差分隐私">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-差分隐私报告总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T11:14:01.000Z" itemprop="datePublished">2021-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      差分隐私汇报总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>何润喆—差分隐私保护</p>
+<p>一、 研讨厅汇报基本情况：</p>
+<p>这是我第一次在研讨厅上汇报，汇报的主题是“差分隐私保护”。我主要介绍了以下几个方面。首先，我简短的描述了隐私保护的意义。其次，简单介绍了三种主流的隐私保护方法：基于加密，基于变形和基于噪声。然后分别介绍了两种差分隐私：本地化差分隐私和中心化差分隐私。之后又介绍了中心化差分隐私中的随机扰动算法和中心化差分隐私中的Laplace分布，以及指数分布。最后总结了差分隐私的优缺点，并对未来可以改进的地方做了一个简单的介绍。</p>
+<span id="more"></span>
+
+<p>二、 提问环节：</p>
+<p>****苏申老师****听的很认真，并就我的汇报内容提出了若干问题和看法。可能由于我们讨论的时间比较长，导致除了最后周老师对我的汇报提出了一点意见之外，没有其他老师和同学对我进行提问。</p>
+<p>苏申老师的提问很尖锐，也让我意识到自己思维上的不足。对于汇报的内容，我并没有完全弄懂，在一些问题上考虑的也不是很周全。</p>
+<p>苏申老师首先就本地化差分隐私的概念对我进行了提问。我复述了PPT上的内容，对本地化差分隐私的概念进行了详细的解释。就数据收集者是否可能和接受调查的人合谋获取参数C进行了讨论。答案是C是可以公开的一个值，不用担心它的泄露问题。苏申老师对本地化差分隐私的实用性给予了肯定，同时提出了自己的疑问：“既然本地化差分隐私的数据实用性这么好，那为什么我们还有使用中心化差分隐私呢？”我就二者定义上的区别进行了阐述，但是苏老师认为没有涉及到问题的核心。数据的可用性和个人隐私的保护程度才是我们最关心的问题。中心化差分隐私比本地化差分隐私到底好在哪里才是关键。在我阅读的文章中确实没有将二者放在一起讨论的，对于苏老师的问题我一时想不出来。我们讨论的一个可能原因是数据量很大时本地化差分隐私才可能比较实用，数据量小的时候不太行。但是苏老师认为这不是关键原因。我接着阐述了自己的看法，认为随机扰动算法并不能还原所有的统计量，苏老师问我具体什么类型的统计量能还原，什么样的不能还原。我没有答上来，我认识到自己对于很多细节没有考虑清楚，只是凭感觉得出了结论，有一些不严谨的地方。对于本地化差分隐私和中心化差分隐私的优劣，我决定从以下几个方面入手继续学习研究：</p>
+<p>1、 我读到的文章中没有关于本地化差分隐私中对连续型数据的处理，对于本地化差分隐私能否处理连续型数据这是一个问题。同时，随机扰动算法的具体细节以及和中心化差分隐私中用于对离散型数据的处理的指数噪声的区别值得进一步深入。</p>
+<p>2、 对于中心化差分隐私的应用实例值得进一步学习。</p>
+<p>3、 对于Dwork的原作以及差分隐私最新的发展情况值得进一步学习。</p>
+<p>****周晓方老师****认为PPT的结构有些混乱，各部分的结构需要调整一下。周老师建议我最好从大家比较熟悉的k-匿名讲起，逐渐过渡到差分隐私。另外关于具体噪声参数的计算不太好说清楚，似乎也不是人们最关心的，可以不作为本次汇报的重点。但是，各种噪声添加后数据的可用性如何，该如何衡量应当更加深入。最后周老师让我讲述一下Google和Apple的系统里差分隐私的一个实现过程。我比较着急，在细节上其实有点错误。</p>
+<p>三、 自我总结：</p>
+<p>我在最初准备这个课题时，在网上接触到的相关文章和讨论非常少，而且大部分文章质量很差，这让我有点不知所措。但是随着进一步的探索，我发现了越来越多有价值的文章和信息渠道，这对我的信息检索能力有很大的提升。同时，我也深感学好英语的重要性，因为国外在该方向的相关研究要更多一点。我没有拜读差分隐私的原作者Dwork的原文让我走了很多弯路。差分隐私是一个新兴方向，权威的文章比较少，阅读原作者的论文还是很有必要的，网上的文章很多都有一定程度上的理解偏差，对初学者产生了误导。</p>
+<p>刚开始我觉得这个方向好难懂，怎么可能在25分钟之内和别人讲清楚。但随着学习思考的进一步深入，我对差分隐私的理解越来越深刻，对其中的来龙去脉也更加清楚。方老师说的“想要给别人一杯水，首先，你自己要有一桶水”很有道理。你没法让别人挺清楚你讲的东西，很多时候并不是你所讲的东西有多深奥，或者你比别人多聪明，而是你自己也没有透彻的理解这个问题。方班研讨厅是一个很好的锻炼机会。如何搞清楚一个方向，并把一个别人不知道，甚至有点高深的东西讲清楚，讲明白是一门学问，很锻炼人的思维以及表达能力，表达技巧。</p>
+<p>演讲的情绪，语气很重要。有的同学演讲的时候很大方自信，能带动起大家的兴趣。相反，有的人声音很小，一直盯着PPT看，没有和观众的互动，让人昏昏欲睡。可能是第一次上台演讲，我语速很快，有些亢奋，没有给观众一个很好的思考和消化信息时间。对于PPT内容，没有做到详略得当，没有厘清重点，这些都是需要改进的地方。</p>
+<p>苏申老师问的问题很尖锐，有待我进一步思考。苏申老师的问的几个问题值得我反复咀嚼。一个是不要盲从书上的定义和讲述的内容，要有自己的思考。另外，不同方法分别解决了什么样的问题，以及它们各自的优缺点是我们思考的重点。为什么会有两种差分隐私，它们各自的优缺点应当是思考和汇报的重点，具体的细节对于自己理解这个东西很重要，但是并不总是听众关心的。解决了什么问题，解决的怎么样，又带来了哪些新的问题，和其他方法相比有什么优缺点才是主线，其他只是辅助手段。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/19/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E6%8A%A5%E5%91%8A%E6%80%BB%E7%BB%93/" data-id="cl4ecwtqs003e5vx33vrn1w32" data-title="差分隐私汇报总结" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/07/19/ST-hadoop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          st-hadoop
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/07/18/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">差分隐私保护</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

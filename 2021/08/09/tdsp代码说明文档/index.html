@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>从最短路径到最快路径的求解（tdsp代码说明文档） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="代码下载代码下载：ssfldsh&#x2F;tdsp (github.com) 数据预处理原始路网数据：  处理后的路网数据：格式： 每行10列：分别是 路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。    导入Qgis，做数据可视化，观察数据分布：  是一个拥有接近10000条边，10000个顶点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从最短路径到最快路径的求解（tdsp代码说明文档）">
+<meta property="og:url" content="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="代码下载代码下载：ssfldsh&#x2F;tdsp (github.com) 数据预处理原始路网数据：  处理后的路网数据：格式： 每行10列：分别是 路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。    导入Qgis，做数据可视化，观察数据分布：  是一个拥有接近10000条边，10000个顶点">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/wpsV5MBi9.jpg">
+<meta property="og:image" content="http://example.com/img/wpsfryxsI.jpg">
+<meta property="og:image" content="http://example.com/img/1637573646427-16c5e92c-4edf-46f9-b29f-ecf9e53fa498.png">
+<meta property="og:image" content="http://example.com/img/wpsj3fxi3.jpg">
+<meta property="og:image" content="http://example.com/img/wps5t3b0K.jpg">
+<meta property="og:image" content="http://example.com/img/wpsAwwVz6.jpg">
+<meta property="og:image" content="http://example.com/img/wpsHhMwBN.jpg">
+<meta property="og:image" content="http://example.com/img/wps2CeHjv.jpg">
+<meta property="og:image" content="http://example.com/img/wpsDhy1fr.jpg">
+<meta property="og:image" content="http://example.com/img/1637671022197-a6707093-6d27-45b4-9233-f01337223ecb.png">
+<meta property="og:image" content="http://example.com/img/1637671812541-01a177c6-61ce-488c-8afa-5f14570ba693.png">
+<meta property="og:image" content="http://example.com/img/image-20220222181532925.png">
+<meta property="og:image" content="http://example.com/img/image-20220222181633550.png">
+<meta property="og:image" content="http://example.com/img/image-20220222194207837.png">
+<meta property="article:published_time" content="2021-08-09T14:30:01.000Z">
+<meta property="article:modified_time" content="2022-06-14T15:37:35.558Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="最快路径">
+<meta property="article:tag" content="最短路径">
+<meta property="article:tag" content="Dijkstra">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/wpsV5MBi9.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-tdsp代码说明文档" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" class="article-date">
+  <time class="dt-published" datetime="2021-08-09T14:30:01.000Z" itemprop="datePublished">2021-08-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      从最短路径到最快路径的求解（tdsp代码说明文档）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><p>代码下载：<a target="_blank" rel="noopener" href="https://github.com/ssfldsh/tdsp">ssfldsh&#x2F;tdsp (github.com)</a></p>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="原始路网数据："><a href="#原始路网数据：" class="headerlink" title="原始路网数据："></a>原始路网数据：</h2><p><img src="/img/wpsV5MBi9.jpg" alt="img"> </p>
+<h2 id="处理后的路网数据："><a href="#处理后的路网数据：" class="headerlink" title="处理后的路网数据："></a>处理后的路网数据：</h2><p>格式：</p>
+<p>每行10列：分别是</p>
+<p>路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。</p>
+<img src="/img/wpsfryxsI.jpg" alt="img" style="zoom:25%;" /> 
+
+<p>导入Qgis，做数据可视化，观察数据分布：</p>
+<p><img src="/img/1637573646427-16c5e92c-4edf-46f9-b29f-ecf9e53fa498.png" alt="img"></p>
+<p>是一个拥有接近10000条边，10000个顶点的小型地图数据集。包含北京中心的部分主要路段。</p>
+<span id="more"></span>
+
+<h2 id="原始速度文件："><a href="#原始速度文件：" class="headerlink" title="原始速度文件："></a>原始速度文件：</h2><p>（2016年7月21日 07: 10）该区域各条路段的（路段id，路段速度，其它）</p>
+<img src="/img/wpsj3fxi3.jpg" alt="img" style="zoom:33%;" /> 
+
+<p> 速度单位m&#x2F;s，非真实数据。</p>
+<p><em><strong>*处理后的速度文件：*</strong></em></p>
+<p>格式：每行4列，路段id，1：代表该行只有1个速度数据,（0,20.25）表示to时刻在编号为502798的路段上行驶的出租车的平均速度为20.25m&#x2F;s。</p>
+<img src="/img/wps5t3b0K.jpg" alt="img" style="zoom: 25%;" /> 
+
+<h1 id="数据导入："><a href="#数据导入：" class="headerlink" title="数据导入："></a>数据导入：</h1><p>修改数据结构，导入地图数据。形成了一个包含10865个顶点，12946条边的图。这里定义了三个结构体，一个Node结构体，一个Road结构体，一个lpf结构体。</p>
+<p>Node存储的是路网节点相关的信息：如nodeID，以该点为起点的道路的id，等等。</p>
+<p>Road struct存储的是每条道路相关的信息：如roadID，道路起点id，道路终点id，道路长度，道路类型，道路级别等信息。每一个Node struct还包含一个lpf struct结构体。</p>
+<p>受天气，早高峰，晚高峰等因素的影响，不同时刻通过某条道路所需要的时间可能不同。造成了路网结构的动态变化。关于这点代码里有相关体现，在lpf struct里记载相关信息。</p>
+<p>lpf struct中的lpf是线性分段函数linearPiecewiseFunction的缩写，它保存了不同时刻通过某条道路所需要的时间vector&lt;pair&lt;t1：到达该条路网起点的时刻,t2：该时刻下通过该条路网所需的时间&gt;&gt;。</p>
+<p>保存任意时刻通过某条道路所需要的时间是不现实的，推荐以5分钟为间隔保存有限个通过该条道路所需的时间，其他时刻通过线性插值法计算。</p>
+<p>如图，只在lpf struct中保存这5个拐点的数据，其他时刻的数据可以由这5个拐点的数据被粗略的计算出来。想要提高预测精度，就需要保存更多更加密集的拐点，这需要额外的存储空间去保存这些信息。</p>
+<img src="/img/wpsAwwVz6.jpg" alt="img" style="zoom: 25%;" />
+
+<p>导入每条边的速度信息发现，原始速度曲线只记录了11671条路网的速度，还有1175条路网没有速度信息，为了在执行最短路算法时不报错，暂时给这些没有速度信息赋予了一个常数值10作为他们的路网速度。（有很多路网数据缺失值填充方法，这里用的默认值）。速度的单位：m&#x2F;s  路段长度单位：m</p>
+<p>采用Map以节点id为key去索引node struct，以roadID去索引road struct。</p>
+<h1 id="代码运行："><a href="#代码运行：" class="headerlink" title="代码运行："></a>代码运行：</h1><p>将代码下载到ubuntu或者Linux系统中。</p>
+<p>进入代码文件目录，鼠标右键空白处，选择open in terminal</p>
+<p><img src="/img/wpsHhMwBN.jpg" alt="img"> </p>
+<p>在命令行terminal中输入一下三条指令来编译运行代码：</p>
+<p>make clean</p>
+<p>make</p>
+<p>.&#x2F;test2hop</p>
+<p><img src="/img/wps2CeHjv.jpg" alt="img"> </p>
+<p>输出结果：</p>
+<p><img src="/img/wpsDhy1fr.jpg" alt="img"> </p>
+<p>之前的测试数据，搞错了单位，应该在原有结果上再除上3.6才是正确结果。</p>
+<h1 id="路网速度数据的获取"><a href="#路网速度数据的获取" class="headerlink" title="路网速度数据的获取"></a>路网速度数据的获取</h1><p>需要用深度学习相关的知识去动态预测未来一段时间内，通过某条道路相关的时间，将这些数据保存起来构造成一个分段线性函数去根据任意给定自变量（指到达该条道路起点的时刻t），计算任意时刻下通过该条道路所需的时间。</p>
+<p>关于路网速度预测相关的工作有很多，有很多该方向的论文，基本上都是通过一个两层的神经网络加上一些额外的知识（数据）去做预测。</p>
+<p>一层图卷积，如CNN去学习空间信息：如临近路段的速度对该路段的影响。</p>
+<p>一层循环神经网络，如RNN根据历史上不同时刻通过该条道路所需要的时间去预测未来某一时刻通过该条道路所需要的时间。</p>
+<p>天气，意外事故等影响路网速度预测的信息也会被编码进去来提高预测准确度。</p>
+<h1 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h1><p>采用斐波那契亚堆而不是一般的堆来实现Dijkstra算法，已在《算法导论》中记载，它能使Dijkstra算法的时间复杂度变为O(E+VlogV)。在我们使用的这个小型北京地图里，E约等于V，都是10000左右，也就是时间复杂度近乎O(VlogV)，比起O(V^2)的实现是一个比较大的提升。</p>
+<h1 id="结果验证"><a href="#结果验证" class="headerlink" title="结果验证"></a>结果验证</h1><p>统计速度文件的平均速度：</p>
+<p><img src="/img/1637671022197-a6707093-6d27-45b4-9233-f01337223ecb.png" alt="img"></p>
+<p>11.44m&#x2F;s（11.44*3.6km&#x2F;h）是比较合理的汽车行驶速度：</p>
+<p><img src="/img/1637671812541-01a177c6-61ce-488c-8afa-5f14570ba693.png" alt="img"></p>
+<p>输入起点坐标：海淀桥，终点坐标：方庄桥验证预测出来的路径和t0时刻出发从起点到终点的最短路径：</p>
+<img src="/img/image-20220222181532925.png" alt="image-20220222181532925" style="zoom:50%;" />
+
+<img src="/img/image-20220222181633550.png" alt="image-20220222181633550" style="zoom:50%;" />
+
+<p>运行程序，输出从起点到终点的路径（用途经的各个点的经纬度坐标表示）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">startNode endNode linestring</span><br><span class="line">536080 651109 &quot;LINESTRING (116.300060 39.984430,116.300260 39.983120,116.300390 39.982040,116.300410 39.981890,116.300490 39.980900,116.300520 39.980540,116.300820 39.977580,116.300870 39.976990,116.300870 39.976920,116.302770 39.972480,116.302980 39.972350,116.303520 39.972000,116.304160 39.971600,116.307140 39.967410,116.307210 39.966870,116.307390 39.965730,116.308010 39.962580,116.308530 39.959230,116.308730 39.958370,116.309140 39.956040,116.309390 39.952860,116.309520 39.951300,116.309550 39.950870,116.309570 39.950540,116.309640 39.949580,116.309670 39.949120,116.309770 39.947480,116.309800 39.947080,116.309810 39.946920,116.309850 39.946170,116.309860 39.946070,116.309930 39.945770,116.310010 39.945140,116.310050 39.944510,116.310370 39.942920,116.311030 39.942120,116.314580 39.940480,116.314990 39.940320,116.316330 39.939810,116.318510 39.939320,116.319470 39.939200,116.319730 39.939180,116.320550 39.939110,116.325530 39.938770,116.329690 39.938460,116.329980 39.938430,116.330490 39.938400,116.330770 39.938370,116.331620 39.938300,116.332040 39.938270,116.332260 39.938250,116.333070 39.938190,116.335700 39.938100,116.336570 39.938120,116.337260 39.938150,116.340590 39.938310,116.342150 39.938370,116.342660 39.938400,116.343130 39.938420,116.344050 39.938470,116.344600 39.938530,116.345090 39.938590,116.345590 39.938670,116.349190 39.939720,116.349740 39.939800,116.349860 39.939820,116.351720 39.940080,116.351790 39.940070,116.352510 39.940080,116.353260 39.940110,116.358140 39.944270,116.359040 39.944550,116.359630 39.944730,116.359870 39.944800,116.360680 39.945020,116.361760 39.945300,116.362280 39.945330,116.363070 39.945520,116.364730 39.945970,116.365600 39.946270,116.366420 39.946620,116.368370 39.947430,116.368520 39.947500,116.368600 39.947540,116.368970 39.947700,116.369070 39.947730,116.370240 39.948020,116.370330 39.948050,116.370980 39.948220,116.371350 39.948300,116.372000 39.948420,116.373360 39.948620,116.375000 39.948690,116.375600 39.948720,116.376280 39.948640,116.376650 39.948650,116.376730 39.948660,116.376850 39.948660,116.378280 39.948660,116.378920 39.948690,116.379010 39.948690,116.380010 39.948700,116.381940 39.948700,116.382930 39.948710,116.383500 39.948710,116.384720 39.948720,116.385170 39.948720,116.386790 39.948730,116.387340 39.948860,116.388920 39.948880,116.389350 39.948880,116.389820 39.948880,116.391130 39.948890,116.391630 39.948890,116.393760 39.948910,116.393840 39.948910,116.394460 39.948920,116.395470 39.948930,116.398550 39.948950,116.400610 39.948970,116.403580 39.948990,116.404430 39.949000,116.405000 39.949000,116.405260 39.949000,116.410650 39.949060,116.411660 39.949080,116.411710 39.949080,116.412600 39.949090,116.414210 39.949150,116.418190 39.949300,116.419050 39.949330,116.419990 39.949360,116.420390 39.949370,116.420760 39.949380,116.421650 39.949410,116.423110 39.949470,116.426010 39.949560,116.427600 39.949610,116.427880 39.949620,116.428010 39.949620,116.429440 39.949600,116.429780 39.949600,116.429980 39.949610,116.432770 39.949140,116.433400 39.949230,116.433530 39.949270,116.434170 39.949410,116.435940 39.949460,116.436400 39.949460,116.440380 39.949400,116.443710 39.949390,116.447750 39.951640,116.447780 39.951670,116.448620 39.952420,116.448980 39.952750,116.450020 39.953690,116.450440 39.954080,116.451770 39.955270,116.452970 39.956340,116.453660 39.956960,116.454040 39.957290,116.454270 39.957510,116.454980 39.958160,116.455040 39.957480,116.454750 39.957670,116.454570 39.957790,116.454350 39.957930,116.454280 39.957980,116.453990 39.958180,116.453690 39.958400,116.453430 39.958550,116.453330 39.958620,116.453050 39.958800,116.453040 39.958980,116.454220 39.959410,116.453330 39.958620,116.453190 39.958500,116.453130 39.958440,116.452280 39.957670,116.452520 39.958550,116.452900 39.958680,116.453190 39.958500,116.453290 39.958430,116.453480 39.958310,116.454050 39.957940,116.454240 39.957810,116.454440 39.957670,116.454580 39.957580,116.454870 39.957380,116.455390 39.957040,116.456040 39.956620,116.456180 39.956520,116.456590 39.956270,116.456920 39.956050,116.459220 39.954520,116.459470 39.954350,116.461180 39.952740,116.461400 39.952290,116.461360 39.951830,116.461380 39.951750,116.461640 39.951340,116.461670 39.951050,116.461690 39.947950,116.461670 39.944840,116.461660 39.944340,116.461660 39.943230,116.461660 39.941450,116.461650 39.938090,116.461650 39.937830,116.461650 39.937270,116.461650 39.936090,116.461660 39.933410,116.461600 39.930080,116.461400 39.929650,116.461400 39.929510,116.461390 39.929350,116.461390 39.928680,116.461370 39.927560,116.461360 39.926840,116.461360 39.926480,116.461360 39.926420,116.461350 39.924830,116.461330 39.923590,116.461340 39.923450,116.461330 39.923400,116.461330 39.923270,116.461330 39.923210,116.461320 39.923030,116.461430 39.920820,116.461440 39.919560,116.461880 39.919160,116.462200 39.919040,116.465620 39.917810,116.469010 39.916670,116.469560 39.916530,116.472530 39.915940,116.474550 39.915810,116.477940 39.915620,116.478020 39.915610,116.481080 39.915490,116.481770 39.915480,116.483390 39.915450,116.484730 39.915460,116.487500 39.915480,116.487640 39.915480,116.489130 39.915500,116.489520 39.915500,116.489760 39.914350,116.489760 39.914030,116.489750 39.913790,116.489750 39.913580,116.489750 39.912960,116.489750 39.912800,116.489750 39.912600,116.489750 39.912170,116.489750 39.911540,116.489750 39.911480,116.489740 39.911150,116.489720 39.911090,116.489700 39.910960,116.489380 39.910470,116.488550 39.909390,116.488490 39.909300,116.484310 39.908420,116.483650 39.908420,116.483470 39.908420,116.482530 39.908430,116.482100 39.908430,116.481780 39.908430,116.480960 39.908430,116.479810 39.908430,116.479100 39.908430,116.478580 39.908430,116.477910 39.908430,116.477800 39.908430,116.477020 39.908450,116.475570 39.908470,116.474800 39.908490,116.474230 39.908500,116.473610 39.908520,116.473320 39.908390,116.473160 39.908390,116.467920 39.908430,116.466010 39.908450,116.465840 39.908450,116.465560 39.908450,116.464200 39.908460,116.462720 39.908480,116.462360 39.908490,116.461210 39.908500,116.461490 39.909800,116.461670 39.909660,116.461630 39.907100,116.461610 39.906410,116.461600 39.905750,116.461580 39.905100,116.461560 39.904530,116.461530 39.903380,116.461410 39.897690,116.461400 39.896940,116.461390 39.896710,116.461380 39.896330,116.461360 39.895400,116.461300 39.890200,116.461280 39.889730,116.461280 39.889380,116.461270 39.889170,116.461250 39.887850,116.461230 39.887070,116.461130 39.881740,116.461130 39.881580,116.461100 39.880420,116.461090 39.880060,116.461110 39.879440,116.461100 39.879050,116.461100 39.878750,116.461050 39.876030,116.461030 39.875210,116.461010 39.874460,116.460990 39.874150,116.460980 39.873880,116.460960 39.872860,116.460910 39.870410,116.460900 39.869720,116.460880 39.869200,116.460660 39.868380,116.460480 39.868030,116.460410 39.867920,116.459780 39.867100,116.458780 39.866260,116.457300 39.865060,116.456520 39.864430,116.456220 39.864200,116.455440 39.863560,116.454910 39.863100,116.454250 39.862600,116.453840 39.862280,116.452750 39.861410,116.452690 39.861370,116.451760 39.860720,116.451530 39.860570,116.450570 39.860060,116.447820 39.859160,116.446250 39.858960,116.444310 39.858950,116.443650 39.858970,116.442920 39.858970,116.442420 39.858980,116.441650 39.859000,116.436430 39.858980,116.434980 39.858890,116.434220 39.858990,116.433800 39.858960,116.432990 39.858910,116.432320 39.858850)&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装postgreDB 和 对应的postgis插件，将lineString类型的数据转换成geom类型的数据，导入到postgis数据库中：</p>
+<img src="/img/image-20220222194207837.png" alt="image-20220222194207837" style="zoom:50%;" />
+
+
+
+<p>蓝色线段显示从起点到终点的路径，看起来还是很正确的。</p>
+<p>接下来检验算法输出的t0时刻从起点到终点所需的时间：</p>
+<p>算法输出的时间是50.872分钟，和使用高德地图得到的36分钟接近。但是两者输出的路径不一样。</p>
+<p>时间差异可能来自输入的速度文件，里面的时间可能不是很标准。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4ecwtqh00115vx3gk5iebox" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Redis跳表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Redis持久化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

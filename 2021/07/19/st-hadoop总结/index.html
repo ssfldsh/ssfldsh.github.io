@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>st-hadoop汇报总结 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="*何润喆**- ST-Hadoop: a MapReduce framework for spatio-temporal data* *一、过程反思* (一) 过程总结 *1、选题与准备* 我们小组目前正在研读京东城市计算团队的一篇论文“JUST: JD Urban Spatio-Temporal Data Engine”，主要介绍了该团队的一款时空数据处理引擎JUST，恰好与我们小组的研究方向相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="st-hadoop汇报总结">
+<meta property="og:url" content="http://example.com/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="*何润喆**- ST-Hadoop: a MapReduce framework for spatio-temporal data* *一、过程反思* (一) 过程总结 *1、选题与准备* 我们小组目前正在研读京东城市计算团队的一篇论文“JUST: JD Urban Spatio-Temporal Data Engine”，主要介绍了该团队的一款时空数据处理引擎JUST，恰好与我们小组的研究方向相">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/wps2G4Ry6.jpg">
+<meta property="og:image" content="http://example.com/img/wpsRwZyyu.jpg">
+<meta property="og:image" content="http://example.com/img/wpsuRszeN.jpg">
+<meta property="og:image" content="http://example.com/img/wpsZyriad.jpg">
+<meta property="og:image" content="http://example.com/img/wps6ITsQZ.jpg">
+<meta property="og:image" content="http://example.com/img/wpspBMN3Z.jpg">
+<meta property="og:image" content="http://example.com/img/wpslYC1TW.jpg">
+<meta property="article:published_time" content="2021-07-19T12:05:05.000Z">
+<meta property="article:modified_time" content="2021-07-19T12:11:02.219Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="时空数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/wps2G4Ry6.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-st-hadoop总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T12:05:05.000Z" itemprop="datePublished">2021-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      st-hadoop汇报总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><em><strong>*何润喆*</strong></em><em><strong>*- ST-Hadoop: a MapReduce framework for spatio-temporal data*</strong></em></p>
+<p><em><strong>*一、过程反思*</strong></em></p>
+<p>(一) 过程总结</p>
+<p><em><strong>*1、选题与准备*</strong></em></p>
+<p>我们小组目前正在研读京东城市计算团队的一篇论文“JUST: JD Urban Spatio-Temporal Data Engine”，主要介绍了该团队的一款时空数据处理引擎JUST，恰好与我们小组的研究方向相契合。里面提到了现有市场上其他的一些时空数据管理平台。 </p>
+<p><img src="/img/wps2G4Ry6.jpg" alt="img"> </p>
+<span id="more"></span>
+
+<p>为了快速了解现有市场上的一些产品，他们各自的的特性，优缺点如何，解决了什么样的问题，还有什么样的问题需要解决，形成对该领域的一个比较全面的认识，我决定对文中提到的一些比较新的数据管理平台做一个比较全面的调研。</p>
+<p>从表中可以看出，在京东的这篇论文里，它将系统是否支持空间索引S和时空索引ST作为一个很重要的指标。此外，大部分系统只支持空间索引的构建而不支持支持时空索引的构建。</p>
+<p>那么问题来了：时空索引的构建是必要的吗?目前有哪些种类的时空索引?他们给系统带来了哪些额外的开销?对数据库的性能带来了哪些提升？分别支持什么样的查询？在哪些时候起作用？</p>
+<p>这些都激发了我的好奇心。我决定从表中提到的ST-hadoop入手，这是文中提到的仅有的几个支持时空索引的数据管理平台。</p>
+<p>​	<em><strong>*2、PPT的制作与讲解*</strong></em></p>
+<p>论文一共有29页，从系统的总体架构，到语言层，索引层，操作层，查询优化层，实验和结论几个方面介绍了该团队提出的st-hadoop系统，并与spatial hadoop以及hadoop做对比，证明了该系统在处理时空数据方面的优越性。论文对索引层和查询优化介绍的比较详细。</p>
+<p>论文对语言层的描述比较简略，我想了解具体细节可能需要在另外一篇论文中寻找。</p>
+<p>在索引层，论文详述了索引的建立过程。两种数据切片方法：时间切片和数据切片。索引的建立时间：在数据导入时。在JUST中评价sthadoop只支持对未来的数据更新，不支持对历史数据的更新，是否如此以及具体原因我觉得值得思考一下，这种索引结构是否支持历史数据的插值？是我接下来思考的一个地方。层次的划分方法：通过预采样随机抽取1%的数据，将它们按时间大小排序，观察它们在时间上的分布特征，确定时间划分到那一层，每层的时间间隔取多少合适。对于如何对用户输入的SQL查询根据它的时间跨度正确分解到每一层，论文提出了两个算法：一种是计算过程较为简略的启发式算法，它只能得到近似最优解。一种是基于贪心算法的求解方法，可以得到全局最优解。</p>
+<p>在操作层，提出了三种基于时空的查询操作，这三种操作是对空间查询操作的扩展，在具体实现上都有着一些小的trick。</p>
+<p>我是先写的演讲稿，再做的PPT。为了方便自己日后复习以及便于展示，我把几乎所有要讲的内容都贴在PPT上了。这样做的好处是阅读的人不需要我去讲解，只看PPT就能了解到我想要讲什么，做了什么工作。坏处是PPT上文字很多，阅读起来没有图像动画的方式更轻松和好接受。由于文字比较多，我就把每段文字分成很多块，并用PPT上的动画一次只显示一小段内容，减轻读者的心理压力。同时，对于重点内容采取了标黑加粗的方式，让听众能集中到重点内容上，忽视不太重要的信息。所有的文字都是对重点内容的阐释，都是帮助听众理解的。通篇文字比较多，但是重点需要理解的内容都用加粗的方式显示了。汇报时我结合PPT上的内容做了一定的扩充和详述。</p>
+<p>（二）反思认识 </p>
+<p><em><strong>*1.*</strong></em><em><strong>*准备阶段*</strong></em></p>
+<p>论文构建时空索引时采用的是一种时间优先，先对时间构建分层索引，再在每个层次上构建空间索引的方式。具体使用的是哪种空间索引，文章中没有提到，只是说提供了对传统空间索引的全支持。</p>
+<p>这是一个值得深入思考的问题，这些空间索引结构的构建，更新，使用上是否支持hadoop这样的分布式结构，能否对计算任务实现均匀分割，充分发挥hadoop并行计算的优势都有待探索。我觉得下一步有必要看一看spatialhadoop的构建。</p>
+<p>论文有29页，比较长。即使这样，很多知识点和技术论文也只是一笔带过，讲的不是很清楚。由于论文涉及的东西很多，很琐碎。在我写好PPT大纲进行排练时就发现已经超过25分钟了。所以对于一些比较复杂的概念和繁琐的细节都被我一笔带过了。比如索引层的构建。</p>
+<p>这样一个好处是我讲的知识点比较深入浅出，听的人即使对于该领域完全不熟悉也能有所收获。坏处是讲的都是大家一下就能听懂的内容可能会让人觉得这篇论文比较水，好像没有什么干货。其实这篇论文构建索引的思想可能比较朴实无华，但是如何构建索引，如何利用索引，如何与hadoop的计算框架MapReduce结合其实是有很多细节要考虑的。这篇论文的工作量还是很大的。是我讲解的问题，没有把它的精髓讲解出来。应该多安排2-3页PPT，5-10min的时间突出一下重点，同时压缩掉一些比较好理解的部分。</p>
+<p><em><strong>*2.*</strong></em><em><strong>*讲解阶段*</strong></em></p>
+<p>图片和动画包含的信息量比较具体和丰富。我的PPT文字太多，后续准备时间充足的情况下可以考虑多加入一些图片来代替文字的讲解，这样听众理解起来比较直观容易，理解负担也会小很多。</p>
+<p>文章的创新点和写的好的地方应该多加着墨。对于st-hadoop这种创新点不算特别惊艳，但是实现起来技术细节繁琐，要考虑的东西很多的软件系统也应让听众意识到它的工作量和复杂性。</p>
+<h2 id="二、反响分析"><a href="#二、反响分析" class="headerlink" title="*二、反响分析*"></a><em><strong>*二、反响分析*</strong></em></h2><p>（一）听众反响 </p>
+<p><em><strong>*1.*</strong></em><em><strong>*孙哲老师的提问及点评*</strong></em></p>
+<p>孙哲老师认为PPT上的文字过多，比较枯燥，全程跟下来很困难，应该有一些说明性的图表和动画来辅助内容的讲解。除此之外，认为论文的工作量比较少，发表的会议级别不是很高。</p>
+<p><em><strong>*2.*</strong></em><em><strong>*仇晶老师的提问及点评*</strong></em></p>
+<p>仇晶老师提问我为什么要选择这篇论文进行讲解以及st-hadoop现在在市场上的一个地位，有没有人用它。</p>
+<p><em><strong>*3.殷丽华老师的意见及点评*</strong></em></p>
+<p>殷丽华老师对我在PPT开头提到的时空数据管理的挑战之一，时空数据的更新频率很高这一点进行了提问。殷老师提问对于数据的实时更新这一问题，st-hadoop解决了吗？</p>
+<p>（二）改进措施 </p>
+<p><em><strong>*1、*</strong></em><em><strong>*改进PPT的制作和讲演方式*</strong></em><em><strong>*：*</strong></em></p>
+<p>PPT上不宜出现大段文字，在时间允许的情况下，应当多做一些说明性对的图表和动画帮助听众来理解文章内容，提高听众的兴趣，降低听众的理解难度。</p>
+<p>除此之外，对于文章的讲解，应当做到重点突出。对于论文的主要贡献和创新点应当着重描绘。对于带有工程性质的文章，比如文中提到的st-hadoop，除了在时空索引建立方面的探索之外，对于这样一个大规模的工程，对于论文的工作量以及技术难度也应当加以描绘，这样听众就不至于有文章言之无物或者文章很水没有什么意义的感觉。</p>
+<p><em><strong>*2、对于论文的来龙去脉，系统现在在市场上所处的地位要讲清楚。*</strong></em></p>
+<p>研讨厅应当是对高水平论文的解读和复盘，应当是对精彩思想的学习。对于我为什么要选择这样一篇发表在CCF B类会议，看上去级别不是很高，而且比较偏向工程的论文我应当解释清楚，不要让听众产生疑惑。之所以会选择这样一篇论文，这是因为小组目前正在学习京东城市计算团队的一篇论文，而这篇论文是其中提到的少数几个实现时空索引的论文之一。</p>
+<p>对于产品在市场上的地位，我不太清楚。我只知道在国内，京东和阿里都是使用自己的时空数据管理引擎，并没有直接使用st-hadoop的。St-hadoop出现在京东文章的比较对象中。</p>
+<p><img src="/img/wpsRwZyyu.jpg" alt="img"> </p>
+<p>京东对sthadoop进行了批判，认为它只支持未来数据的插入，不支持过去的历史数据的插值。对于这一点，我不是很懂，后续会仔细看一下。但是st-hadoop就真的一无是处吗？肯定不是这样的，作为少数几款实现时空索引的数据库，可能它的思想不是很纯熟，设计上有缺陷，但肯定是有可取之处的。在最新的京东团队的报告中，就提到了这种采用时间分层的方式来改进索引性能的想法。</p>
+<p><img src="/img/wpsuRszeN.jpg" alt="img"> </p>
+<p>对于文章的来龙去脉，周老师提到spatial hadoop和st-hadoop是同一个团队，包括geospark，这是我在阅读论文上没有关注的地方。对于文章团队和团队成果的追踪也是很重要的，同一团队的作品 可以放在一起解读，理清作者的设计思路和意图。同时，在时间线上看看产品做了哪些改进和创新。</p>
+<p>​	<em><strong>*3、对于文章提出的挑战解决了哪些，哪些没被解决要解释清楚。*</strong></em></p>
+<p>在PPT的开头我提到了时空数据管理遇到的一些挑战，却对st-hadoop解决了哪些，哪些没解决没有解释清楚。关于st-hadoop是否支持数据的实时更新这一点我不是很清楚。同时st-hadoop里面提到的这种索引结构在面临新数据的到来时是需要再重新构建索引，还是能很便捷地在原有索引基础上进行扩展我也比较疑惑，后续我会看看spatialhadoop和其他空间索引，看看他们的索引结构在面临数据更新时的表现如何。</p>
+<h2 id="三、作法理解"><a href="#三、作法理解" class="headerlink" title="*三、作法理解*"></a><em><strong>*三、作法理解*</strong></em></h2><p>（一）对专家点评的理解 </p>
+<p>1.<em><strong>*周老师认为文章的来龙去脉没有讲明白*<em><strong>，st-hadoop之前有什么平台，之后又有哪些平台，他们各自之间是一个怎样的关系，st-hadoop在这一系列平台里处于一个怎样的地位没有讲明白。</strong></em>*另外，周老师提到st-hadoop是一种时间优先的索引。*<em><strong>对于这一点我表示非常赞同，sthadoop里，空间和时间的地位是不平等的，是先对时间创建索引，再对空间建立索引的一种方式。</strong></em>*周老师让我思考为什么采用这样一种建立索引的方式，并提出可以先对空间建立索引吗？*</strong></em></p>
+<p>我认为这两种方式都是可以的。它们各自适合不同的业务场景，如果经常需要做这种一天为单位，以月为单位的查询，使用这种时间层次索引可以快速获得该天或者该月内的所有记录。如果经常需要做一某个地域范围为单位的查询，那么将这个地域范围的数据聚集在一起，需要调用时全部取出，这样也是比较快的。同时，考虑是否兼容hadoop的MapReduce操作的话，时间有限的方式应该是比较适合的，空间优先的方式不是很清楚。我对存在哪几种空间索引，他们是否支持hadoop的分布式结构不太清楚，后续会深入研究。</p>
+<p>****对于轨迹数据的存储****，处理，索引我都不是很懂，sthadoop的这种结构是否方便对轨迹数据的操作也是我接下来要考虑的地方。轨迹可以由同一物体的时空点构成，但是在处理，存储，索引，查询上应该有所不同，这也是应当注意的，论文中好像没有提到针对轨迹进行专门的优化，和支持轨迹数据处理的系统相比性能上可能有缺陷。</p>
+<p>2、 ****方老师对我PPT中提到的实验结果产生了质疑****，认为好几个数量级的概念比较模糊，好几个数量级究竟是几十几百倍还是一个指数级有歧义。</p>
+<p><img src="/img/wpsZyriad.jpg" alt="img"> </p>
+<p>这段话摘自文章开头中的“In the indexing layer, ST-Hadoop spatiotemporally loads and divides data across computation nodes in Hadoop Distributed File System in a way that mimics spatio-temporal index structures,which result in achieving orders of magnitude better performance than Hadoop and SpatialHadoop when dealing with spatio-temporal data and queries.”</p>
+<p>这里将orders of magnitude翻译成好几个数量级我不知道合不合适，我查了一下，orders of magnitude里的数量级是以10为单位，10倍，百倍的意思。具体指多少我不太清楚，需要再查一下。</p>
+<p>由于论文的实验结果部分贴的图比较多，在做PPT时被我省略了，只放了一句带有歧义的话，误导了听众。今后我会对实验结果部分描述充分，贴图完整，并小心求证。有提升但是提升不是非常明显。</p>
+<p>st-hadoop的性能提升并没有几十几百倍那么夸张，至少和spatialhadoop相比，并没有特别明显的提升。这是实验结果的部分贴图：</p>
+<p><img src="/img/wps6ITsQZ.jpg" alt="img"> </p>
+<p><img src="/img/wpspBMN3Z.jpg" alt="img"> </p>
+<p>****方老师认为索引的提升是一个重要的地方，是整篇文章画龙点睛的地方，我应该着重描绘****。这是一个需要注意的地方，PPT的内容不宜过于精简，对想深入了解的人产生了困扰。</p>
+<p>****方老师认为时间不是一个特别的属性，把他当做一个普通的一维数据单独创建索引即可。****我之前也有类似的困惑，我上网查了一下针对时间的索引方式，好像没有专门针对时间这一数据类型订制的索引，对时间进行索引好像什么特别需要考虑的地方。</p>
+<p>关于时间这一类型是不是需要当作一个特殊的数据类型创建索引暂且不谈，这需要我后续的学习。但是即时把时间看做一个普通的一维数值数据，在经常需要用到时空联合查询的数据库中把时间，空间看做一个整体他们创建索引仍然是必要的。</p>
+<p>这涉及到一个“多码访问”的问题，在《数据库系统概念》一书中谈到：</p>
+<p><img src="/img/wpslYC1TW.jpg" alt="img"> </p>
+<p>如果系统经常需要用到某几个属性值的联合查询（比如，在时空数据库中时间和空间总是同时作为查询条件出现），单独为每个属性创建索引的性能往往是很差的。由此可见，时空联合索引的创建和研究还是很有必要的。</p>
+<p>但是，对于sthadoop中提到的时空层次索引，作者缺乏理论上的推导，它相比单独为时间创建索引的方式究竟有没有提升，或者提升了多少，很难评估。这和具体的业务场景有关，如果经常需要做这种一天为单位，以月为单位的查询，使用这种时间层次索引可以快速获得该天或者该月内的所有记录，这个时候有理由相信时间层次索引还是有他的可取之处的。</p>
+<p>（二）优化作法 </p>
+<p>对于时空索引的比较是一件很复杂的事情，它和具体的业务场景，数据的规模以及数据的分布特征都有关系。不同的索引在不同的查询条件下有着不同的执行方式和表现，甚至常常出现使用索引扫描文件后系统性能反而下降的问题。同时，索引是否支持数据的更新，是否能很好的和hadoop这类的分布式平台都是需要考虑的地方。一种可能的方式是对典型场景下的典型规模的数据进行理论上的分析，比如计算时间复杂度；另外一种是针对具体数据具体查询语句进行具体的计算，计算查询耗时；实验比较也是一种可行的方法。</p>
+<p>对于空间索引，时空索引我也是最近才开始了解，还有很多不懂的地方，后续需要进一步学习。</p>
+<p>对于轨迹数据的处理需要考虑哪些问题我没考虑过，后续需要做一个调研。</p>
+<p>对于PPT的实验结论部分应当力求数据详实，同时对实验结果要有一个深入的分析，因为恶意制造实验数据和结果往往是一件很容易的事情。</p>
+<p>对于文章的创新点应该详尽的描述，而不是一笔带过。</p>
+<p>对于文章的来龙去脉，产品的市场地位要讲清楚。</p>
+<p>对于PPT的制作，图表比文字更易让人接受。</p>
+<p>“跳出来想问题”是一个很好的建议，能对文章有一个客观的评价。</p>
+<p>这是我的第二次线下研讨厅，各位老师的点评都很有道理，让我受益匪浅。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/" data-id="cl4ecwtqi00155vx3cim2cber" data-title="st-hadoop汇报总结" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          轨迹数据库入门总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/07/19/ST-hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">st-hadoop</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

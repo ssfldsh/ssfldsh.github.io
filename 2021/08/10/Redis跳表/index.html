@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Redis跳表 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Zset（也叫Sorted Set，有序集合，按照Score有序）Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。 不同的是zset有序集合中的每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。有序集合的成员是唯一的,但分数(score)却可以重复。 跳表是zset（有序集合）的底层实现之一。 zset">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis跳表">
+<meta property="og:url" content="http://example.com/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Zset（也叫Sorted Set，有序集合，按照Score有序）Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。 不同的是zset有序集合中的每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。有序集合的成员是唯一的,但分数(score)却可以重复。 跳表是zset（有序集合）的底层实现之一。 zset">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/1628594585268-126f54e3-65ec-4fe6-bba3-ce2ebe7591c8.png">
+<meta property="og:image" content="http://example.com/img/1628595891613-3c75c042-4163-4f0e-9893-5806ebb215bc.png">
+<meta property="og:image" content="http://example.com/img/1628598454166-007d9acc-0b47-42c5-8b9a-70a0d6385b67.png">
+<meta property="og:image" content="http://example.com/img/1628604485475-f262ea86-f4e7-4a2c-82aa-6aa8e1ea952e.png">
+<meta property="og:image" content="http://example.com/img/1628598454166-007d9acc-0b47-42c5-8b9a-70a0d6385b67-20210810221455435.png">
+<meta property="og:image" content="http://example.com/img/1628601647043-61d95472-3803-4c82-98df-ef3ce21b760a.png">
+<meta property="og:image" content="http://example.com/img/1628601942985-0d97245b-8785-47dd-bfdc-7ff733bbc30f.png">
+<meta property="article:published_time" content="2021-08-10T13:48:51.000Z">
+<meta property="article:modified_time" content="2022-02-26T17:11:03.348Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="跳表">
+<meta property="article:tag" content="zset">
+<meta property="article:tag" content="有序集合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/1628594585268-126f54e3-65ec-4fe6-bba3-ce2ebe7591c8.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Redis跳表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2021-08-10T13:48:51.000Z" itemprop="datePublished">2021-08-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Redis跳表
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Zset（也叫Sorted-Set，有序集合，按照Score有序）"><a href="#Zset（也叫Sorted-Set，有序集合，按照Score有序）" class="headerlink" title="Zset（也叫Sorted Set，有序集合，按照Score有序）"></a>Zset（也叫Sorted Set，有序集合，按照Score有序）</h1><p><strong>Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。</strong></p>
+<p><strong>不同的是zset有序集合中的每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。</strong>有序集合的成员是唯一的,但分数(score)却可以重复。</p>
+<p><strong>跳表</strong>是zset（有序集合）的底层实现之一。</p>
+<p><strong>zset</strong>底层两个数据结构实现：zipList压缩列表和zskipList。</p>
+<p><strong>zipList</strong>能节省内存空间，但是性能比较差，增删改查的时间复杂度较高，平均O(n)，特殊情况下，增删改这三项的时间复杂度能达到O(n^2)（指触发级联更新，不断重新分配内存空间的情况下）。</p>
+<p><strong>skipList</strong>跳表是一个<strong>层次索引</strong>，使用的是<strong>分层索引</strong>的思想，对标的是平衡查找树，底层采用<strong>链表</strong>实现，<strong>增删改查的平均时间复杂度是O(logn)。</strong>同时<strong>支持</strong>快速查找单个数据和<strong>范围查询。</strong>空间复杂度O(n)。</p>
+<span id="more"></span>
+
+<p><em><strong>如果用zipList实现zset也会按照score进行排序吗？</strong></em></p>
+<p>答：可以。*<code>ziplist</code>编码的有序集合使用紧挨在一起的压缩列表节点来保存，第一个节点保存member，第二个保存score。ziplist内的集合元素按score从小到大排序，score较小的排在表头位置???(待求证，引用自：*<a target="_blank" rel="noopener" href="https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/">https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/</a><em>)</em></p>
+<p>补充：<em><strong>Redis存在另外一种排序数据结构，set的底层实现之一：有序整数数组（元素类型必须为整数，数量不能超过XXXX）。</strong></em></p>
+<h1 id="skipList跳表总览"><a href="#skipList跳表总览" class="headerlink" title="skipList跳表总览"></a>skipList跳表总览</h1><p><em><strong>用途：</strong></em></p>
+<p><em><strong>设计思想：</strong></em></p>
+<p><em><strong>时间复杂度：</strong></em></p>
+<p><em><strong>空间复杂度：</strong></em></p>
+<p><em><strong>查找平衡策略：</strong></em></p>
+<p><strong>skipList</strong>跳表是一个<strong>层次索引</strong>，使用的是<strong>分层索引</strong>的思想，对标的是平衡查找树，底层采用<strong>链表</strong>实现，<strong>增删改查的平均时间复杂度是O(logn)。</strong>同时<strong>支持</strong>快速查找单个数据和<strong>范围查询。</strong></p>
+<p><strong>Redis的两个查找结构一个是Hash，一个是跳表。Hash不支持范围查找，跳表支持范围查找。</strong></p>
+<p><img src="/img/1628594585268-126f54e3-65ec-4fe6-bba3-ce2ebe7591c8.png" alt="image.png"></p>
+<p>所以，<strong>跳表的空间复杂度是O(n)。</strong>实际上，在软件开发中，我们不必太在意索引占用的额外空间。在讲数据结构和算法时，我们习惯性地把要处理的数据看成整数，但是在实际的软件开发中，原始链表中存储的有可能是很大的对象，而索引结点只需要存储关键值和几个指针，并不需要存储对象，所以当对象比索引结点大很多时，那索引占用的额外空间 就可以忽略了。</p>
+<h1 id="层高间距平衡策略（查找平衡的优化）："><a href="#层高间距平衡策略（查找平衡的优化）：" class="headerlink" title="层高间距平衡策略（查找平衡的优化）："></a>层高间距平衡策略（查找平衡的优化）：</h1><p>红黑树、 AVL 树这样平衡二叉树，是通过左右旋的方式保持左右子树的大小平衡，而跳表是通过随机函数来维护前面提到的 “ 平衡性 ” 。 </p>
+<p>当我们往跳表中插入数据的时候，我们可以选择同时将这个数据插入到部分索引层中。如何选择加入哪些索引层呢？ <strong>我们通过一个随机函数，来决定将这个结点插入到哪几级索引中，比如随机函数生成了值 K ，那我们就将这个结点添加到第一级到第 K 级这 K 级索引中。</strong></p>
+<p>**<br>**</p>
+<p><strong>如下图所示，跳表（分层索引）存在查找性能下降问题：</strong></p>
+<p><strong><img src="/img/1628595891613-3c75c042-4163-4f0e-9893-5806ebb215bc.png" alt="image.png"></strong></p>
+<p><strong>解决方法，如下图所示：</strong></p>
+<p><img src="/img/1628598454166-007d9acc-0b47-42c5-8b9a-70a0d6385b67.png" alt="image.png"></p>
+<p>跳表对标的是平衡查找树（典型的如红黑树），很多Map的底层实现都是红黑树，跳表相比于红黑树的一个优点是<strong>跳表的实现相对比较简单。</strong></p>
+<h1 id="订正"><a href="#订正" class="headerlink" title="订正"></a>订正</h1><h2 id="1、SortedSet是哈希表和跳表的混合"><a href="#1、SortedSet是哈希表和跳表的混合" class="headerlink" title="1、SortedSet是哈希表和跳表的混合"></a>1、SortedSet是哈希表和跳表的混合</h2><p>Sorted Set 先是通过在它的数据结构中同时定义了跳表和哈希表，来实现同时使用这两种索引结构。然后，Sorted Set 在执行数据插入或是数据更新的过程中，会依次在跳表和哈希表中插入或更新相应的数据，从而保证了跳表和哈希表中记录的信息一致。</p>
+<p>这样一来，Sorted Set <strong>既可以使用跳表支持数据的范围查询</strong>，还能使用<strong>哈希表支持根据元素直接查询它的权重。</strong></p>
+<p><strong>使用哈希表的查找Key是元素id。</strong></p>
+<p><strong>使用跳表的查找key是元素Score，按照Score大小对元素进行范围查询。</strong></p>
+<p><strong>两种数据结构的查找Key不一样。分别对应两种查找方法：</strong></p>
+<p><strong><img src="/img/1628604485475-f262ea86-f4e7-4a2c-82aa-6aa8e1ea952e.png" alt="image.png"></strong></p>
+<p>此外，Sorted Set 中还将元素保存在了哈希表中，作为哈希表的 key，同时将 value 指向元素在跳表中的权重。使用了哈希表后，Sorted Set 可以通过哈希计算直接查找到某个元素及其权重值，相较于通过跳表查找单个元素，使用哈希表就有效提升了查询效率。</p>
+<p><strong>双索引机制的优点和不足：</strong></p>
+<p><em>查找效率，索引维护，空间消耗。</em></p>
+<p><em>虽然同时使用两种结构，但它们会通过指针来共享相同元素的member和score，因此不会浪费额外的内存??（待求证，引用自</em><a target="_blank" rel="noopener" href="https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/">https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/</a><em>）</em></p>
+<h2 id="2、跳表中的随机数生成策略"><a href="#2、跳表中的随机数生成策略" class="headerlink" title="2、跳表中的随机数生成策略"></a>2、跳表中的随机数生成策略</h2><p>在 Redis 源码中，跳表结点层数是由 zslRandomLevel 函数决定。<strong>zslRandomLevel 函数会把层数初始化为 1</strong>，这也是结点的最小层数。然后，该函数会生成随机数，如果随机数的值小于 ZSKIPLIST_P（指跳表结点增加层数的概率，值为 0.25），那么层数就增加 1 层。因为随机数取值到[0,0.25) 范围内的概率不超过 25%，所以这也就表明了，<strong>每增加一层的概率不超过 25%。</strong></p>
+<h2 id="3、从简单的分层索引结构到Redis里的跳表，增加了那些数据类型和设计："><a href="#3、从简单的分层索引结构到Redis里的跳表，增加了那些数据类型和设计：" class="headerlink" title="3、从简单的分层索引结构到Redis里的跳表，增加了那些数据类型和设计："></a>3、从简单的分层索引结构到Redis里的跳表，增加了那些数据类型和设计：</h2><p>*<strong>分层索引示意图：*</strong></p>
+<p><img src="/img/1628598454166-007d9acc-0b47-42c5-8b9a-70a0d6385b67-20210810221455435.png" alt="image.png"></p>
+<p>*<strong>实际的跳表示意图：*</strong></p>
+<p><img src="/img/1628601647043-61d95472-3803-4c82-98df-ef3ce21b760a.png" alt="image.png"></p>
+<p><img src="/img/1628601942985-0d97245b-8785-47dd-bfdc-7ff733bbc30f.png" alt="image.png"></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1、极客时间–《数据结构与算法之美》–17|跳表：为什么Redis一定要用跳表来实现有序集合？</p>
+<p>2、极客时间–《Redis源码剖析与实战》– 05|有序集合为什么同时支持范围查询和点查询？</p>
+<p>3、<a target="_blank" rel="noopener" href="https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/%E9%83%A8%E5%88%86%E5%86%85%E5%AE%B9%E5%BC%95%E7%94%A8%E8%87%AA%E8%AF%A5%E5%8D%9A%E5%AE%A2%EF%BC%8C%E6%AD%A3%E7%A1%AE%E6%80%A7%E6%9C%89%E5%BE%85%E8%80%83%E7%A9%B6%E3%80%82%E5%9C%A8%E6%96%87%E7%AB%A0%E4%B8%AD%E5%B7%B2%E6%A0%87%E8%AE%B0%E5%87%BA%E6%9D%A5%E8%87%AA%E8%AF%A5%E6%96%87%E7%AB%A0%E7%9A%84%E4%B8%A4%E5%A4%84%E5%BC%95%E7%94%A8%E3%80%82">https://zsr.github.io/2017/07/03/redis-zset%E5%86%85%E9%83%A8%E5%AE%9E%E7%8E%B0/部分内容引用自该博客，正确性有待考究。在文章中已标记出来自该文章的两处引用。</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" data-id="cl4ecwtqb000e5vx3gc5oblvf" data-title="Redis跳表" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          商汤实习总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">从最短路径到最快路径的求解（tdsp代码说明文档）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

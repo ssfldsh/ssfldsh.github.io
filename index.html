@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-parallel sssp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/24/parallel%20sssp/" class="article-date">
+  <time class="dt-published" datetime="2022-03-24T04:02:35.000Z" itemprop="datePublished">2022-03-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><em>CS-260 并行算法学习整理：</em></p>
+<p>引用了孙老师和顾老师的大量课件和博文：</p>
+<p>孙老师的知乎专栏：</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1174996853811335168">多核时代与并行算法 - 知乎 (zhihu.com)</a></p>
+<p>课程地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~yihans/palgo.html">https://www.cs.cmu.edu/~yihans/palgo.html</a></p>
+<p>这里使用的并行模型是binary-fork-join模型，使用的是工作窃取算法。是针对单机多核结构的并行，使用CAS解决竞态条件。</p>
+<p>我主要整理了并行算法在单源最短路径(single source shortest path:sssp)上的应用。</p>
+<p>并行算法带来的提升并不总是常数级别的，有的时候使用了并行反而会更慢。</p>
+<p>这是因为使用使用并行和使用并发一样会有共享变量的读写问题，会有大量fork带来的开销问题。</p>
+<p>在串行的世界里时间效率最优的算法在并行的世界里并不总是最优的。</p>
+<p>比如，在拥有大量处理器时，使用并行的方法能使Bellman-Ford算法的时间效率得到极大地提升，但是使用并行的方法对Dijkstra算法的提升却很有限。</p>
+<p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871-8128718.jpeg" alt="幻灯片1"></p>
+<p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%872-8128718.jpeg" alt="幻灯片2"></p>
+        
+          <p class="article-more-link">
+            <a href="/2022/03/24/parallel%20sssp/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/24/parallel%20sssp/" data-id="cl4ecwtqg000v5vx38xmc7lmi" data-title="单源最短路径算法的并行化" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Go 顺序打印" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" class="article-date">
+  <time class="dt-published" datetime="2022-02-25T04:02:35.000Z" itemprop="datePublished">2022-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>题目一：顺序打印</p>
+<p>要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，</p>
+<p> 要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	wg.Add(<span class="number">3</span>)</span><br><span class="line">	nowBThreadCanRun := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>)</span><br><span class="line">	nowCThreadCanRun := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">// ３、打印A不需要依赖于谁，直接打印即可</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;A&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		nowBThreadCanRun &lt;- <span class="number">1</span></span><br><span class="line">		<span class="comment">// A线程阻塞时，可以执行B线程，体现了多线程的意义</span></span><br><span class="line">		time.Sleep(<span class="number">1000</span> * time.Millisecond)</span><br><span class="line">		wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">//　２、在A线程和B线程中使用使用nowBThreadCanRun，使得A线程中的打印操作发生在B线程之前</span></span><br><span class="line">		&lt;-nowBThreadCanRun</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;B&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		nowCThreadCanRun &lt;- <span class="number">2</span></span><br><span class="line">		time.Sleep(<span class="number">1000</span> * time.Millisecond)</span><br><span class="line">		wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="comment">//　２、在B线程和C线程中使用使用nowCThreadCanRun，使得B线程中的打印操作发生在C线程之前</span></span><br><span class="line">		&lt;-nowCThreadCanRun</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;C&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">		wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	time.Sleep(<span class="number">100</span> * time.Millisecond)</span><br><span class="line">	fmt.Println(<span class="string">&quot;main thread end&quot;</span>)</span><br><span class="line">	<span class="comment">// 使用waitGroup阻塞main线程，防止main线程过早执行结束</span></span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不使用多线程也能实现顺序打印ABC的效果，但是因为在print过程中，加入了很多阻塞cpu的操作（如sleep）</span></span><br><span class="line"><span class="comment">// 使得以非并发方式实现的代码运行时间很长：至少大于代码中所有sleep的时间的总和：</span></span><br><span class="line"><span class="comment">// 以多线程方式实现的顺序打印ABC的代码运行时间为1.115s左右，比顺序执行要快，顺序执行的话，3个sleep操作就至少需要执行2.1s</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>题目二：现在有A、B两个线程，它们的功能分别为打印A、B各5次</p>
+<p>现在要求修改代码，使得：</p>
+<p>A和B交替打印：</p>
+<p>具体规则：打印一个A后才能打印一个B；打印一个B后才能打印一个A;A先被打印。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// const声明以及赋值:</span></span><br><span class="line"><span class="keyword">const</span> looptime <span class="type">int</span> = <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	wg.Add(<span class="number">2</span>)</span><br><span class="line">	start := time.Now()</span><br><span class="line">	<span class="comment">// 交替打印A、B，使用1个或者2个cahnnel来实现:</span></span><br><span class="line">	canPrintFoo := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">	canPrintBar := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">	<span class="comment">// 在A、B两个线程中引入：canPrintA channel使得对A的打印发生在B之前：</span></span><br><span class="line">	<span class="comment">// 在A、B两个线程中引入：canPrintB channel使得对B的打印发生在A之前：</span></span><br><span class="line">	<span class="comment">// 在创建A、B两个线程前先 canPrintA channel里注入数据。</span></span><br><span class="line">	canPrintFoo &lt;- <span class="number">0</span></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; looptime; i++ &#123;</span><br><span class="line">			&lt;-canPrintFoo</span><br><span class="line">			fmt.Print(<span class="string">&quot;foo&quot;</span>)</span><br><span class="line">			canPrintBar &lt;- <span class="number">0</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; looptime; i++ &#123;</span><br><span class="line">			&lt;-canPrintBar</span><br><span class="line">			fmt.Print(<span class="string">&quot;bar&quot;</span>)</span><br><span class="line">			canPrintFoo &lt;- <span class="number">0</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> wg.Done()</span><br><span class="line">	&#125;()</span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Println(<span class="string">&quot;the main function has been run:&quot;</span>, time.Since(start))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多线程程序适合在I&#x2F;O密集型应用中使用，当一个线程处于I&#x2F;O状态时，CPU是空闲的，可以被用来执行其他线程。</p>
+<p>大部分网络应用都是I&#x2F;O密集型的，适合使用并发优化。</p>
+<p>常见的I&#x2F;O优化方式还有</p>
+<p>同步非阻塞IO： 在一个线程里使用多路复用，同时监听多个连接。多个连接共享一个线程，避免大量线程创建带来的时间和空间开销。</p>
+<p>异步非阻塞IO：不需要主动轮询，访问每个连接状态。当被调用方执行完毕式，主动通知调用方。</p>
+<p>对于计算密集型任务，适合使用并行优化：</p>
+<p>如游戏还有科学计算领域使用GPU并行处理矩阵计算、处理图像数据。</p>
+<p>合适的数据结构和算法也能降低程序的复杂度。某些算法的优化空间特别大，如使用动态规划代替暴力搜索，能将某些O(2^n)的算法优化到O(n)。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" data-id="cl4ecwtq900075vx3cc8bcj7p" data-title="Go并发：控制多个线程中部分功能的执行顺序" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Go哲学者就餐" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/" class="article-date">
+  <time class="dt-published" datetime="2022-02-25T04:02:35.000Z" itemprop="datePublished">2022-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/the-dining-philosophers/">1226. 哲学家进餐 - 力扣（LeetCode）</a></p>
+<p>leetCode的并发编程题没有Go的测试环境，在本地自己写了个哲学者就餐问题，通过观察程序能否长时间保持运行状态而不死锁来判断程序逻辑是否正确。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 初始变量1:筷子数</span></span><br><span class="line">	philoNum := <span class="number">5</span></span><br><span class="line">	<span class="comment">// 初始变量2:forkSate数组,表示每个筷子的状态</span></span><br><span class="line">	<span class="comment">// 5个哲学家对应5个线程，他们不断遵循一定规则修改筷子状态：</span></span><br><span class="line">	<span class="comment">// 规则一：拿到左右两双筷子就能吃饭。仅仅按照这个规则编程程序很容易发生死锁</span></span><br><span class="line">	<span class="comment">// 必须要引入其他规则才能使得5个线程没有死锁的情况出现，能一直运行下去 。</span></span><br><span class="line">	<span class="comment">// 这里采用只有同时拿到左右两只筷子才能吃饭(修改筷子状态，并调用eat方法)的规则来防止线程死锁。</span></span><br><span class="line">	forkState := [<span class="number">5</span>]<span class="type">int</span>&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;</span><br><span class="line">	mutex := sync.Mutex&#123;&#125;</span><br><span class="line">	<span class="comment">// channel数组:</span></span><br><span class="line">	canRunPhilo := <span class="built_in">make</span>([]<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">5</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">		canRunPhilo[i] = <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; philoNum; i++ &#123;</span><br><span class="line">		<span class="comment">// 匿名函数传参:</span></span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(i <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">			<span class="keyword">for</span> &#123;</span><br><span class="line">        <span class="comment">// 左右两只筷子状态都为0时:</span></span><br><span class="line">				mutex.Lock()</span><br><span class="line">				<span class="keyword">if</span> forkState[i] == <span class="number">0</span> &amp;&amp; forkState[(i<span class="number">-1</span>+philoNum)%philoNum] == <span class="number">0</span> &#123;</span><br><span class="line">					forkState[i] = <span class="number">1</span></span><br><span class="line">					forkState[(i<span class="number">-1</span>+philoNum)%philoNum] = <span class="number">1</span></span><br><span class="line">					canRunPhilo[i] &lt;- <span class="number">0</span></span><br><span class="line">				&#125;</span><br><span class="line">				mutex.Unlock()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 成功拿起两只筷子后：调用eat方法，输出5只筷子的状态:</span></span><br><span class="line">				&lt;-canRunPhilo[i]</span><br><span class="line">				<span class="comment">// eat(i)</span></span><br><span class="line">				mutex.Lock()</span><br><span class="line">				fmt.Print(<span class="string">&quot;筷子状态:&quot;</span>)</span><br><span class="line">				<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; philoNum; i++ &#123;</span><br><span class="line">					<span class="keyword">if</span> forkState[i] != <span class="number">0</span> &#123;</span><br><span class="line">						fmt.Print(<span class="string">&quot;#&quot;</span>, i)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				fmt.Println()</span><br><span class="line">				time.Sleep(<span class="number">100</span> * time.Microsecond)</span><br><span class="line">				mutex.Unlock()</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 就餐完毕后，执行放下筷子（即将筷子状态重新置为0）的操作:</span></span><br><span class="line">				mutex.Lock()</span><br><span class="line">        		<span class="comment">// 放下左手筷子（即将左手筷子的状态置为0），同时判断左手边的哲学家（一个线程）是否拥有就餐资格:</span></span><br><span class="line">				forkState[i] = <span class="number">0</span></span><br><span class="line">				<span class="keyword">if</span> forkState[(i+<span class="number">1</span>)%philoNum] == <span class="number">0</span> &#123;</span><br><span class="line">					forkState[i] = <span class="number">1</span></span><br><span class="line">					forkState[(i+<span class="number">1</span>)%philoNum] = <span class="number">1</span></span><br><span class="line">					canRunPhilo[(i+<span class="number">1</span>)%philoNum] &lt;- <span class="number">0</span></span><br><span class="line">				&#125;</span><br><span class="line">        <span class="comment">// 放下右手筷子，同时判断右手边的哲学家（一个线程）是否拥有就餐资格:</span></span><br><span class="line">				forkState[(i<span class="number">-1</span>+philoNum)%philoNum] = <span class="number">0</span></span><br><span class="line">				<span class="keyword">if</span> forkState[(i<span class="number">-2</span>+philoNum)%philoNum] == <span class="number">0</span> &#123;</span><br><span class="line">					forkState[(i<span class="number">-1</span>+philoNum)%philoNum] = <span class="number">1</span></span><br><span class="line">					forkState[(i<span class="number">-2</span>+philoNum)%philoNum] = <span class="number">1</span></span><br><span class="line">					canRunPhilo[(i<span class="number">-1</span>+philoNum)%philoNum] &lt;- <span class="number">0</span></span><br><span class="line">				&#125;</span><br><span class="line">				mutex.Unlock()</span><br><span class="line">        <span class="comment">// 哲学家（线程）i的任务执行完毕!</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// time.Sleep(10 * time.Second)</span></span><br><span class="line">	<span class="comment">// for &#123;</span></span><br><span class="line">	<span class="comment">// 	time.Sleep(10 * time.Microsecond)</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line">	<span class="keyword">select</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">eat</span><span class="params">(i <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;now %d begin eating...\n&quot;</span>, i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 总结：</span></span><br><span class="line"><span class="comment">// 通过 boolean forkStae数组的值 来判断 筷子是否在哲学家手中</span></span><br><span class="line"><span class="comment">// 通过 创建5个线程来模拟哲学家就餐过程</span></span><br><span class="line"><span class="comment">// 通过一定的策略来避免死锁</span></span><br><span class="line"><span class="comment">// 改写：题目很适合使用条件变量来代替channel控制线程同步</span></span><br><span class="line"><span class="comment">// 避免哲学家就餐（线程运行）时发生死锁还存在其他规则，比如每次只允许4个筷子被同时拿起。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>哲学者就餐问题最重要的是避免多线程并发时出现的死锁情况：</p>
+<p>一段逻辑正确的哲学者就餐问题的代码应当能时刻保持运行状态，而没有死锁发生：</p>
+<p>经过测试：该段代码在本地机器上可以持续运行3小时以上，持续输出当前状态下正在被使用的筷子编号。（测试环境:Ubuntu 16.04）</p>
+<img src="/img/image-20220614215833948.png" alt="image-20220614215833948" style="zoom:50%;" />
+
+<p>同时发现，每轮最多有4只筷子可以被同时拿起。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>《七周七并发》</p>
+<p>《现代操作系统》</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/" data-id="cl4ecwtqa00095vx38hbx5ewr" data-title="使用Golang并发工具包解决哲学者就餐问题" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-商汤实习总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2022-02-23T14:30:35.000Z" itemprop="datePublished">2022-02-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="实习时间："><a href="#实习时间：" class="headerlink" title="实习时间："></a>实习时间：</h1><p>​	2021-9-9 到 2022-1-20 </p>
+<h1 id="实习公司："><a href="#实习公司：" class="headerlink" title="实习公司："></a>实习公司：</h1><p>​	商汤科技( SenseTime )，亚洲最大的人工智能公司，市值千亿级别。计算机视觉相关的算法很厉害，工程方面做的也不错。</p>
+<h1 id="实习部门："><a href="#实习部门：" class="headerlink" title="实习部门："></a>实习部门：</h1><p>​	工程院-容器平台，名字叫容器平台，实际上我们组并不直接接触docker、k8s二次开发之类的，至少我去的时候是没有做的，可能同部门其他组或者我们组在我来之前有负责k8s集群部署，运维，二次开发之类的。公司内部是有自己的k8s平台的，日常开发docker用的也比较多。</p>
+<p>​	我对docker、k8s的了解仅限于一些基本操作上，如dockerfile的编写之类，对于底层原理不是很熟悉，有时间再补吧。</p>
+<p>​	实习期间，参与的后台开发项目较多。使用的开发语言是Goalng和Golang相关的Web开发技术栈。采用的是微服务架构，涉及到一些分布式系统相关的知识。</p>
+<p>​	内部使用的是DevOps的开发模式，要自己写gitlab-ci.yaml配置gitlab上的pipeline，运行自动化测试、部署的脚本，持续集成和持续部署体验很好。</p>
+<h1 id="参与项目："><a href="#参与项目：" class="headerlink" title="参与项目："></a>参与项目：</h1><h2 id="1、产品交付中心的开发："><a href="#1、产品交付中心的开发：" class="headerlink" title="1、产品交付中心的开发："></a>1、产品交付中心的开发：</h2><p>​		产品交付中心是一个Web项目，以网站的形式提供服务。</p>
+<p>​		方便客户经理管理客户，描述客户需求，提出发货申请。</p>
+<p>​		方便产品经理管理各自的产品线和物料仓库，根据客户的需求匹配相应的物料，从license中心添加相应的加密包。</p>
+<p>​		财务人员审核后，发货。</p>
+<p>​		将原本的客户经理线下交付模式转变为线上，实现软件发货流程的合规与可追溯。</p>
+<p>​		交付中心里将从统一的网站入口进入，通过 IAM 对登陆用户统一进行鉴权，根据用户角色提供相应的页面内</p>
+<p>容以及操作能力。交付中心2.0是“基于合同的软件交付”流程，即在OA审批，在交付中心完成软件交付，形成业务</p>
+<p>闭环。</p>
+<p>​	   项目采用微服务架构，调用了IAM（认证与授权）系统和license （秘钥）中心这两个服务。</p>
+<h2 id="2、-ABAC-基于属性的访问控制-微服务部分接口的开发："><a href="#2、-ABAC-基于属性的访问控制-微服务部分接口的开发：" class="headerlink" title="2、 ABAC( 基于属性的访问控制) 微服务部分接口的开发："></a>2、 ABAC( 基于属性的访问控制) 微服务部分接口的开发：</h2><p>​		ABAC 和 RBAC（基于角色的访问控制相对应），基于访问主体的属性、所处环境，被访问对象、对被访问对象执行的操作 这四种元素描述一次访问行为，和 内置的一些访问规则去碰撞，返回 allow 或者 deny。</p>
+<p>​		ABAC 在一次访问过程中使用了更多的属性（信息），能获得比RBAC更细粒度的控制。当然实现上也更加复杂一点。</p>
+<h1 id="所用技术栈："><a href="#所用技术栈：" class="headerlink" title="所用技术栈："></a>所用技术栈：</h1><p>微服务架构：</p>
+<p>Golang 编程：</p>
+<p>Golang Web开发相关开源组件：</p>
+<p>​	cobra搭建命令行工具</p>
+<p>​	viper实现配置信息管理</p>
+<p>​	gorilla实现restful接口的路由</p>
+<p>​	ORM工具：gorm&#x2F;entGo</p>
+<p>​	zap日志</p>
+<p>​	packr将静态文件打包进go二进制可执行文件</p>
+<p>​	prometheus监控	</p>
+<p>设计模式：</p>
+<p>​	微服务架构</p>
+<p>​	gorilla middleware做 日志、recovery、jwt（面向切面编程）</p>
+<p>​	wire包管理对象创建（依赖注入），依赖于接口而非具体实现</p>
+<p>​	分层架构，类似DDD的模块划分模式（不过我对DDD不是很熟，有时间再看吧。。。）</p>
+<p>代码健壮性：</p>
+<p>​	使用自定义业务码+描述信息代替http Status Code给用户和前端更加详细的报错信息</p>
+<p>​	插入时使用唯一索引实现接口幂等	</p>
+<p>工程效率：	</p>
+<p>​	pre-commit：go fmt 代码格式调整、lint静态代码扫描</p>
+<p>​	gitlab ci&#x2F;cd 构建自动化测试和部署流水线, DevOps开发模式</p>
+<p>​	docker、k8s集群部署</p>
+<p>测试：</p>
+<p>​	单元测试:  </p>
+<p>​	功能测试：Postman</p>
+<p>​	</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4ecwtqi00195vx36ckr4nbq" data-title="商汤实习总结" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Redis跳表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2021-08-10T13:48:51.000Z" itemprop="datePublished">2021-08-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Zset（也叫Sorted-Set，有序集合，按照Score有序）"><a href="#Zset（也叫Sorted-Set，有序集合，按照Score有序）" class="headerlink" title="Zset（也叫Sorted Set，有序集合，按照Score有序）"></a>Zset（也叫Sorted Set，有序集合，按照Score有序）</h1><p><strong>Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。</strong></p>
+<p><strong>不同的是zset有序集合中的每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。</strong>有序集合的成员是唯一的,但分数(score)却可以重复。</p>
+<p><strong>跳表</strong>是zset（有序集合）的底层实现之一。</p>
+<p><strong>zset</strong>底层两个数据结构实现：zipList压缩列表和zskipList。</p>
+<p><strong>zipList</strong>能节省内存空间，但是性能比较差，增删改查的时间复杂度较高，平均O(n)，特殊情况下，增删改这三项的时间复杂度能达到O(n^2)（指触发级联更新，不断重新分配内存空间的情况下）。</p>
+<p><strong>skipList</strong>跳表是一个<strong>层次索引</strong>，使用的是<strong>分层索引</strong>的思想，对标的是平衡查找树，底层采用<strong>链表</strong>实现，<strong>增删改查的平均时间复杂度是O(logn)。</strong>同时<strong>支持</strong>快速查找单个数据和<strong>范围查询。</strong>空间复杂度O(n)。</p>
+        
+          <p class="article-more-link">
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" data-id="cl4ecwtqb000e5vx3gc5oblvf" data-title="Redis跳表" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-tdsp代码说明文档" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" class="article-date">
+  <time class="dt-published" datetime="2021-08-09T14:30:01.000Z" itemprop="datePublished">2021-08-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/">从最短路径到最快路径的求解（tdsp代码说明文档）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><p>代码下载：<a target="_blank" rel="noopener" href="https://github.com/ssfldsh/tdsp">ssfldsh&#x2F;tdsp (github.com)</a></p>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="原始路网数据："><a href="#原始路网数据：" class="headerlink" title="原始路网数据："></a>原始路网数据：</h2><p><img src="/img/wpsV5MBi9.jpg" alt="img"> </p>
+<h2 id="处理后的路网数据："><a href="#处理后的路网数据：" class="headerlink" title="处理后的路网数据："></a>处理后的路网数据：</h2><p>格式：</p>
+<p>每行10列：分别是</p>
+<p>路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。</p>
+<img src="/img/wpsfryxsI.jpg" alt="img" style="zoom:25%;" /> 
+
+<p>导入Qgis，做数据可视化，观察数据分布：</p>
+<p><img src="/img/1637573646427-16c5e92c-4edf-46f9-b29f-ecf9e53fa498.png" alt="img"></p>
+<p>是一个拥有接近10000条边，10000个顶点的小型地图数据集。包含北京中心的部分主要路段。</p>
+        
+          <p class="article-more-link">
+            <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4ecwtqh00115vx3gk5iebox" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Redis持久化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2021-08-08T10:42:07.000Z" itemprop="datePublished">2021-08-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/">Redis持久化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="AOF和RDB的取舍"><a href="#AOF和RDB的取舍" class="headerlink" title="AOF和RDB的取舍"></a>AOF和RDB的取舍</h1><p>目前，Redis 的持久化主要有两大机制，即 AOF（Append Only File）日志和 RDB 快照。</p>
+<p>AOF记录的是操作命令，而不是实际的数据。<br>用 AOF 方法进行故障恢复的时候，需要逐一把操作日志都执行一遍。如果操作日志非常多，Redis 就会恢复得很缓慢，影响到正常使用。这当然不是理想的结果。<br>使用AOF备份的特点是慢而全面，数据内容的丢失可以控制在秒级。</p>
+<p>使用RDB快照在做数据恢复时比较快。<br>缺点是备份内容不够详细，数据粒度只能达到分钟级。<br>频繁的全量快照造成大量高频磁盘读写，fork开销也很大。</p>
+<p>实际生产中，可以考虑两者的结合，如：</p>
+<p><strong>Redis 4.0 中提出了一个混合使用 AOF 日志和内存快照的方法。</strong>简单来说，内存快照以一定的频率执行，在两次快照之间，使用 AOF 日志记录这期间的所有命令操作。</p>
+<p>这样数据恢复速度可以得到提升，能恢复出的数据也更加全面。</p>
+<p>另外，具体情况具体分析，如根据QPS大小和键值对修改范围定制Redis持久化策略：</p>
+        
+          <p class="article-more-link">
+            <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" data-id="cl4ecwtqb000d5vx3fya39m1r" data-title="Redis持久化" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-minimalOnRoadTime" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/19/minimalOnRoadTime/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T13:15:30.000Z" itemprop="datePublished">2021-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/19/minimalOnRoadTime/">Minimal on road time</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871-6700633.jpeg" alt="幻灯片1"></p>
+        
+          <p class="article-more-link">
+            <a href="/2021/07/19/minimalOnRoadTime/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/19/minimalOnRoadTime/" data-id="cl4ecwtqd000k5vx39jr8ebfg" data-title="Minimal on road time" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-寒假工作总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T12:33:58.000Z" itemprop="datePublished">2021-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">轨迹数据库入门总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>1、《Computing with Spatial Trajectories》第一章和第二章，轨迹数据的预处理部分</p>
+<p>2、  轨迹数据的常用索引</p>
+<p>3、 市面上的轨迹数据处理平台：以阿里云和京东为例</p>
+        
+          <p class="article-more-link">
+            <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" data-id="cl4ecwtqh00135vx3adxm52vw" data-title="轨迹数据库入门总结" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-st-hadoop总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2021-07-19T12:05:05.000Z" itemprop="datePublished">2021-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/">st-hadoop汇报总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><em><strong>*何润喆*</strong></em><em><strong>*- ST-Hadoop: a MapReduce framework for spatio-temporal data*</strong></em></p>
+<p><em><strong>*一、过程反思*</strong></em></p>
+<p>(一) 过程总结</p>
+<p><em><strong>*1、选题与准备*</strong></em></p>
+<p>我们小组目前正在研读京东城市计算团队的一篇论文“JUST: JD Urban Spatio-Temporal Data Engine”，主要介绍了该团队的一款时空数据处理引擎JUST，恰好与我们小组的研究方向相契合。里面提到了现有市场上其他的一些时空数据管理平台。 </p>
+<p><img src="/img/wps2G4Ry6.jpg" alt="img"> </p>
+        
+          <p class="article-more-link">
+            <a href="/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/07/19/st-hadoop%E6%80%BB%E7%BB%93/" data-id="cl4ecwtqi00155vx3cim2cber" data-title="st-hadoop汇报总结" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>postgreGIS数据库性能实测 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="*出租车数据实验报告* *数据来源：* https:&#x2F;&#x2F;www.microsoft.com&#x2F;en-us&#x2F;research&#x2F;publication&#x2F;t-drive-trajectory-data-sample&#x2F; *数据介绍：* This dataset contains the GPS trajectories of 10,357 taxis during the period of Feb. 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postgreGIS数据库性能实测">
+<meta property="og:url" content="http://example.com/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="*出租车数据实验报告* *数据来源：* https:&#x2F;&#x2F;www.microsoft.com&#x2F;en-us&#x2F;research&#x2F;publication&#x2F;t-drive-trajectory-data-sample&#x2F; *数据介绍：* This dataset contains the GPS trajectories of 10,357 taxis during the period of Feb. 2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/wpsEKnrLr.jpg">
+<meta property="og:image" content="http://example.com/img/wps8o6crC.jpg">
+<meta property="og:image" content="http://example.com/img/wpst72LOS.jpg">
+<meta property="og:image" content="http://example.com/img/wps2eQqRF.jpg">
+<meta property="og:image" content="http://example.com/img/wpsap8WnK.jpg">
+<meta property="og:image" content="http://example.com/img/wps3V9XqS.jpg">
+<meta property="og:image" content="http://example.com/img/wpsJudhGD.jpg">
+<meta property="og:image" content="http://example.com/img/wpsZGqjak.jpg">
+<meta property="og:image" content="http://example.com/img/wpsI6FsSZ.jpg">
+<meta property="og:image" content="http://example.com/img/wps9Ftpxk.jpg">
+<meta property="og:image" content="http://example.com/img/wpsN7AP71.jpg">
+<meta property="og:image" content="http://example.com/img/wpsNVaETJ.jpg">
+<meta property="og:image" content="http://example.com/img/wpslK98Kv.jpg">
+<meta property="og:image" content="http://example.com/img/wpsRjVtTz.jpg">
+<meta property="og:image" content="http://example.com/img/wpspaULta.jpg">
+<meta property="og:image" content="http://example.com/img/wpsqmPERH.jpg">
+<meta property="og:image" content="http://example.com/img/wpsmpCEDV.jpg">
+<meta property="og:image" content="http://example.com/img/wpsjYn60t.jpg">
+<meta property="og:image" content="http://example.com/img/wps8YmguQ.jpg">
+<meta property="og:image" content="http://example.com/img/wpsfsktnA.jpg">
+<meta property="og:image" content="http://example.com/img/wpsxEQUqr.jpg">
+<meta property="og:image" content="http://example.com/img/wpskd8pm9.jpg">
+<meta property="og:image" content="http://example.com/img/wpsLcHAHA.jpg">
+<meta property="og:image" content="http://example.com/img/wpsSdhcD3.jpg">
+<meta property="og:image" content="http://example.com/img/wpsdc15lG.jpg">
+<meta property="og:image" content="http://example.com/img/wpshurAfx.jpg">
+<meta property="og:image" content="http://example.com/img/wps2FBNsH.jpg">
+<meta property="og:image" content="http://example.com/img/wpsEeO69Q.jpg">
+<meta property="og:image" content="http://example.com/img/wpsBbN0Ql.jpg">
+<meta property="og:image" content="http://example.com/img/wpsXbM0vS.jpg">
+<meta property="og:image" content="http://example.com/img/wpsSG5P6C.jpg">
+<meta property="og:image" content="http://example.com/img/wps9fBrr8.jpg">
+<meta property="og:image" content="http://example.com/img/wpsvTmm3j.jpg">
+<meta property="og:image" content="http://example.com/img/wpsTGMEPH.jpg">
+<meta property="og:image" content="http://example.com/img/wpsBzNv84.jpg">
+<meta property="og:image" content="http://example.com/img/wpsHotKjq.jpg">
+<meta property="og:image" content="http://example.com/img/wpsLCaDfA.jpg">
+<meta property="article:published_time" content="2020-11-19T04:02:35.000Z">
+<meta property="article:modified_time" content="2021-07-25T17:06:10.386Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="postgreGIS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/wpsEKnrLr.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-postgreGIS性能实测" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/" class="article-date">
+  <time class="dt-published" datetime="2020-11-19T04:02:35.000Z" itemprop="datePublished">2020-11-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/postgreGIS/">postgreGIS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      postgreGIS数据库性能实测
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><em><strong>*出租车数据实验报告*</strong></em></p>
+<p><em><strong>*数据来源：*</strong></em></p>
+<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/publication/t-drive-trajectory-data-sample/">https://www.microsoft.com/en-us/research/publication/t-drive-trajectory-data-sample/</a></p>
+<p><em><strong>*数据介绍：*</strong></em></p>
+<p>This dataset contains the GPS trajectories of 10,357 taxis during the period of Feb. 2 to Feb. 8, 2008</p>
+<p>within Beijing. </p>
+<p>一共有 10357辆出租车的txt数据，每个TXT文件分别记载了车辆的taxi_id，记录时间data_time，经度longitude纬度latitude：</p>
+<span id="more"></span>
+
+<p><img src="/img/wpsEKnrLr.jpg" alt="img"></p>
+<img src="/img/wps8o6crC.jpg" alt="img" style="zoom:50%;" />
+
+<p><em><strong>*导入QGIS：*</strong></em></p>
+<p>将所有TXT文件合并后得到一份记录了所有车辆时空数据的CSV文件，共735MB</p>
+<p>在文件的第一行加上记录的属性值后：</p>
+<img src="/img/wpst72LOS.jpg" alt="img" style="zoom:50%;" />
+
+<p>将其导入QGIS的图层：</p>
+<p><img src="/img/wps2eQqRF.jpg" alt="img"></p>
+<img src="/img/wpsap8WnK.jpg" alt="img" style="zoom:50%;" />
+
+<p>需要大概5-10min。</p>
+<p><em><strong>*导出到postgre*</strong></em></p>
+<p>然后，将其导出到postgis的表中：</p>
+<img src="/img/wps3V9XqS.jpg" alt="img" style="zoom:50%;" />
+
+<p>大概需要1.5个小时，</p>
+<p>导出后的表结构如下所示：</p>
+<p><img src="/img/wpsJudhGD.jpg" alt="img"></p>
+<p>可以看到：QGIS自动为我们创建了geometry类型的数据geom用于数据的可视化。</p>
+<p>自动创建了integer类型的数据id作为表的主键。</p>
+<p>将taxi_id设置为integer类型的数据</p>
+<p>longitude和latitude设置为double类型的数据</p>
+<p>datetime设置为timestamp without time zone类型的数据</p>
+<p><em><strong>*数据清洗：*</strong></em></p>
+<p>1、查找所有时间有问题的数据</p>
+<p>select * from public.”all_T-drive” where date_time&lt;’2008-02-02 00:00:00’ OR date_time&gt;’2008-02-08 23:59:59’</p>
+<p>执行时间：</p>
+<img src="/img/wpsZGqjak.jpg" alt="img" style="zoom:50%;" />
+
+<p>返回0条记录，说明所有的小车数据的时间都没有问题。</p>
+<p>2、查找所有经纬度有问题的数据：</p>
+<p>这里，假设北京市的经纬度位于东经115.7°—117.4°，北纬39.4°—41.6°，剔除这之外的数据：</p>
+<p>select * from public.”all_T-drive” where longitude&lt;115.6 OR longitude&gt;117.5 OR latitude&lt;39.3 OR latitude&gt;41.7</p>
+<img src="/img/wpsI6FsSZ.jpg" alt="img" style="zoom:25%;" />
+
+<p>返回了168008条记录。</p>
+<p>删除这些数据：</p>
+<p>delete from public.”all_T-drive” where longitude&lt;115.6 OR longitude&gt;117.5 OR latitude&lt;39.3 OR latitude&gt;41.7</p>
+<img src="/img/wps9Ftpxk.jpg" alt="img" style="zoom:25%;" />
+
+<p>删除脏数据后的车辆轨迹分布：</p>
+<img src="/img/wpsN7AP71.jpg" alt="img" style="zoom:67%;" />
+
+ 
+
+<p><em><strong>*SQL查询：*</strong></em></p>
+<p><em><strong>*1、查询表中记录的总数：*</strong></em></p>
+<p>select count(*) from public.”all_T-drive”</p>
+<p>执行时间：77s</p>
+<p>返回结果：</p>
+<img src="/img/wpsNVaETJ.jpg" alt="img" style="zoom:10%;" />
+
+ 
+
+<p>结论：一共有17662984条关于出租车的时空数据。</p>
+<p><em><strong>*2、查询某辆车的行驶轨迹：*</strong></em></p>
+<p>如查询taxi_id为1的出租车的行驶轨迹：</p>
+<p>select * from public.”all_T-drive” where taxi_id&#x3D;1</p>
+<p>执行时间：32S</p>
+<p>返回结果：</p>
+<img src="/img/wpslK98Kv.jpg" alt="img" style="zoom:67%;" />
+
+ 
+
+<p><em><strong>*3、查询某个时间段内的车辆轨迹：*</strong></em></p>
+<p>如查询2008-02-02 17:00:00-2008-02-02 19:00:00 这一个小时内所有的出租车位置</p>
+<p>select * from public.”all_T-drive” where date_time&gt;’2008-02-02 17:00:00’ AND date_time&lt;’2008-02-02 19:00:00’</p>
+<p>执行时间：</p>
+<img src="/img/wpsRjVtTz.jpg" alt="img" style="zoom:50%;" />
+
+<p>返回结果：</p>
+<p>在postgis中的显示：</p>
+<img src="/img/wpspaULta.jpg" alt="img" style="zoom:67%;" />
+
+ 
+
+<p><em><strong>*4、查询天安门（经纬度（116.391261 39.907337））200米范围内的出租车轨迹点：*</strong></em></p>
+<p>SELECT * from public.”all_T-drive”  where st_distance(geom::geography, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geography)&lt;200 </p>
+<p>执行时间：</p>
+<img src="/img/wpsqmPERH.jpg" alt="img" style="zoom:50%;" />
+
+<p>返回结果：</p>
+<img src="/img/wpsmpCEDV.jpg" alt="img" style="zoom:50%;" />
+
+ 
+
+<img src="/img/wpsjYn60t.jpg" alt="img" style="zoom:50%;" />
+
+ 
+
+<p><em><strong>*5、查询距离天安门200米范围内的前100个点并显示他们距离天安门的距离，所有点按距离升序排列：*</strong></em></p>
+<p>SELECT id, taxi_id, geom, date_time, longitude, latitude, ST_Distance(geom::geography, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geography) as distance from public.”all_T-drive” WHERE ST_DWithin(geom::geography, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geography, 200) ORDER BY distance limit 100 </p>
+<p>执行时间：</p>
+<img src="/img/wps8YmguQ.jpg" alt="img" style="zoom:50%;" />
+
+<p>返回结果：</p>
+<p><img src="/img/wpsfsktnA.jpg" alt="img"></p>
+<img src="/img/wpsxEQUqr.jpg" alt="img" style="zoom:50%;" />
+
+<p><em><strong>*7、创建索引：*</strong></em></p>
+<p>为表中geometry类型的列geom建立索引：</p>
+<p>CREATE INDEX global_points_gix ON public.”all_T-drive” USING GIST (geom); </p>
+<img src="/img/wpskd8pm9.jpg" alt="img" style="zoom:25%;" />
+
+<img src="/img/wpsLcHAHA.jpg" alt="img" style="zoom:33%;" />
+
+<p>更新表的状态 VACUUM ANALYZE public.”all_T-drive” (geom); </p>
+<p>让查询优化器更智能的选择是否使用索引。</p>
+<p>可以通过 set enable_seqscan&#x3D;false 命令在有合适的索引时强制使用索引。</p>
+<p><em><strong>*8、有无索引时的比较：*</strong></em></p>
+<p><em><strong>*（1）查询天安门附近距离最近的1000个点，按距离升序排列：*</strong></em></p>
+<p>SELECT id, taxi_id, geom, date_time, longitude, latitude, ST_Distance(geom, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geometry) as distance  from public.”all_T-drive” WHERE ST_DWithin(geom, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geometry, 500)  ORDER BY distance limit 1000 </p>
+<p><em><strong>*有索引时：*</strong></em></p>
+<p>使用explain命令查看执行计划，使用了索引进行扫描</p>
+<img src="/img/wpsSdhcD3.jpg" alt="img" style="zoom:50%;" />
+
+<p>执行时间：</p>
+<img src="/img/wpsdc15lG.jpg" alt="img" style="zoom:50%;" />
+
+<p>返回结果：</p>
+<p><img src="/img/wpshurAfx.jpg" alt="img"></p>
+<img src="/img/wps2FBNsH.jpg" alt="img" style="zoom:25%;" />
+
+<p><em><strong>*比较无索引时的情况：*</strong></em></p>
+<p>删除索引：</p>
+<img src="/img/wpsEeO69Q.jpg" alt="img" style="zoom:10%;" />
+
+<p>重新执行SQL语句。</p>
+<p>查看查询计划：</p>
+<p><img src="/img/wpsBbN0Ql.jpg" alt="img"></p>
+<p>发现无索引时采取顺序扫描策略。</p>
+<p>执行时间：72S，比有索引时还要快一点。</p>
+<p><em><strong>*分析：*</strong></em></p>
+<p>执行语句</p>
+<p>SELECT id, taxi_id, geom, date_time, longitude, latitude, ST_Distance(geom, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geometry) as distance  from public.”all_T-drive” WHERE ST_DWithin(geom, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geometry, 500)  ORDER BY distance </p>
+<p>返回了数据库中的所有表项，</p>
+<p>分析，由于500这个度数距离设置的过大，导致该次查询需要遍历表中所有的表项，所以无索引时反而要快一点。</p>
+<p><em><strong>*（2）修改SQL语句，缩小查询范围：*</strong></em></p>
+<p>SELECT id, taxi_id, geom, date_time, longitude, latitude, ST_Distance(geom, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geometry) as distance  from public.”all_T-drive” WHERE ST_DWithin(geom, ‘SRID&#x3D;4326;POINT(116.391261 39.907337)’::geometry, 0.0012)  ORDER BY distance </p>
+<p><em><strong>*有索引：*</strong></em></p>
+<p>执行时间：</p>
+<img src="/img/wpsXbM0vS.jpg" alt="img" style="zoom:50%;" />
+
+<p>查看查询计划：</p>
+<img src="/img/wpsSG5P6C.jpg" alt="img" style="zoom:50%;" />
+
+<p>查询计划显示该次查询使用了索引。</p>
+<p>返回结果：</p>
+<p><img src="/img/wps9fBrr8.jpg" alt="img"></p>
+<img src="/img/wpsvTmm3j.jpg" alt="img" style="zoom:20%;" />
+
+<p><em><strong>*无索引：*</strong></em></p>
+<img src="/img/wpsTGMEPH.jpg" alt="img" style="zoom:50%;" />
+
+<img src="/img/wpsBzNv84.jpg" alt="img" style="zoom:50%;" />
+
+<img src="/img/wpsHotKjq.jpg" alt="img" style="zoom:20%;" />
+
+<img src="/img/wpsLCaDfA.jpg" alt="img" style="zoom:50%;" />
+
+<p>顺序扫描</p>
+<p><em><strong>*分析：*</strong></em></p>
+<p>无索引时，查询时间为12s，有索引时查询时间为491ms，提升明显。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/" data-id="cl4ecwtqg000x5vx3dych1bms" data-title="postgreGIS数据库性能实测" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Qgis的使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/12/Unity3D%E5%B0%8F%E6%B8%B8%E6%88%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unity3D小游戏</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

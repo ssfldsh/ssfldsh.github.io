@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Qgis的使用 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="QGIS介绍：Quantum GIS（QGIS）是开源地理信息系统桌面软件， 使用GNU（General Public License）授权，属于 Open Source eospatial Foundation（OSGeo）的官方计划。 在 GNU 这个授权下，开发者可以自行检阅与调整程序代码，并保障让所有使用者可以免费且自由地修改程序。 QGIS 的目标是成为一个使用简单的 GIS，提供了常见">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qgis的使用">
+<meta property="og:url" content="http://example.com/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="QGIS介绍：Quantum GIS（QGIS）是开源地理信息系统桌面软件， 使用GNU（General Public License）授权，属于 Open Source eospatial Foundation（OSGeo）的官方计划。 在 GNU 这个授权下，开发者可以自行检阅与调整程序代码，并保障让所有使用者可以免费且自由地修改程序。 QGIS 的目标是成为一个使用简单的 GIS，提供了常见">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/1605624198010-043ad4ad-d601-4d98-8e57-99a57c7f7c2f.png">
+<meta property="og:image" content="http://example.com/img/1605624217170-eee63bb3-4eb1-4545-8b7b-e0aca0d7ca74.png">
+<meta property="og:image" content="http://example.com/img/1605624251344-1e624a07-0622-4921-9bc4-6fda054a12c7.png">
+<meta property="og:image" content="http://example.com/img/1605624406407-08d102cd-bb35-4604-aecb-e61ae636420b.png">
+<meta property="og:image" content="http://example.com/img/1605624498385-eb0ace5d-652e-4271-9c05-8a57ec868170.png">
+<meta property="og:image" content="http://example.com/img/1605624699112-643ada58-4f64-45f4-b764-628ea29b6b85.png">
+<meta property="og:image" content="http://example.com/img/1605624770678-940d3007-0c64-483d-9142-ed636bc61af6.png">
+<meta property="og:image" content="http://example.com/img/1605624837991-cbd92378-808a-493c-8755-52a2b186e468.png">
+<meta property="og:image" content="http://example.com/img/1605625003518-7ae47cf3-dc93-450a-b9a7-efe84bc10c7e.png">
+<meta property="og:image" content="http://example.com/img/1605625034308-8fc6a836-1835-41bd-bd01-1132b43a97ee.png">
+<meta property="og:image" content="http://example.com/img/1605625231897-3a62f126-874f-4495-890c-45352efd0779.png">
+<meta property="og:image" content="http://example.com/img/1605625306251-ab121444-ccbc-456f-bef0-713f51022b14.png">
+<meta property="og:image" content="http://example.com/img/1605625407804-9ebf38d5-3291-4d76-964e-9a4e030558ae.png">
+<meta property="og:image" content="http://example.com/img/1605625586127-3ed63c02-9bda-4071-bbad-0974e323c24a.png">
+<meta property="og:image" content="http://example.com/img/1605625811185-7974393c-5b8d-45c4-a4d6-742533b367de.png">
+<meta property="og:image" content="http://example.com/img/1605625890324-d66c0044-2ee9-4185-a183-6ab6f4229763.png">
+<meta property="og:image" content="http://example.com/img/1605625951849-6fd2b1b0-dd97-4f0d-96e3-610ae413cf42.png">
+<meta property="og:image" content="http://example.com/img/1605626035102-f4d07bc8-8adc-461a-ace3-8d2a4fd3141e.png">
+<meta property="og:image" content="http://example.com/img/1605626298209-756c734a-3226-42a2-a0bf-f32a62bbeba7.png">
+<meta property="og:image" content="http://example.com/img/1605626353726-02f66f9e-1ba6-465a-9dce-1605b5081c8f.png">
+<meta property="og:image" content="http://example.com/img/1605626568756-f6e788da-9873-4702-ad26-9786c767d6eb.png">
+<meta property="og:image" content="http://example.com/img/1605756192695-ee59c143-6cea-4c8c-a338-e8f92f7a051a.png">
+<meta property="og:image" content="http://example.com/img/1605756173496-df35efb9-082e-4676-8fa1-b5d57e0b5c5a.png">
+<meta property="og:image" content="http://example.com/img/1605756138507-70cce5a0-f367-45ea-a1d4-272cb973799b.png">
+<meta property="article:published_time" content="2020-11-19T04:02:35.000Z">
+<meta property="article:modified_time" content="2020-11-19T18:23:17.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Qgis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/1605624198010-043ad4ad-d601-4d98-8e57-99a57c7f7c2f.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Qgis的使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time class="dt-published" datetime="2020-11-19T04:02:35.000Z" itemprop="datePublished">2020-11-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/GIS/">GIS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Qgis的使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="QGIS介绍："><a href="#QGIS介绍：" class="headerlink" title="QGIS介绍："></a>QGIS介绍：</h1><p>Quantum GIS（QGIS）是开源地理信息系统桌面软件， 使用GNU（General Public License）授权，属于 Open Source eospatial Foundation（OSGeo）的官方计划。 在 GNU 这个授权下，开发者可以自行检阅与调整程序代码，并保障让所有使用者可以免费且自由地修改程序。</p>
+<p>QGIS 的目标是成为一个使用简单的 GIS，提供了常见的功能与特征。借着核心特征提供基本功能与附加组件（Python 或 C++） 持续地扩充，让使用者可以浏览、管理、编辑、分析数据以及制图。</p>
+<p>QGIS 是一群自愿者所开发的项目，欢迎全球使用者或开发者将程序代码的缺陷、修复、报告以及提供文件等贡献。 它是由热心的使用者和开发社群所维护的。它提供了交互式的邮件列表， 以及通过网络管道传达给其他用户与开发人员帮忙与建议。另外，它也提供商业定制化开发。</p>
+<p>QGIS项目开始于2002年5月，是基于跨平台的图形工具Qt软件包，采用C++ 语言开发的一个GIS软件。 目前的开发非常活跃，当前Windows（2020年）的最新版本是QGIS 3.12版。</p>
+<span id="more"></span>
+
+<h2 id="支持数据格式："><a href="#支持数据格式：" class="headerlink" title="支持数据格式："></a>支持数据格式：</h2><p>QGIS支持数据格式包括：</p>
+<p>矢量数据：支持 PostgreSQL&#x2F;PostGIS，以及 OGR 函式库，包含 ESRI Shapefiles、MapInfo、SDTS 和 GML。</p>
+<p>栅格数据：支援 GDAL 函式库，如 GeoTiff、Erdas Img.、ArcInfo Ascii Grid、JPEG、PNG。</p>
+<p>支持 GRASS 栅格与矢量数据，同时也支持在线 OGC 数据 Web Map Service（WMS）、Web Map Tile Service、 (WMTS)、Web Feature Service（WFS）</p>
+<h2 id="主要特点："><a href="#主要特点：" class="headerlink" title="主要特点："></a>主要特点：</h2><ul>
+<li>支持多种GIS数据文件格式。通过GDAL&#x2F;OGR扩展可以支持多达几十种数据格式。</li>
+<li>支持PostGIS数据库。</li>
+<li>支持从WMS,WFS服务器中获取数据。</li>
+<li>集成了GRASS GIS的部分功能。</li>
+<li>支持对GIS数据的基本操作，如属性的编辑修改等。</li>
+<li>支持创建地图。</li>
+<li>通过插件的形式支持功能的扩展</li>
+</ul>
+<h1 id="与PostGis的连接："><a href="#与PostGis的连接：" class="headerlink" title="与PostGis的连接："></a>与PostGis的连接：</h1><p><img src="/img/1605624198010-043ad4ad-d601-4d98-8e57-99a57c7f7c2f.png" alt="image.png"></p>
+<p><img src="/img/1605624217170-eee63bb3-4eb1-4545-8b7b-e0aca0d7ca74.png" alt="image.png"></p>
+<p>输入数据库的账户和密码：</p>
+<p><img src="/img/1605624251344-1e624a07-0622-4921-9bc4-6fda054a12c7.png" alt="image.png"></p>
+<h1 id="数据库的可视化："><a href="#数据库的可视化：" class="headerlink" title="数据库的可视化："></a>数据库的可视化：</h1><p><img src="/img/1605624406407-08d102cd-bb35-4604-aecb-e61ae636420b.png" alt="image.png"></p>
+<h2 id="图层管理与图层显示顺序："><a href="#图层管理与图层显示顺序：" class="headerlink" title="图层管理与图层显示顺序："></a>图层管理与图层显示顺序：</h2><p><img src="/img/1605624498385-eb0ace5d-652e-4271-9c05-8a57ec868170.png" alt="image.png"></p>
+<p>图层之间叠加显示，排在前面的图层，如nyc_homicides在图的上层。</p>
+<p>打开属性表：</p>
+<p>右键某一图层，打开菜单，选择“打开属性表”</p>
+<p><img src="/img/1605624699112-643ada58-4f64-45f4-b764-628ea29b6b85.png" alt="image.png"></p>
+<h1 id="使用QGIS操作属性表："><a href="#使用QGIS操作属性表：" class="headerlink" title="使用QGIS操作属性表："></a>使用QGIS操作属性表：</h1><h2 id="属性表中的内容："><a href="#属性表中的内容：" class="headerlink" title="属性表中的内容："></a>属性表中的内容：</h2><p><img src="/img/1605624770678-940d3007-0c64-483d-9142-ed636bc61af6.png" alt="image.png"></p>
+<h3 id="表达式选择"><a href="#表达式选择" class="headerlink" title="表达式选择"></a>表达式选择</h3><p>打开按表达式选择：</p>
+<p><img src="/img/1605624837991-cbd92378-808a-493c-8755-52a2b186e468.png" alt="image.png"></p>
+<p>选择字段和值，对表中数据执行查询操作：</p>
+<p>输入查询命令：”weapon”&#x3D;’gun’:</p>
+<p>点击选择要素，对数据表中武器类型为“gun”的节点进行选择。</p>
+<p><img src="/img/1605625003518-7ae47cf3-dc93-450a-b9a7-efe84bc10c7e.png" alt="image.png"></p>
+<p>返回相应表项和可视化结果：</p>
+<p><img src="/img/1605625034308-8fc6a836-1835-41bd-bd01-1132b43a97ee.png" alt="image.png"></p>
+<p>黄色为选中的“gun”节点。</p>
+<p><img src="/img/1605625231897-3a62f126-874f-4495-890c-45352efd0779.png" alt="image.png"></p>
+<h3 id="字段计算器"><a href="#字段计算器" class="headerlink" title="字段计算器"></a>字段计算器</h3><p>字段计算器用于在数据表中添加新的属性：</p>
+<p><img src="/img/1605625306251-ab121444-ccbc-456f-bef0-713f51022b14.png" alt="image.png"></p>
+<h1 id="使用QGIS执行SQL命令："><a href="#使用QGIS执行SQL命令：" class="headerlink" title="使用QGIS执行SQL命令："></a>使用QGIS执行SQL命令：</h1><h2 id="在QGIS中执行SQL命令并以图层的形式返回可视化的查询结果："><a href="#在QGIS中执行SQL命令并以图层的形式返回可视化的查询结果：" class="headerlink" title="在QGIS中执行SQL命令并以图层的形式返回可视化的查询结果："></a>在QGIS中执行SQL命令并以图层的形式返回可视化的查询结果：</h2><p>点击数据库管理器–数据库–SQL窗口，打开SQL语句编写界面：</p>
+<p><img src="/img/1605625407804-9ebf38d5-3291-4d76-964e-9a4e030558ae.png" alt="image.png"></p>
+<p>如果提示未连接数据库，单机数据源中的数据库进行数据库的连接：</p>
+<p><img src="/img/1605625586127-3ed63c02-9bda-4071-bbad-0974e323c24a.png" alt="image.png"></p>
+<p>输入SQL语句，单机“执行”，返回数据库的查询结果。</p>
+<p><img src="/img/1605625811185-7974393c-5b8d-45c4-a4d6-742533b367de.png" alt="image.png"></p>
+<p>输入SQL语句：</p>
+<p><strong>SELECT *</strong></p>
+<p><strong>FROM nyc_neighborhoods</strong></p>
+<p><strong>WHERE boroname &#x3D; ‘Brooklyn’;</strong></p>
+<p>返回”Brooklyn”街区的全部数据库表项。</p>
+<p><img src="/img/1605625890324-d66c0044-2ee9-4185-a183-6ab6f4229763.png" alt="image.png"></p>
+<p>勾选“导入为新图层”，输入图层名，点击“加载”返回查询结果的可视化图层。</p>
+<p><img src="/img/1605625951849-6fd2b1b0-dd97-4f0d-96e3-610ae413cf42.png" alt="image.png"></p>
+<p>图中“绿色”为可视化的查询结果–“Brooklyn”街区</p>
+<p><img src="/img/1605626035102-f4d07bc8-8adc-461a-ace3-8d2a4fd3141e.png" alt="image.png"></p>
+<h2 id="将图层导出到PostgresSQL："><a href="#将图层导出到PostgresSQL：" class="headerlink" title="将图层导出到PostgresSQL："></a>将图层导出到PostgresSQL：</h2><p>单机“工具箱”按钮，弹出常用工具。</p>
+<p>单机“数据库”–”导出到PostgresSQL”</p>
+<p><img src="/img/1605626298209-756c734a-3226-42a2-a0bf-f32a62bbeba7.png" alt="image.png"></p>
+<p>选择要导入的图层，选择要连接的数据库，单机运行按钮。</p>
+<p><img src="/img/1605626353726-02f66f9e-1ba6-465a-9dce-1605b5081c8f.png" alt="image.png"></p>
+<p>导出成功，数据库中新增了一个表“try”</p>
+<p><img src="/img/1605626568756-f6e788da-9873-4702-ad26-9786c767d6eb.png" alt="image.png"></p>
+<h1 id="要素的选择与识别"><a href="#要素的选择与识别" class="headerlink" title="要素的选择与识别"></a>要素的选择与识别</h1><p>单击“要素识别”工具</p>
+<p><img src="/img/1605756192695-ee59c143-6cea-4c8c-a338-e8f92f7a051a.png" alt="image.png"></p>
+<p>在要识别的图层对象上右键选中待识别的要素。</p>
+<p><img src="/img/1605756173496-df35efb9-082e-4676-8fa1-b5d57e0b5c5a.png" alt="image.png"></p>
+<p>在识别结果处查看该要素在数据库表项中各属性的命名和取值</p>
+<p><img src="/img/1605756138507-70cce5a0-f367-45ea-a1d4-272cb973799b.png" alt="image.png"></p>
+<p>如果选中的要素是一个多边形区域，还可以看到它的周长，面积等几何信息。</p>
+<h1 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h1><p><a target="_blank" rel="noopener" href="https://www.osgeo.cn/qgis-tutorial/overview-intro.html#id2">https://www.osgeo.cn/qgis-tutorial/overview-intro.html#id2</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62357338">https://zhuanlan.zhihu.com/p/62357338</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/87a6caa92496">https://www.jianshu.com/p/87a6caa92496</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903864341102606">https://juejin.im/post/6844903864341102606</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/19/Qgis%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="cl4ecwtqa000a5vx3fjimcs7r" data-title="Qgis的使用" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/07/18/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          差分隐私保护
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/19/postgreGIS%E6%80%A7%E8%83%BD%E5%AE%9E%E6%B5%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">postgreGIS数据库性能实测</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity/">Unity</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/postgreGIS/">postgreGIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/">数据挖掘</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4/">隐私保护</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/" rel="tag">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Qgis/" rel="tag">Qgis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/postgreGIS/" rel="tag">postgreGIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" rel="tag">共现关系</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" rel="tag">动态网页</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" rel="tag">团队项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" rel="tag">差分隐私</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag">软件开发</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Qgis/" style="font-size: 10px;">Qgis</a> <a href="/tags/Redis/" style="font-size: 15px;">Redis</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/postgreGIS/" style="font-size: 10px;">postgreGIS</a> <a href="/tags/zset/" style="font-size: 10px;">zset</a> <a href="/tags/%E5%85%B1%E7%8E%B0%E5%85%B3%E7%B3%BB/" style="font-size: 10px;">共现关系</a> <a href="/tags/%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5/" style="font-size: 10px;">动态网页</a> <a href="/tags/%E5%9B%A2%E9%98%9F%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">团队项目</a> <a href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" style="font-size: 10px;">实习总结</a> <a href="/tags/%E5%B7%AE%E5%88%86%E9%9A%90%E7%A7%81/" style="font-size: 15px;">差分隐私</a> <a href="/tags/%E5%B9%B6%E5%8F%91/" style="font-size: 15px;">并发</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" style="font-size: 10px;">并行算法</a> <a href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 10px;">持久化</a> <a href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 10px;">数字图像处理</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" style="font-size: 10px;">数据备份</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" style="font-size: 20px;">数据挖掘</a> <a href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 20px;">时空数据库</a> <a href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最快路径</a> <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">最短路径</a> <a href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" style="font-size: 10px;">有序集合</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 10px;">查询</a> <a href="/tags/%E7%B4%A2%E5%BC%95/" style="font-size: 10px;">索引</a> <a href="/tags/%E8%B7%B3%E8%A1%A8/" style="font-size: 10px;">跳表</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" style="font-size: 10px;">软件开发</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
