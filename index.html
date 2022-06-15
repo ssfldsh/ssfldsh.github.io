@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-parallel sssp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-商汤实习总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/03/24/parallel%20sssp/" class="article-date">
-  <time class="dt-published" datetime="2022-03-24T04:02:35.000Z" itemprop="datePublished">2022-03-24</time>
+    <a href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" class="article-date">
+  <time class="dt-published" datetime="2022-02-23T14:30:35.000Z" itemprop="datePublished">2022-02-23</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a>
+    <a class="article-category-link" href="/categories/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">实习总结</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+      <a class="p-name article-title" href="/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/">商汤实习总结</a>
     </h1>
   
 
@@ -97,33 +97,116 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><em>CS-260 并行算法学习整理：</em></p>
-<p>引用了孙老师和顾老师的大量课件和博文：</p>
-<p>孙老师的知乎专栏：</p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1174996853811335168">多核时代与并行算法 - 知乎 (zhihu.com)</a></p>
-<p>课程地址：</p>
-<p><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~yihans/palgo.html">https://www.cs.cmu.edu/~yihans/palgo.html</a></p>
-<p>这里使用的并行模型是binary-fork-join模型，使用的是工作窃取算法。是针对单机多核结构的并行，使用CAS解决竞态条件。</p>
-<p>我主要整理了并行算法在单源最短路径(single source shortest path:sssp)上的应用。</p>
-<p>并行算法带来的提升并不总是常数级别的，有的时候使用了并行反而会更慢。</p>
-<p>这是因为使用使用并行和使用并发一样会有共享变量的读写问题，会有大量fork带来的开销问题。</p>
-<p>在串行的世界里时间效率最优的算法在并行的世界里并不总是最优的。</p>
-<p>比如，在拥有大量处理器时，使用并行的方法能使Bellman-Ford算法的时间效率得到极大地提升，但是使用并行的方法对Dijkstra算法的提升却很有限。</p>
-<p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871-8128718.jpeg" alt="幻灯片1"></p>
-<p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%872-8128718.jpeg" alt="幻灯片2"></p>
+        <h1 id="实习时间："><a href="#实习时间：" class="headerlink" title="实习时间："></a>实习时间：</h1><p>​	2021-9-9 到 2022-1-20 </p>
+<h1 id="实习公司："><a href="#实习公司：" class="headerlink" title="实习公司："></a>实习公司：</h1><p>​	**商汤科技( SenseTime )**，亚洲最大的人工智能公司，市值千亿级别。计算机视觉相关的算法很厉害，工程方面做的也不错。</p>
+<h1 id="实习部门："><a href="#实习部门：" class="headerlink" title="实习部门："></a>实习部门：</h1><p>​	<strong>工程院-容器平台</strong>，名字叫容器平台，实际上我们组并不直接接触docker、k8s二次开发之类的，至少我去的时候是没有做的，可能同部门其他组或者我们组在我来之前有负责k8s集群部署，运维，二次开发之类的。公司内部是有自己的k8s平台的，日常开发docker用的也比较多。</p>
+<p>​	我对docker、k8s的了解仅限于一些基本操作上，如dockerfile的编写之类，对于底层原理不是很熟悉，有时间再补吧。</p>
+<p>​	实习期间，参与的<strong>后台开发</strong>项目较多。使用的开发语言是Goalng和Golang相关的Web开发技术栈。采用的是<strong>微服务架构</strong>，涉及到一些分布式系统相关的知识。</p>
+<p>​	内部使用的是<strong>DevOps</strong>的开发模式，要自己写gitlab-ci.yaml配置gitlab上的pipeline，运行自动化测试、部署的脚本，持续集成和持续部署体验很好。</p>
+<h1 id="参与项目："><a href="#参与项目：" class="headerlink" title="参与项目："></a>参与项目：</h1><h2 id="1、产品交付中心的开发："><a href="#1、产品交付中心的开发：" class="headerlink" title="1、产品交付中心的开发："></a>1、产品交付中心的开发：</h2><p>​		产品交付中心是一个Web项目，以网站的形式提供服务。</p>
+<p>​		方便客户经理管理客户，描述客户需求，提出发货申请。</p>
+<p>​		方便产品经理管理各自的产品线和物料仓库，根据客户的需求匹配相应的物料，从license中心添加相应的加密包。</p>
+<p>​		财务人员审核后，发货。</p>
+<p>​		将原本的客户经理线下交付模式转变为线上，实现软件发货流程的合规与可追溯。</p>
+<p>​		交付中心里将从统一的网站入口进入，通过 IAM 对登陆用户统一进行鉴权，根据用户角色提供相应的页面内</p>
+<p>容以及操作能力。交付中心2.0是“基于合同的软件交付”流程，即在OA审批，在交付中心完成软件交付，形成业务</p>
+<p>闭环。</p>
+<p>​	   项目采用微服务架构，调用了IAM（认证与授权）系统和license （秘钥）中心这两个服务。</p>
+<h2 id="2、-ABAC-基于属性的访问控制-微服务部分接口的开发："><a href="#2、-ABAC-基于属性的访问控制-微服务部分接口的开发：" class="headerlink" title="2、 ABAC( 基于属性的访问控制) 微服务部分接口的开发："></a>2、 ABAC( 基于属性的访问控制) 微服务部分接口的开发：</h2><p>​		ABAC 和 RBAC（基于角色的访问控制相对应），基于访问主体的属性、所处环境，被访问对象、对被访问对象执行的操作 这四种元素描述一次访问行为，和 内置的一些访问规则去碰撞，返回 allow 或者 deny。</p>
+<p>​		ABAC 在一次访问过程中使用了更多的属性（信息），能获得比RBAC更细粒度的控制。当然实现上也更加复杂一点。</p>
+<h1 id="所用技术栈："><a href="#所用技术栈：" class="headerlink" title="所用技术栈："></a>所用技术栈：</h1><p><strong>微服务架构：</strong></p>
+<p><strong>Golang 编程</strong>：</p>
+<p><strong>Golang Web</strong>开发相关开源组件：</p>
+<p>​	cobra搭建命令行工具</p>
+<p>​	viper实现配置信息管理</p>
+<p>​	gorilla实现restful接口的路由</p>
+<p>​	ORM工具：gorm&#x2F;entGo</p>
+<p>​	zap日志</p>
+<p>​	packr将静态文件打包进go二进制可执行文件</p>
+<p>​	prometheus监控	</p>
+<p><strong>设计模式</strong>：</p>
+<p>​	微服务架构</p>
+<p>​	gorilla middleware做 日志、recovery、jwt（面向切面编程）</p>
+<p>​	wire包管理对象创建（依赖注入），依赖于接口而非具体实现</p>
+<p>​	分层架构，类似DDD的模块划分模式（不过我对DDD不是很熟，有时间再看吧。。。）</p>
+<p><strong>代码健壮性</strong>：</p>
+<p>​	使用自定义业务码+描述信息代替http Status Code给用户和前端更加详细的报错信息</p>
+<p>​	插入时使用唯一索引实现接口幂等	</p>
+<p><strong>工程效率</strong>：	</p>
+<p>​	pre-commit：go fmt 代码格式调整、lint静态代码扫描</p>
+<p>​	gitlab ci&#x2F;cd 构建自动化测试和部署流水线, DevOps开发模式</p>
+<p>​	docker、k8s集群部署</p>
+<p><strong>测试</strong>：</p>
+<p>​	单元测试:  </p>
+<p>​	功能测试：Postman</p>
+<p>​	</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4ee5ow3000w21x3fbk090m1" data-title="商汤实习总结" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" rel="tag">实习总结</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-tdsp代码说明文档" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" class="article-date">
+  <time class="dt-published" datetime="2021-08-09T14:30:02.000Z" itemprop="datePublished">2021-08-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/">最快路径</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/">从最短路径到最快路径的求解（tdsp代码说明文档）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><p>代码下载：<a target="_blank" rel="noopener" href="https://github.com/ssfldsh/tdsp">ssfldsh&#x2F;tdsp (github.com)</a></p>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="原始路网数据："><a href="#原始路网数据：" class="headerlink" title="原始路网数据："></a>原始路网数据：</h2><p><img src="/img/wpsV5MBi9.jpg" alt="img"> </p>
+<h2 id="处理后的路网数据："><a href="#处理后的路网数据：" class="headerlink" title="处理后的路网数据："></a>处理后的路网数据：</h2><p>格式：</p>
+<p>每行10列：分别是</p>
+<p>路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。</p>
+<img src="/img/wpsfryxsI.jpg" alt="img" style="zoom:25%;" /> 
+
+<p>导入Qgis，做数据可视化，观察数据分布：</p>
+<p><img src="/img/1637573646427-16c5e92c-4edf-46f9-b29f-ecf9e53fa498.png" alt="img"></p>
+<p>是一个拥有接近10000条边，10000个顶点的小型地图数据集。包含北京中心的部分主要路段。</p>
         
           <p class="article-more-link">
-            <a href="/2022/03/24/parallel%20sssp/#more">Read More</a>
+            <a href="/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/24/parallel%20sssp/" data-id="cl4ee5ow4001021x3aav56pxr" data-title="单源最短路径算法的并行化" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4ee5ow2000v21x3exdw4lyz" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dijkstra/" rel="tag">Dijkstra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
 
     </footer>
   </div>
@@ -133,14 +216,14 @@
 
 
   
-    <article id="post-Go 顺序打印" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-小型PS软件" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" class="article-date">
-  <time class="dt-published" datetime="2022-02-25T04:02:35.000Z" itemprop="datePublished">2022-02-25</time>
+    <a href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" class="article-date">
+  <time class="dt-published" datetime="2020-03-12T04:02:35.000Z" itemprop="datePublished">2020-03-12</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a>
   </div>
 
   </div>
@@ -151,7 +234,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+      <a class="p-name article-title" href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/">小型PS软件</a>
     </h1>
   
 
@@ -159,271 +242,21 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>题目一：顺序打印</p>
-<p>要求1：现在有三个线程A、B、C，它们的功能分别为打印A、B、C各五次，</p>
-<p> 要求修改代码：使用同步语句控制线程执行顺序，使得A的打印发生在B之前，B的打印发生在C之前</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
-
-<span class="token keyword">import</span> <span class="token punctuation">(</span>
-    <span class="token string">"fmt"</span>
-    <span class="token string">"sync"</span>
-    <span class="token string">"time"</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
-    wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
-    nowBThreadCanRun <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
-    nowCThreadCanRun <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">)</span>
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// ３、打印A不需要依赖于谁，直接打印即可</span>
-        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span>
-        nowBThreadCanRun <span class="token operator">&lt;-</span> <span class="token number">1</span>
-        <span class="token comment">// A线程阻塞时，可以执行B线程，体现了多线程的意义</span>
-        time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
-        wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//　２、在A线程和B线程中使用使用nowBThreadCanRun，使得A线程中的打印操作发生在B线程之前</span>
-        <span class="token operator">&lt;-</span>nowBThreadCanRun
-        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span>
-        nowCThreadCanRun <span class="token operator">&lt;-</span> <span class="token number">2</span>
-        time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
-        wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//　２、在B线程和C线程中使用使用nowCThreadCanRun，使得B线程中的打印操作发生在C线程之前</span>
-        <span class="token operator">&lt;-</span>nowCThreadCanRun
-        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-            fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#125;</span>
-        wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"main thread end"</span><span class="token punctuation">)</span>
-    <span class="token comment">// 使用waitGroup阻塞main线程，防止main线程过早执行结束</span>
-    wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">// 不使用多线程也能实现顺序打印ABC的效果，但是因为在print过程中，加入了很多阻塞cpu的操作（如sleep）</span>
-<span class="token comment">// 使得以非并发方式实现的代码运行时间很长：至少大于代码中所有sleep的时间的总和：</span>
-<span class="token comment">// 以多线程方式实现的顺序打印ABC的代码运行时间为1.115s左右，比顺序执行要快，顺序执行的话，3个sleep操作就至少需要执行2.1s</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>题目二：现在有A、B两个线程，它们的功能分别为打印A、B各5次</p>
-<p>现在要求修改代码，使得：</p>
-<p>A和B交替打印：</p>
-<p>具体规则：打印一个A后才能打印一个B；打印一个B后才能打印一个A;A先被打印。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
-
-<span class="token keyword">import</span> <span class="token punctuation">(</span>
-    <span class="token string">"fmt"</span>
-    <span class="token string">"sync"</span>
-    <span class="token string">"time"</span>
-<span class="token punctuation">)</span>
-
-<span class="token comment">// const声明以及赋值:</span>
-<span class="token keyword">const</span> looptime <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">100</span>
-
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> wg sync<span class="token punctuation">.</span>WaitGroup
-    wg<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-    start <span class="token operator">:=</span> time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token comment">// 交替打印A、B，使用1个或者2个cahnnel来实现:</span>
-    canPrintFoo <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    canPrintBar <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    <span class="token comment">// 在A、B两个线程中引入：canPrintA channel使得对A的打印发生在B之前：</span>
-    <span class="token comment">// 在A、B两个线程中引入：canPrintB channel使得对B的打印发生在A之前：</span>
-    <span class="token comment">// 在创建A、B两个线程前先 canPrintA channel里注入数据。</span>
-    canPrintFoo <span class="token operator">&lt;-</span> <span class="token number">0</span>
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> looptime<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-            <span class="token operator">&lt;-</span>canPrintFoo
-            fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">)</span>
-            canPrintBar <span class="token operator">&lt;-</span> <span class="token number">0</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">defer</span> wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> looptime<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-            <span class="token operator">&lt;-</span>canPrintBar
-            fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"bar"</span><span class="token punctuation">)</span>
-            canPrintFoo <span class="token operator">&lt;-</span> <span class="token number">0</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">defer</span> wg<span class="token punctuation">.</span><span class="token function">Done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    wg<span class="token punctuation">.</span><span class="token function">Wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"the main function has been run:"</span><span class="token punctuation">,</span> time<span class="token punctuation">.</span><span class="token function">Since</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>多线程程序适合在I&#x2F;O密集型应用中使用，当一个线程处于I&#x2F;O状态时，CPU是空闲的，可以被用来执行其他线程。</p>
-<p>大部分网络应用都是I&#x2F;O密集型的，适合使用并发优化。</p>
-<p>常见的I&#x2F;O优化方式还有</p>
-<p>同步非阻塞IO： 在一个线程里使用多路复用，同时监听多个连接。多个连接共享一个线程，避免大量线程创建带来的时间和空间开销。</p>
-<p>异步非阻塞IO：不需要主动轮询，访问每个连接状态。当被调用方执行完毕式，主动通知调用方。</p>
-<p>对于计算密集型任务，适合使用并行优化：</p>
-<p>如游戏还有科学计算领域使用GPU并行处理矩阵计算、处理图像数据。</p>
-<p>合适的数据结构和算法也能降低程序的复杂度。某些算法的优化空间特别大，如使用动态规划代替暴力搜索，能将某些O(2^n)的算法优化到O(n)。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" data-id="cl4ee5ovr000321x35asm8r2q" data-title="Go并发：控制多个线程中部分功能的执行顺序" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Go哲学者就餐" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/" class="article-date">
-  <time class="dt-published" datetime="2022-02-25T04:02:35.000Z" itemprop="datePublished">2022-02-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B9%B6%E5%8F%91/">并发</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+        <h1 id="软件已实现功能："><a href="#软件已实现功能：" class="headerlink" title="软件已实现功能："></a>软件已实现功能：</h1><h2 id="导入图片："><a href="#导入图片：" class="headerlink" title="导入图片："></a>导入图片：</h2><p>点击 文件-打开导入图片：</p>
+<p><img src="/img/1584005701819.png" alt="1584005701819"></p>
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/the-dining-philosophers/">1226. 哲学家进餐 - 力扣（LeetCode）</a></p>
-<p>leetCode的并发编程题没有Go的测试环境，在本地自己写了个哲学者就餐问题，通过观察程序能否长时间保持运行状态而不死锁来判断程序逻辑是否正确。</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
-
-<span class="token keyword">import</span> <span class="token punctuation">(</span>
-    <span class="token string">"fmt"</span>
-    <span class="token string">"sync"</span>
-    <span class="token string">"time"</span>
-<span class="token punctuation">)</span>
-
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 初始变量1:筷子数</span>
-    philoNum <span class="token operator">:=</span> <span class="token number">5</span>
-    <span class="token comment">// 初始变量2:forkSate数组,表示每个筷子的状态</span>
-    <span class="token comment">// 5个哲学家对应5个线程，他们不断遵循一定规则修改筷子状态：</span>
-    <span class="token comment">// 规则一：拿到左右两双筷子就能吃饭。仅仅按照这个规则编程程序很容易发生死锁</span>
-    <span class="token comment">// 必须要引入其他规则才能使得5个线程没有死锁的情况出现，能一直运行下去 。</span>
-    <span class="token comment">// 这里采用只有同时拿到左右两只筷子才能吃饭(修改筷子状态，并调用eat方法)的规则来防止线程死锁。</span>
-    forkState <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span>
-    mutex <span class="token operator">:=</span> sync<span class="token punctuation">.</span>Mutex<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token comment">// channel数组:</span>
-    canRunPhilo <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-        canRunPhilo<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">chan</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> philoNum<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 匿名函数传参:</span>
-        <span class="token keyword">go</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">for</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">// 左右两只筷子状态都为0时:</span>
-                mutex<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token keyword">if</span> forkState<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
-                    forkState<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-                    forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-                    canRunPhilo<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;-</span> <span class="token number">0</span>
-                <span class="token punctuation">&#125;</span>
-                mutex<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token comment">// 成功拿起两只筷子后：调用eat方法，输出5只筷子的状态:</span>
-                <span class="token operator">&lt;-</span>canRunPhilo<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-                <span class="token comment">// eat(i)</span>
-                mutex<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"筷子状态:"</span><span class="token punctuation">)</span>
-                <span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> philoNum<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
-                    <span class="token keyword">if</span> forkState<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
-                        fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"#"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
-                    <span class="token punctuation">&#125;</span>
-                <span class="token punctuation">&#125;</span>
-                fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                time<span class="token punctuation">.</span><span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">*</span> time<span class="token punctuation">.</span>Microsecond<span class="token punctuation">)</span>
-                mutex<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token comment">// 就餐完毕后，执行放下筷子（即将筷子状态重新置为0）的操作:</span>
-                mutex<span class="token punctuation">.</span><span class="token function">Lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        		<span class="token comment">// 放下左手筷子（即将左手筷子的状态置为0），同时判断左手边的哲学家（一个线程）是否拥有就餐资格:</span>
-                forkState<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-                <span class="token keyword">if</span> forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
-                    forkState<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-                    forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-                    canRunPhilo<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">&lt;-</span> <span class="token number">0</span>
-                <span class="token punctuation">&#125;</span>
-        <span class="token comment">// 放下右手筷子，同时判断右手边的哲学家（一个线程）是否拥有就餐资格:</span>
-                forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-                <span class="token keyword">if</span> forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">2</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
-                    forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-                    forkState<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">2</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-                    canRunPhilo<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token operator">+</span>philoNum<span class="token punctuation">)</span><span class="token operator">%</span>philoNum<span class="token punctuation">]</span> <span class="token operator">&lt;-</span> <span class="token number">0</span>
-                <span class="token punctuation">&#125;</span>
-                mutex<span class="token punctuation">.</span><span class="token function">Unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token comment">// 哲学家（线程）i的任务执行完毕!</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">// time.Sleep(10 * time.Second)</span>
-    <span class="token comment">// for &#123;</span>
-    <span class="token comment">// 	time.Sleep(10 * time.Microsecond)</span>
-    <span class="token comment">// &#125;</span>
-    <span class="token keyword">select</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">func</span> <span class="token function">eat</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"now %d begin eating...\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span>
-<span class="token comment">// 总结：</span>
-<span class="token comment">// 通过 boolean forkStae数组的值 来判断 筷子是否在哲学家手中</span>
-<span class="token comment">// 通过 创建5个线程来模拟哲学家就餐过程</span>
-<span class="token comment">// 通过一定的策略来避免死锁</span>
-<span class="token comment">// 改写：题目很适合使用条件变量来代替channel控制线程同步</span>
-<span class="token comment">// 避免哲学家就餐（线程运行）时发生死锁还存在其他规则，比如每次只允许4个筷子被同时拿起。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>哲学者就餐问题最重要的是避免多线程并发时出现的死锁情况：</p>
-<p>一段逻辑正确的哲学者就餐问题的代码应当能时刻保持运行状态，而没有死锁发生：</p>
-<p>经过测试：该段代码在本地机器上可以持续运行3小时以上，持续输出当前状态下正在被使用的筷子编号。（测试环境:Ubuntu 16.04）</p>
-<img src="/img/image-20220614215833948.png" alt="image-20220614215833948" style="zoom:50%;" />
-
-<p>同时发现，每轮最多有4只筷子可以被同时拿起。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>《七周七并发》</p>
-<p>《现代操作系统》</p>
-
+          <p class="article-more-link">
+            <a href="/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/" data-id="cl4ee5ovu000721x3gx1x0395" data-title="使用Golang并发工具包解决哲学者就餐问题" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" data-id="cl4ee5ow5001521x380rce3p4" data-title="小型PS软件" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91/" rel="tag">并发</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag">数字图像处理</a></li></ul>
 
     </footer>
   </div>

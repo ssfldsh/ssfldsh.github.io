@@ -71,10 +71,72 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Redis持久化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-parallel sssp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" class="article-date">
-  <time class="dt-published" datetime="2021-08-08T10:42:08.000Z" itemprop="datePublished">2021-08-08</time>
+    <a href="/2022/03/24/parallel%20sssp/" class="article-date">
+  <time class="dt-published" datetime="2022-03-24T04:02:35.000Z" itemprop="datePublished">2022-03-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%B9%B6%E8%A1%8C/">并行</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/03/24/parallel%20sssp/">单源最短路径算法的并行化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><em>CS-260 并行算法学习整理：</em></p>
+<p>引用了孙老师和顾老师的大量课件和博文：</p>
+<p>孙老师的知乎专栏：</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1174996853811335168">多核时代与并行算法 - 知乎 (zhihu.com)</a></p>
+<p>课程地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~yihans/palgo.html">https://www.cs.cmu.edu/~yihans/palgo.html</a></p>
+<p>这里使用的并行模型是binary-fork-join模型，使用的是工作窃取算法。是针对单机多核结构的并行，使用CAS解决竞态条件。</p>
+<p>我主要整理了并行算法在单源最短路径(single source shortest path:sssp)上的应用。</p>
+<p>并行算法带来的提升并不总是常数级别的，有的时候使用了并行反而会更慢。</p>
+<p>这是因为使用使用并行和使用并发一样会有共享变量的读写问题，会有大量fork带来的开销问题。</p>
+<p>在串行的世界里时间效率最优的算法在并行的世界里并不总是最优的。</p>
+<p>比如，在拥有大量处理器时，使用并行的方法能使Bellman-Ford算法的时间效率得到极大地提升，但是使用并行的方法对Dijkstra算法的提升却很有限。</p>
+<p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%871-8128718.jpeg" alt="幻灯片1"></p>
+<p><img src="/img/%E5%B9%BB%E7%81%AF%E7%89%872-8128718.jpeg" alt="幻灯片2"></p>
+        
+          <p class="article-more-link">
+            <a href="/2022/03/24/parallel%20sssp/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/24/parallel%20sssp/" data-id="cl4ee5ow4001021x3aav56pxr" data-title="单源最短路径算法的并行化" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E7%AE%97%E6%B3%95/" rel="tag">并行算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">最短路径</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Redis跳表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2021-08-10T13:48:52.000Z" itemprop="datePublished">2021-08-10</time>
 </a>
     
   <div class="article-category">
@@ -89,7 +151,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/">Redis持久化</a>
+      <a class="p-name article-title" href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/">Redis跳表</a>
     </h1>
   
 
@@ -97,26 +159,25 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="AOF和RDB的取舍"><a href="#AOF和RDB的取舍" class="headerlink" title="AOF和RDB的取舍"></a>AOF和RDB的取舍</h1><p>目前，Redis 的持久化主要有两大机制，即 AOF（Append Only File）日志和 RDB 快照。</p>
-<p>AOF记录的是操作命令，而不是实际的数据。<br>用 AOF 方法进行故障恢复的时候，需要逐一把操作日志都执行一遍。如果操作日志非常多，Redis 就会恢复得很缓慢，影响到正常使用。这当然不是理想的结果。<br>使用AOF备份的特点是慢而全面，数据内容的丢失可以控制在秒级。</p>
-<p>使用RDB快照在做数据恢复时比较快。<br>缺点是备份内容不够详细，数据粒度只能达到分钟级。<br>频繁的全量快照造成大量高频磁盘读写，fork开销也很大。</p>
-<p>实际生产中，可以考虑两者的结合，如：</p>
-<p><strong>Redis 4.0 中提出了一个混合使用 AOF 日志和内存快照的方法。</strong>简单来说，内存快照以一定的频率执行，在两次快照之间，使用 AOF 日志记录这期间的所有命令操作。</p>
-<p>这样数据恢复速度可以得到提升，能恢复出的数据也更加全面。</p>
-<p>另外，具体情况具体分析，如根据QPS大小和键值对修改范围定制Redis持久化策略：</p>
+        <h1 id="Zset（也叫Sorted-Set，有序集合，按照Score有序）"><a href="#Zset（也叫Sorted-Set，有序集合，按照Score有序）" class="headerlink" title="Zset（也叫Sorted Set，有序集合，按照Score有序）"></a>Zset（也叫Sorted Set，有序集合，按照Score有序）</h1><p><strong>Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。</strong></p>
+<p><strong>不同的是zset有序集合中的每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。</strong>有序集合的成员是唯一的,但分数(score)却可以重复。</p>
+<p><strong>跳表</strong>是zset（有序集合）的底层实现之一。</p>
+<p><strong>zset</strong>底层两个数据结构实现：zipList压缩列表和zskipList。</p>
+<p><strong>zipList</strong>能节省内存空间，但是性能比较差，增删改查的时间复杂度较高，平均O(n)，特殊情况下，增删改这三项的时间复杂度能达到O(n^2)（指触发级联更新，不断重新分配内存空间的情况下）。</p>
+<p><strong>skipList</strong>跳表是一个<strong>层次索引</strong>，使用的是<strong>分层索引</strong>的思想，对标的是平衡查找树，底层采用<strong>链表</strong>实现，<strong>增删改查的平均时间复杂度是O(logn)。</strong>同时<strong>支持</strong>快速查找单个数据和<strong>范围查询。</strong>空间复杂度O(n)。</p>
         
           <p class="article-more-link">
-            <a href="/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/#more">Read More</a>
+            <a href="/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" data-id="cl4ee5ovv000a21x3gpd64uds" data-title="Redis持久化" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/10/Redis%E8%B7%B3%E8%A1%A8/" data-id="cl4ee5ovz000l21x3aj42dseu" data-title="Redis跳表" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">持久化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD/" rel="tag">数据备份</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zset/" rel="tag">zset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88/" rel="tag">有序集合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B7%B3%E8%A1%A8/" rel="tag">跳表</a></li></ul>
 
     </footer>
   </div>
@@ -166,57 +227,6 @@
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E5%BF%AB%E8%B7%AF%E5%BE%84/" rel="tag">最快路径</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-寒假工作总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" class="article-date">
-  <time class="dt-published" datetime="2021-07-19T12:33:59.000Z" itemprop="datePublished">2021-07-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/">时空数据库</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">轨迹数据库入门总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>1、《Computing with Spatial Trajectories》第一章和第二章，轨迹数据的预处理部分</p>
-<p>2、  轨迹数据的常用索引</p>
-<p>3、 市面上的轨迹数据处理平台：以阿里云和京东为例</p>
-        
-          <p class="article-more-link">
-            <a href="/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/19/%E5%AF%92%E5%81%87%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/" data-id="cl4ee5ow6001821x385tmb6rg" data-title="轨迹数据库入门总结" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%B6%E7%A9%BA%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">时空数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9F%A5%E8%AF%A2/" rel="tag">查询</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a></li></ul>
 
     </footer>
   </div>
