@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://example.com/img/1628418422545-42259536-550a-458f-85a3-97ad3238575d.png">
 <meta property="og:image" content="http://example.com/img/image-20210808210148660.png">
 <meta property="article:published_time" content="2021-08-08T10:42:08.000Z">
-<meta property="article:modified_time" content="2022-06-15T06:31:29.488Z">
+<meta property="article:modified_time" content="2022-06-15T12:21:50.411Z">
 <meta property="article:author" content="RunZhe He">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="持久化">
@@ -152,7 +152,7 @@
 <p>两种工作模式：</p>
 <h2 id="RDB两种工作模式："><a href="#RDB两种工作模式：" class="headerlink" title="RDB两种工作模式："></a>RDB两种工作模式：</h2><h3 id="阻塞式："><a href="#阻塞式：" class="headerlink" title="阻塞式："></a>阻塞式：</h3><p>同步调用</p>
 <h3 id="非阻塞式："><a href="#非阻塞式：" class="headerlink" title="非阻塞式："></a>非阻塞式：</h3><p>使用子线程对当前内存中的所有数据做快照。</p>
-<h1 id="Redis真的是单线程吗？"><a href="#Redis真的是单线程吗？" class="headerlink" title="Redis真的是单线程吗？"></a>Redis真的是单线程吗？</h1><p>主线程（接收命令，读写数据，备份命令到AOF缓存）是单线程的，除此之外，还有其他线程：如AOF秒级同步策略下的每秒刷盘策略：</p>
+<h1 id="Redis的主线程和其他任务"><a href="#Redis的主线程和其他任务" class="headerlink" title="Redis的主线程和其他任务"></a>Redis的主线程和其他任务</h1><p>主线程（接收命令，读写数据，备份命令到AOF缓存）是单线程的，除此之外，还有其他线程：如AOF秒级同步策略下的每秒刷盘策略：</p>
 <p>虽然Redis处理处理请求是单线程的，但Redis Server还有其他线程在后台工作，例如AOF每秒刷盘、异步关闭文件描述符这些操作。</p>
 <h1 id="非易失性内存上的NoSQL"><a href="#非易失性内存上的NoSQL" class="headerlink" title="非易失性内存上的NoSQL"></a>非易失性内存上的NoSQL</h1><img src="/img/image-20210808210148660.png" alt="image-20210808210148660" style="zoom:50%;" />
 
@@ -166,7 +166,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" data-id="cl4ee5ovv000a21x3gpd64uds" data-title="Redis持久化" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/08/Redis%E6%8C%81%E4%B9%85%E5%8C%96/" data-id="cl4fkhyze000evpx3a7pj55ez" data-title="Redis持久化" class="article-share-link">Share</a>
       
       
       
