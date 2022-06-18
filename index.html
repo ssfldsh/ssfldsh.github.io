@@ -97,43 +97,44 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>微服务与分布式：</p>
-<p>​	1、什么是单体服务：</p>
-<p>​	2、什么是SOA：</p>
-<p>​		SOA 面向服务的思想，拆分治理重用传承到微服务架构。</p>
-<p>​	3、微服务架构：</p>
-<p>​				服务拆分：</p>
-<p>​				好处：</p>
-<p>​				系统架构： 多服务、多实例-&gt; 服务器负载均衡、数据库主从、分片、多副本协同</p>
-<p>​				服务间通信（RPC和消息队列）、注册与发现中心、配置中心-&gt;Zookeeper ：CP 系统（Paxos、Raft算	法）、Eureka：AP系统</p>
-<p>​				跨进程协同：分布式锁</p>
-<p>​				面向异常编程：</p>
-<p>​						故障检测方法</p>
-<p>​						偶发故障：幂等重试</p>
-<p>​						系统过载：</p>
-<p>​								熔断、限流、降级（弃车保帅、遇到问题想的不是怎么解决，而是怎么将风险降到最低。）</p>
-<p>​								彻底解决系统过载问题：</p>
-<p>​										纵向扩展：</p>
-<p>​										横向拓展：</p>
-<p>​												服务器多实例以及负载均衡：</p>
-<p>​												数据库主从： </p>
-<p>​														容灾备份： RAID、Paxos-Raft、主从同步</p>
-<p>​														抗压：多个从节点同时支持读，能分担读的压力；</p>
-<p>​												多副本复制</p>
-<p>​														Raft、Paxos：容灾以及抗压</p>
-<p>​										弹性伸缩：k8s-pod ：合理使用服务器集群</p>
-<p>​										优化算法、流程、数据结构、提升程序性能：</p>
-<p>​					分布式事务：</p>
-<p>​							CAP、ACID、BASE</p>
-<p>​							强一致性和最终一致性：</p>
-<p>​							分布式原子性：</p>
-<p>​									2PC、3PC….</p>
-<p>​							多数据副本一致性：</p>
-<p>​									2PC</p>
-<p>​									Raft-Paxos</p>
-<p>​									MySQL 异步复制，半同步复制</p>
-<p>​					典型的分布式系统：</p>
-<p>​							</p>
+        <p>​		</p>
+<pre class="line-numbers language-apl" data-language="apl"><code class="language-apl">微服务与分布式：
+    <span class="token number">1</span>、什么是单体服务：
+    <span class="token number">2</span>、什么是SOA：
+            SOA 面向服务的思想，拆分治理重用传承到微服务架构。
+    <span class="token number">3</span>、微服务架构：
+                服务拆分：
+                好处：
+                系统架构： 多服务、多实例<span class="token function">-</span><span class="token function">></span> 服务器负载均衡、数据库主从、分片、多副本协同
+                服务间通信（RPC和消息队列）、注册与发现中心、配置中心<span class="token function">-</span><span class="token function">></span>Zookeeper ：CP 系统（Paxos、Raft算法）、							Eureka：AP系统
+                跨进程协同：分布式锁
+                面向异常编程：
+                        故障检测方法
+                        偶发故障：幂等重试
+                        系统过载：
+                                熔断、限流、降级（弃车保帅、遇到问题想的不是怎么解决，而是怎么将风险降到最低。）
+                                彻底解决系统过载问题：
+                        纵向扩展：
+                        横向拓展：（传说中的加机器，什么是好架构，通过简单的加机器就能突破系统瓶颈的架构）：
+                                服务器多实例以及负载均衡：
+                                数据库主从： 
+                                        容灾备份： RAID、Paxos<span class="token function">-</span>Raft、主从同步
+                                        抗压：多个从节点同时支持读，能分担读的压力；
+                                多副本复制Raft、Paxos：容灾以及抗压： 
+                                弹性伸缩：k8s<span class="token function">-</span>pod ：合理使用服务器集群
+                        优化算法、流程、数据结构、提升程序性能：
+                分布式事务：
+                        CAP、ACID、BASE
+                        强一致性和最终一致性：
+                        分布式原子性：
+                                <span class="token number">2</span>PC、<span class="token number">3</span>PC<span class="token dyadic-operator operator">.</span><span class="token dyadic-operator operator">.</span><span class="token dyadic-operator operator">.</span><span class="token dyadic-operator operator">.</span>
+                        多数据副本一致性：
+                                <span class="token number">2</span>PC
+                                Raft<span class="token function">-</span>Paxos
+                                MySQL 异步复制，半同步复制
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>​					</p>
 
       
     </div>
