@@ -6,12 +6,12 @@
   
   <title>从最短路径到最快路径的求解（tdsp代码说明文档） | RunZhe He&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="代码下载代码下载：ssfldsh&#x2F;tdsp (github.com) 数据预处理原始路网数据：  处理后的路网数据：格式： 每行10列：分别是 路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。    导入Qgis，做数据可视化，观察数据分布：  是一个拥有接近10000条边，10000个顶点">
+  <meta name="description" content="代码下载代码下载：ssfldsh&#x2F;tdsp (github.com) 实验室自娱自乐的项目，代码质量可能一般，也不是专门写C++的。 一次性运行的项目，没有考虑内存管理，OOM之类的。 主要是复现 time-dependent Dijkstra算法，存储不同时刻通过每条道路所需的时间，修改Dijkstra算法，输出不同时刻出发，从起点到终点的所需的最短时间和最快路径。作为baseline">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从最短路径到最快路径的求解（tdsp代码说明文档）">
 <meta property="og:url" content="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/index.html">
 <meta property="og:site_name" content="RunZhe He&#39;s Blog">
-<meta property="og:description" content="代码下载代码下载：ssfldsh&#x2F;tdsp (github.com) 数据预处理原始路网数据：  处理后的路网数据：格式： 每行10列：分别是 路段id，路段起始点id, 路段终止点id，道路方向，路段长度，路段限速，路段起始点横坐标，路段起始点纵坐标，路段终止点横坐标，路段终止点纵坐标。    导入Qgis，做数据可视化，观察数据分布：  是一个拥有接近10000条边，10000个顶点">
+<meta property="og:description" content="代码下载代码下载：ssfldsh&#x2F;tdsp (github.com) 实验室自娱自乐的项目，代码质量可能一般，也不是专门写C++的。 一次性运行的项目，没有考虑内存管理，OOM之类的。 主要是复现 time-dependent Dijkstra算法，存储不同时刻通过每条道路所需的时间，修改Dijkstra算法，输出不同时刻出发，从起点到终点的所需的最短时间和最快路径。作为baseline">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/wpsV5MBi9.jpg">
 <meta property="og:image" content="http://example.com/img/wpsfryxsI.jpg">
@@ -28,10 +28,10 @@
 <meta property="og:image" content="http://example.com/img/image-20220222181633550.png">
 <meta property="og:image" content="http://example.com/img/image-20220222194207837.png">
 <meta property="article:published_time" content="2021-08-09T14:30:02.000Z">
-<meta property="article:modified_time" content="2022-06-15T13:45:44.741Z">
+<meta property="article:modified_time" content="2022-06-18T08:18:37.066Z">
 <meta property="article:author" content="RunZhe He">
-<meta property="article:tag" content="最快路径">
 <meta property="article:tag" content="最短路径">
+<meta property="article:tag" content="最快路径">
 <meta property="article:tag" content="Dijkstra">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/wpsV5MBi9.jpg">
@@ -118,6 +118,9 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><p>代码下载：<a target="_blank" rel="noopener" href="https://github.com/ssfldsh/tdsp">ssfldsh&#x2F;tdsp (github.com)</a></p>
+<p>实验室自娱自乐的项目，代码质量可能一般，也不是专门写C++的。</p>
+<p>一次性运行的项目，没有考虑内存管理，OOM之类的。</p>
+<p>主要是复现 time-dependent Dijkstra算法，存储不同时刻通过每条道路所需的时间，修改Dijkstra算法，输出不同时刻出发，从起点到终点的所需的最短时间和最快路径。作为baseline ,方便后续优化对比。</p>
 <h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="原始路网数据："><a href="#原始路网数据：" class="headerlink" title="原始路网数据："></a>原始路网数据：</h2><p><img src="/img/wpsV5MBi9.jpg" alt="img"> </p>
 <h2 id="处理后的路网数据："><a href="#处理后的路网数据：" class="headerlink" title="处理后的路网数据："></a>处理后的路网数据：</h2><p>格式：</p>
 <p>每行10列：分别是</p>
@@ -204,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4fkr8sq000xxhx31lt90pls" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4jm70qu0011nbx3dih192ls" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
       
       
       
@@ -291,11 +294,11 @@
           </li>
         
           <li>
-            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
           </li>
         
           <li>
-            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
           </li>
         
           <li>

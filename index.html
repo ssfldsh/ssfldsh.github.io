@@ -131,7 +131,9 @@
 <p>​	分层架构，类似DDD的模块划分模式（不过我对DDD不是很熟，有时间再看吧。。。）</p>
 <p><strong>代码健壮性</strong>：</p>
 <p>​	使用自定义业务码+描述信息代替http Status Code给用户和前端更加详细的报错信息</p>
-<p>​	插入时使用唯一索引实现接口幂等	</p>
+<p>​	这里还做了一个i18n（国际化），根据用户使用的设备的语言，返回不同语言的报错信息。</p>
+<p>​	各业务码，对应的具体描述和内容写在yaml里，使用packr打包进go二进制可运行文件。在制作镜像时更加方便。</p>
+<p>​	插入时使用唯一索引实现接口幂等</p>
 <p><strong>工程效率</strong>：	</p>
 <p>​	pre-commit：go fmt 代码格式调整、lint静态代码扫描</p>
 <p>​	gitlab ci&#x2F;cd 构建自动化测试和部署流水线, DevOps开发模式</p>
@@ -139,12 +141,21 @@
 <p><strong>测试</strong>：</p>
 <p>​	单元测试:  </p>
 <p>​	功能测试：Postman</p>
+<p>​	pprof ：性能分析，火焰图查看耗时操作，内存占用。</p>
+<p><strong>功能：</strong></p>
+<p>​	MySQL 8.0 JSON 字段的使用</p>
+<p>​	重写gorm的Scan和Value方法使得gorm 支持 JSON 字段</p>
+<p>​	任意结构的JSON报文-&gt;struct-&gt;MySQL JSON字段：场景，不知道某个JSON字段的具体结构，但是要将传来的http request 的body(ISON格式) ，持久化到数据库(post 方法)。</p>
+<p>​	使用 go context 存放 jwt 里反解出的 用户角色，根据用户角色返回不同的查询结果</p>
+<p>​	gorm Debug 模式的使用，慢查询的配置，MysqL explain 分析SQL耗时和索引命中情况</p>
+<p>​	list 时使用 分页查询返回结果</p>
+<p>​	</p>
 <p>​	</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4fkr8sr0012xhx330zygk2e" data-title="商汤实习总结" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4jm70qu0010nbx38enhg83n" data-title="商汤实习总结" class="article-share-link">Share</a>
       
       
       
@@ -185,6 +196,9 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="代码下载"><a href="#代码下载" class="headerlink" title="代码下载"></a>代码下载</h1><p>代码下载：<a target="_blank" rel="noopener" href="https://github.com/ssfldsh/tdsp">ssfldsh&#x2F;tdsp (github.com)</a></p>
+<p>实验室自娱自乐的项目，代码质量可能一般，也不是专门写C++的。</p>
+<p>一次性运行的项目，没有考虑内存管理，OOM之类的。</p>
+<p>主要是复现 time-dependent Dijkstra算法，存储不同时刻通过每条道路所需的时间，修改Dijkstra算法，输出不同时刻出发，从起点到终点的所需的最短时间和最快路径。作为baseline ,方便后续优化对比。</p>
 <h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="原始路网数据："><a href="#原始路网数据：" class="headerlink" title="原始路网数据："></a>原始路网数据：</h2><p><img src="/img/wpsV5MBi9.jpg" alt="img"> </p>
 <h2 id="处理后的路网数据："><a href="#处理后的路网数据：" class="headerlink" title="处理后的路网数据："></a>处理后的路网数据：</h2><p>格式：</p>
 <p>每行10列：分别是</p>
@@ -202,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4fkr8sq000xxhx31lt90pls" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/08/09/tdsp%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/" data-id="cl4jm70qu0011nbx3dih192ls" data-title="从最短路径到最快路径的求解（tdsp代码说明文档）" class="article-share-link">Share</a>
       
       
       
@@ -252,7 +266,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" data-id="cl4fkr8ss0018xhx3d4v4bur2" data-title="小型PS软件" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/03/12/%E5%B0%8F%E5%9E%8BPS%E8%BD%AF%E4%BB%B6/" data-id="cl4jm70qy001mnbx39s71dqow" data-title="小型PS软件" class="article-share-link">Share</a>
       
       
       
@@ -327,11 +341,11 @@
           </li>
         
           <li>
-            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
           </li>
         
           <li>
-            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
           </li>
         
           <li>

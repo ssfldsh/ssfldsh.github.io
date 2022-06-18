@@ -14,7 +14,7 @@
 <meta property="og:description" content="实习时间：​	2021-9-9 到 2022-1-20  实习公司：​	商汤科技( SenseTime )，亚洲最大的人工智能公司，市值千亿级别。计算机视觉相关的算法很厉害，工程方面做的也不错。 实习部门：​	工程院-容器平台，名字叫容器平台，实际上我们组并不直接接触docker、k8s二次开发之类的，至少我去的时候是没有做的，可能同部门其他组或者我们组在我来之前有负责k8s集群部署，运维，二次开">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-23T14:30:35.000Z">
-<meta property="article:modified_time" content="2022-06-15T12:28:23.818Z">
+<meta property="article:modified_time" content="2022-06-16T16:21:18.281Z">
 <meta property="article:author" content="RunZhe He">
 <meta property="article:tag" content="实习总结">
 <meta name="twitter:card" content="summary">
@@ -134,7 +134,9 @@
 <p>​	分层架构，类似DDD的模块划分模式（不过我对DDD不是很熟，有时间再看吧。。。）</p>
 <p><strong>代码健壮性</strong>：</p>
 <p>​	使用自定义业务码+描述信息代替http Status Code给用户和前端更加详细的报错信息</p>
-<p>​	插入时使用唯一索引实现接口幂等	</p>
+<p>​	这里还做了一个i18n（国际化），根据用户使用的设备的语言，返回不同语言的报错信息。</p>
+<p>​	各业务码，对应的具体描述和内容写在yaml里，使用packr打包进go二进制可运行文件。在制作镜像时更加方便。</p>
+<p>​	插入时使用唯一索引实现接口幂等</p>
 <p><strong>工程效率</strong>：	</p>
 <p>​	pre-commit：go fmt 代码格式调整、lint静态代码扫描</p>
 <p>​	gitlab ci&#x2F;cd 构建自动化测试和部署流水线, DevOps开发模式</p>
@@ -142,12 +144,21 @@
 <p><strong>测试</strong>：</p>
 <p>​	单元测试:  </p>
 <p>​	功能测试：Postman</p>
+<p>​	pprof ：性能分析，火焰图查看耗时操作，内存占用。</p>
+<p><strong>功能：</strong></p>
+<p>​	MySQL 8.0 JSON 字段的使用</p>
+<p>​	重写gorm的Scan和Value方法使得gorm 支持 JSON 字段</p>
+<p>​	任意结构的JSON报文-&gt;struct-&gt;MySQL JSON字段：场景，不知道某个JSON字段的具体结构，但是要将传来的http request 的body(ISON格式) ，持久化到数据库(post 方法)。</p>
+<p>​	使用 go context 存放 jwt 里反解出的 用户角色，根据用户角色返回不同的查询结果</p>
+<p>​	gorm Debug 模式的使用，慢查询的配置，MysqL explain 分析SQL耗时和索引命中情况</p>
+<p>​	list 时使用 分页查询返回结果</p>
+<p>​	</p>
 <p>​	</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4fkr8sr0012xhx330zygk2e" data-title="商汤实习总结" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/02/23/%E5%95%86%E6%B1%A4%E5%AE%9E%E4%B9%A0%E6%80%BB%E7%BB%93/" data-id="cl4jm70qu0010nbx38enhg83n" data-title="商汤实习总结" class="article-share-link">Share</a>
       
       
       
@@ -159,11 +170,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Go并发：控制多个线程中部分功能的执行顺序
+          使用Golang并发工具包解决哲学者就餐问题
         
       </div>
     </a>
@@ -234,11 +245,11 @@
           </li>
         
           <li>
-            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
+            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
           </li>
         
           <li>
-            <a href="/2022/02/25/Go%20%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0/">Go并发：控制多个线程中部分功能的执行顺序</a>
+            <a href="/2022/02/25/Go%E5%93%B2%E5%AD%A6%E8%80%85%E5%B0%B1%E9%A4%90/">使用Golang并发工具包解决哲学者就餐问题</a>
           </li>
         
           <li>
