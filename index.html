@@ -106,7 +106,7 @@
                 服务拆分：
                 好处：
                 系统架构： 多服务、多实例<span class="token function">-</span><span class="token function">></span> 服务器负载均衡、数据库主从、分片、多副本协同
-                服务间通信（RPC和消息队列）、注册与发现中心、配置中心<span class="token function">-</span><span class="token function">></span>Zookeeper ：CP 系统（Paxos、Raft算法）、							Eureka：AP系统
+                服务间通信（RPC和消息队列）、注册与发现中心、配置中心<span class="token function">-</span><span class="token function">></span>Zookeeper ：CP 系统（Paxos、Raft算法）、Eureka：AP系统
                 跨进程协同：分布式锁
                 面向异常编程：
                         故障检测方法
@@ -115,7 +115,7 @@
                                 熔断、限流、降级（弃车保帅、遇到问题想的不是怎么解决，而是怎么将风险降到最低。）
                                 彻底解决系统过载问题：
                         纵向扩展：
-                        横向拓展：（传说中的加机器，什么是好架构，通过简单的加机器就能突破系统瓶颈的架构）：
+                        横向拓展（加机器）：
                                 服务器多实例以及负载均衡：
                                 数据库主从： 
                                         容灾备份： RAID、Paxos<span class="token function">-</span>Raft、主从同步
